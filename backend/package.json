@@ -1,0 +1,25 @@
+{
+  "name": "syncity_backend",
+  "version": "1.0.0",
+  "description": "Syncity backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "KlemPear"
+  },
+  "keywords": [
+    "Sync"
+  ],
+  "author": "KlemPear",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3"
+  }
+}
