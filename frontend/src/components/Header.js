@@ -19,13 +19,15 @@ class Header extends React.Component {
 					<Link to="/profile" className="item">
 						Profile
 					</Link>
-					<Link to="/">
-						<button
-							className="ui btn btn-primary"
-							onClick={this.onLogOutSubmit}
-						>
-							Log Out
-						</button>
+					<Link to="/list-briefs" className="item">
+						All Briefs
+					</Link>
+					<Link
+						to="/"
+						className="ui negative basic button"
+						onClick={this.onLogOutSubmit}
+					>
+						Log out
 					</Link>
 				</div>
 			);

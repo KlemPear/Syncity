@@ -6,6 +6,7 @@ import Register from "./Users/Register";
 import Login from "./Users/Login";
 import LandingPage from "./LandingPage";
 import ShowUser from "./Users/ShowUser";
+import ListBriefs from "./Briefs/ListBriefs";
 
 class App extends React.Component {
 	render() {
@@ -17,6 +18,7 @@ class App extends React.Component {
 					<Route path="/login" exact component={Login} />
 					<Route path="/" exact component={LandingPage} />
 					<Route path="/profile" exact component={ShowUser} />
+					<Route path="/list-briefs" exact component={ListBriefs} />
 					<Redirect to="/" />
 				</Switch>
 			</div>

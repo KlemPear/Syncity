@@ -14,6 +14,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/User");
 //Routes
 const userRouter = require("./routes/user");
+const briefRouter = require("./routes/brief");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
 const mongoDbSetUp = require("./config/mongo");
@@ -89,6 +90,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", userRouter);
+app.use("/briefs", briefRouter);
 
 /** catch 404 and forward to error handler */
 app.use("*", (req, res) => {
