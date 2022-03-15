@@ -4,10 +4,11 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reportWebVitals from "./reportWebVitals";
-
 import App from './components/App';
 import reducers from "./reducers";
 import { checkLoggedIn } from "./util/session";
+import history from "./util/history";
+import { Router } from "react-router-dom";
 
 
 const renderApp = (preloadedState) => {
@@ -20,7 +21,9 @@ const renderApp = (preloadedState) => {
 	);
 	ReactDOM.render(
 		<Provider store={store}>
-			<App />
+			<Router history={history}>
+				<App />
+			</Router>
 		</Provider>,
 		document.getElementById("root")
 	);

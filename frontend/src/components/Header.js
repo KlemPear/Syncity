@@ -16,6 +16,9 @@ class Header extends React.Component {
 					<Link to="/" className="item">
 						Home
 					</Link>
+					<Link to="/profile" className="item">
+						Profile
+					</Link>
 					<Link to="/">
 						<button
 							className="ui btn btn-primary"

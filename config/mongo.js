@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const db = {
 	url: "localhost:27017",
-	name: "chatdb",
+	name: "syncity",
 };
 
 const CONNECTION_URL = `mongodb://${db.url}/${db.name}`;
