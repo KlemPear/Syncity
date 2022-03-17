@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 // session
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -98,6 +99,13 @@ app.use("*", (req, res) => {
 		success: false,
 		message: "API endpoint does not exist",
 	});
+});
+
+// Step 1:
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+// Step 2:
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 
 app.listen(port, () => {

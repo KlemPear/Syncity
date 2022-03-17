@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const db = {
 	url: "localhost:27017",
@@ -7,7 +8,7 @@ const db = {
 
 const CONNECTION_URL = `mongodb://${db.url}/${db.name}`;
 
-mongoose.connect(CONNECTION_URL, {
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
