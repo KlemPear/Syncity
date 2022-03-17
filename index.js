@@ -93,13 +93,13 @@ app.use((req, res, next) => {
 app.use("/users", userRouter);
 app.use("/briefs", briefRouter);
 
-/** catch 404 and forward to error handler */
-app.use("*", (req, res) => {
-	return res.status(404).json({
-		success: false,
-		message: "API endpoint does not exist",
-	});
-});
+// /** catch 404 and forward to error handler */
+// app.use("*", (req, res) => {
+// 	return res.status(404).json({
+// 		success: false,
+// 		message: "API endpoint does not exist",
+// 	});
+// });
 
 // Step 1:
 app.use(express.static(path.resolve(__dirname, "./client/build")));
