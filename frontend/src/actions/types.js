@@ -4,3 +4,8 @@ export const usersTypes = {
 	LOGOUT_USER: "LOGOUT_USER",
 	UNAUTHORIZED: "UNAUTHORIZED",
 };
+
+export const briefsTypes = {
+	FETCH_BRIEFS: "FETCH_BRIEFS",
+	CREATE_BRIEF: "CREATE_BRIEF",
+};

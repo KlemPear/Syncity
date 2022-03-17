@@ -7,6 +7,7 @@ import Login from "./Users/Login";
 import LandingPage from "./LandingPage";
 import ShowUser from "./Users/ShowUser";
 import ListBriefs from "./Briefs/ListBriefs";
+import CreateBrief from "./Briefs/CreateBrief";
 
 class App extends React.Component {
 	render() {
@@ -19,6 +20,7 @@ class App extends React.Component {
 					<Route path="/" exact component={LandingPage} />
 					<Route path="/profile" exact component={ShowUser} />
 					<Route path="/list-briefs" exact component={ListBriefs} />
+					<Route path="/create-brief" exact component={CreateBrief} />
 					<Redirect to="/" />
 				</Switch>
 			</div>

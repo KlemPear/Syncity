@@ -22,6 +22,9 @@ class Header extends React.Component {
 					<Link to="/list-briefs" className="item">
 						All Briefs
 					</Link>
+					<Link to="/create-brief" className="item">
+						Create Brief
+					</Link>
 					<Link
 						to="/"
 						className="ui negative basic button"
