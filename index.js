@@ -27,6 +27,7 @@ mongoDbSetUp.once("open", () => {
 
 const port = process.env.PORT || "5000";
 const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000";
+
 app.set("port", port);
 
 //Configure CORS
@@ -93,20 +94,24 @@ app.use((req, res, next) => {
 app.use("/users", userRouter);
 app.use("/briefs", briefRouter);
 
-// /** catch 404 and forward to error handler */
-// app.use("*", (req, res) => {
-// 	return res.status(404).json({
-// 		success: false,
-// 		message: "API endpoint does not exist",
-// 	});
-// });
-
-// Step 1:
-app.use(express.static(path.resolve(__dirname, "./frontend/build")));
-// Step 2:
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
-});
+if (process.env.NODE_ENV === "production") {
+	// Step 1: serve our static asset in production
+	app.use(express.static(path.resolve(__dirname, "./frontend/build")));
+	// Step 2:
+	app.get("*", function (request, response) {
+		response.sendFile(
+			path.resolve(__dirname, "./frontend/build", "index.html")
+		);
+	});
+} else {
+	/** catch 404 and forward to error handler */
+	app.use("*", (req, res) => {
+		return res.status(404).json({
+			success: false,
+			message: "API endpoint does not exist",
+		});
+	});
+}
 
 app.listen(port, () => {
 	console.log(`Listening on port: ${port}`);

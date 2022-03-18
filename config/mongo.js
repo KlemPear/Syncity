@@ -6,9 +6,12 @@ const db = {
 	name: "syncity",
 };
 
-const CONNECTION_URL = `mongodb://${db.url}/${db.name}`;
+const CONNECTION_URL =
+	process.env.NODE_ENV === "production"
+		? process.env.MONGODB_CONNECTION_STRING
+		: `mongodb://${db.url}/${db.name}`;
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING, {
+mongoose.connect(CONNECTION_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });

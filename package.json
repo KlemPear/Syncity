@@ -10,7 +10,7 @@
 		"heroku-postbuild": "npm run install-frontend && npm run build",
 		"server": "nodemon index.js",
 		"frontend": "cd frontend && npm start",
-		"develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix frontend\""
+		"dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix frontend\""
 	},
 	"repository": {
 		"type": "git",
