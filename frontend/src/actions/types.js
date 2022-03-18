@@ -7,5 +7,8 @@ export const usersTypes = {
 
 export const briefsTypes = {
 	FETCH_BRIEFS: "FETCH_BRIEFS",
+	FETCH_BRIEF: "FETCH_BRIEF",
 	CREATE_BRIEF: "CREATE_BRIEF",
+	EDIT_BRIEF: "EDIT_BRIEF",
+	DELETE_BRIEF: "DELETE_BRIEF",
 };

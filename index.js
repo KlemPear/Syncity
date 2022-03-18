@@ -97,11 +97,9 @@ app.use("/briefs", briefRouter);
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production
 	app.use(express.static(path.resolve(__dirname, "./frontend/build")));
-	// Step 2:
-	app.get("*", function (request, response) {
-		response.sendFile(
-			path.resolve(__dirname, "./frontend/build", "index.html")
-		);
+	// Step 2: redirect all traffic outside of api routes to index.html
+	app.get("*", function (req, res) {
+		res.sendFile(path.resolve(__dirname, "./frontend/build", "index.html"));
 	});
 } else {
 	/** catch 404 and forward to error handler */

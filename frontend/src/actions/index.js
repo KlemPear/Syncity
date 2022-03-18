@@ -40,6 +40,10 @@ export const fetchBriefs = () => async (dispatch, getState) => {
 	dispatch({ type: briefsTypes.FETCH_BRIEFS, payload: response.data });
 };
 
+export const fetchBrief = (id) => async (dispatch, getState) => {
+	const response = await briefs.get(`/${id}`);
+	dispatch({ type: briefsTypes.FETCH_BRIEF, payload: response.data });
+};
 
 export const createBrief = (body) => async (dispatch, getState) => {
 	const response = await briefs.post(`/create-brief`, body);
@@ -49,6 +53,20 @@ export const createBrief = (body) => async (dispatch, getState) => {
 	history.push("/list-briefs");
 };
 
+export const editBrief = (body) => async (dispatch, getState) => {
+	const response = await briefs.put(`/edit/${body._id}`, body);
+	dispatch({ type: briefsTypes.EDIT_BRIEF, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the main page
+	history.push("/list-briefs");
+};
 
+export const deleteBrief = (id) => async (dispatch, getState) => {
+	const response = await briefs.delete(`/${id}`);
+	dispatch({ type: briefsTypes.DELETE_BRIEF, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the main page
+	history.push("/list-briefs");
+};
 
 //#endregion

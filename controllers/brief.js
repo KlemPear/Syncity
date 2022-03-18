@@ -24,6 +24,7 @@ module.exports.onCreateBrief = async (req, res, next) => {
 			req.body.logo =
 				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpd8grPAcmeeZPO_pho-bOhFivjEq8MCTFPw&usqp=CAU";
 		}
+		console.log(req.body);
 		const newBrief = new Brief(req.body);
 		newBrief.save();
 		return res.status(200).json(newBrief);
@@ -51,6 +52,7 @@ module.exports.onDeleteBriefById = async (req, res, next) => {
 		const deleteBrief = await Brief.findByIdAndRemove(id);
 		return res.status(200).json(deleteBrief);
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json(error);
 	}
 };

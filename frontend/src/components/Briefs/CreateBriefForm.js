@@ -1,7 +1,14 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
 
 class CreateBriefForm extends React.Component {
+	componentDidMount = () => {
+		if (this.props.editBrief) {
+			this.props.initialize(this.props.editBrief);
+		}
+	};
+
 	renderError({ error, touched }) {
 		if (touched && error) {
 			return (
@@ -12,41 +19,96 @@ class CreateBriefForm extends React.Component {
 		}
 	}
 
-	renderInput = ({ input, label, meta, type }) => {
+	renderInput = ({ input, label, meta, type, placeholder, value }) => {
 		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
 		return (
 			<div className={className}>
 				<label>{label}</label>
-				<input type={type} {...input} autoComplete="off" />
+				<input
+					type={type}
+					{...input}
+					autoComplete="off"
+					placeholder={placeholder}
+					value={value}
+				/>
 				{this.renderError(meta)}
 			</div>
 		);
 	};
 
-	renderTextInput = ({ input, label, meta }) => {
+	renderTextInput = ({ input, label, meta, placeholder, value }) => {
 		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
 		return (
 			<div className={className}>
 				<label>{label}</label>
-				<textarea {...input} autoComplete="off" />
+				<textarea
+					{...input}
+					autoComplete="off"
+					placeholder={placeholder}
+					value={value}
+				/>
 				{this.renderError(meta)}
 			</div>
 		);
 	};
 
-	onSubmit = (formValues) => {
+	onSubmit = () => {
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
-		this.props.onSubmit(formValues);
+		this.props.onSubmit(this.props.formValues);
 	};
 
-	render() {
-		return (
-			<div>
-				<form
-					onSubmit={this.props.handleSubmit(this.onSubmit)}
-					className="ui form error"
-				>
+	renderFormFields = () => {
+		if (this.props.editBrief) {
+			return (
+				<>
+					<Field
+						name="title"
+						component={this.renderInput}
+						label="Title"
+						defaultValue={this.props.editBrief.title}
+						value={this.props.editBrief.title}
+						placeholder={this.props.editBrief.title}
+					/>
+					<Field
+						name="budget"
+						component={this.renderInput}
+						type="number"
+						label="Budget"
+						defaultValue={this.props.editBrief.budget}
+						value={this.props.editBrief.budget}
+						placeholder={this.props.editBrief.budget}
+					/>
+					<Field
+						name="dueDate"
+						component={this.renderInput}
+						type="date"
+						label="Due Date"
+						defaultValue={this.props.editBrief.budget}
+						value={this.props.editBrief.budget}
+						placeholder={this.props.editBrief.dueDate}
+					/>
+					<Field
+						name="logo"
+						component={this.renderInput}
+						label="Logo"
+						defaultValue={this.props.editBrief.budget}
+						value={this.props.editBrief.budget}
+						placeholder={this.props.editBrief.logo}
+					/>
+					<Field
+						name="description"
+						component={this.renderTextInput}
+						label="description"
+						defaultValue={this.props.editBrief.budget}
+						value={this.props.editBrief.budget}
+						placeholder={this.props.editBrief.description}
+					/>
+				</>
+			);
+		} else {
+			return (
+				<>
 					<Field name="title" component={this.renderInput} label="Title" />
 					<Field
 						name="budget"
@@ -66,6 +128,19 @@ class CreateBriefForm extends React.Component {
 						component={this.renderTextInput}
 						label="description"
 					/>
+				</>
+			);
+		}
+	};
+
+	render() {
+		return (
+			<div>
+				<form
+					onSubmit={this.props.handleSubmit(this.onSubmit)}
+					className="ui form error"
+				>
+					{this.renderFormFields()}
 					<button className="ui button primary">Submit</button>
 				</form>
 			</div>
@@ -90,7 +165,19 @@ const validate = (formValues) => {
 	return errors;
 };
 
-export default reduxForm({
-	form: "CreateBriefForm",
-	validate: validate,
-})(CreateBriefForm);
+const mapStateToProps = (state) => {
+	return {
+		formValues: state.form?.CreateBriefForm?.values,
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{}
+)(
+	reduxForm({
+		form: "CreateBriefForm", // a unique identifier for this form
+		enableReinitialize: true,
+		validate: validate,
+	})(CreateBriefForm)
+);

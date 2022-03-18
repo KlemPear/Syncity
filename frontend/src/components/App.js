@@ -8,6 +8,8 @@ import LandingPage from "./LandingPage";
 import ShowUser from "./Users/ShowUser";
 import ListBriefs from "./Briefs/ListBriefs";
 import CreateBrief from "./Briefs/CreateBrief";
+import ShowBrief from "./Briefs/ShowBrief";
+import EditBrief from "./Briefs/EditBrief";
 
 class App extends React.Component {
 	render() {
@@ -21,6 +23,8 @@ class App extends React.Component {
 					<Route path="/profile" exact component={ShowUser} />
 					<Route path="/list-briefs" exact component={ListBriefs} />
 					<Route path="/create-brief" exact component={CreateBrief} />
+					<Route path="/briefs/edit/:id" exact component={EditBrief} />
+					<Route path="/briefs/:id" exact component={ShowBrief} />
 					<Redirect to="/" />
 				</Switch>
 			</div>
