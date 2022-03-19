@@ -13,7 +13,7 @@ class ListApplications extends React.Component {
 		if (!this.props.applications) {
 			return (
 				<div>
-					<Loader />
+					You have never submitted any application.
 				</div>
 			);
 		} else {
