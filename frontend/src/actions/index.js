@@ -1,7 +1,8 @@
-import { usersTypes, briefsTypes } from "./types";
+import { usersTypes, briefsTypes, applicationsTypes } from "./types";
 import history from "../util/history";
 import users from "../apis/users";
 import briefs from "../apis/briefs";
+import applications from "../apis/applications";
 
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
@@ -46,7 +47,7 @@ export const fetchBrief = (id) => async (dispatch, getState) => {
 };
 
 export const createBrief = (body) => async (dispatch, getState) => {
-	const response = await briefs.post(`/create-brief`, body);
+	const response = await briefs.post(`/`, body);
 	dispatch({ type: briefsTypes.CREATE_BRIEF, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
@@ -54,7 +55,7 @@ export const createBrief = (body) => async (dispatch, getState) => {
 };
 
 export const editBrief = (body) => async (dispatch, getState) => {
-	const response = await briefs.put(`/edit/${body._id}`, body);
+	const response = await briefs.put(`/${body._id}`, body);
 	dispatch({ type: briefsTypes.EDIT_BRIEF, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
@@ -64,6 +65,22 @@ export const editBrief = (body) => async (dispatch, getState) => {
 export const deleteBrief = (id) => async (dispatch, getState) => {
 	const response = await briefs.delete(`/${id}`);
 	dispatch({ type: briefsTypes.DELETE_BRIEF, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the main page
+	history.push("/list-briefs");
+};
+
+//#endregion
+
+//#region Application
+export const fetchApplications = (body) => async (dispatch, getState) => {
+	const response = await applications.get("/", body);
+	dispatch({ type: applicationsTypes.FETCH_APPLICATIONS, payload: response.data });
+};
+
+export const createApplication = (body) => async (dispatch, getState) => {
+	const response = await applications.post(`/`, body);
+	dispatch({ type: applicationsTypes.CREATE_APPLICATION, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
 	history.push("/list-briefs");

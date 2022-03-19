@@ -4,10 +4,6 @@ import { Link } from "react-router-dom";
 import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
 
 class BriefCard extends React.Component {
-	formatDate = (date) => {
-		return new Date(date).toLocaleDateString("en-Us");
-	};
-
 	render() {
 		return (
 			<div className="card">

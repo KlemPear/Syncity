@@ -16,6 +16,7 @@ const User = require("./models/User");
 //Routes
 const userRouter = require("./routes/user");
 const briefRouter = require("./routes/brief");
+const applicationRouter = require("./routes/application");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
 const mongoDbSetUp = require("./config/mongo");
@@ -93,6 +94,7 @@ app.use((req, res, next) => {
 
 app.use("/users", userRouter);
 app.use("/briefs", briefRouter);
+app.use("/applications", applicationRouter);
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production

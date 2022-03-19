@@ -4,6 +4,7 @@ import { fetchBrief } from "../../actions";
 import history from "../../util/history";
 import Loader from "../Loader";
 import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
+import BriefApplication from "./BriefApplication";
 
 class ShowBrief extends React.Component {
 	componentDidMount = () => {
@@ -20,15 +21,19 @@ class ShowBrief extends React.Component {
 		} else {
 			const { brief } = this.props;
 			return (
-				<div>
-					<h1>this is a page to show brief and apply</h1>
-					<h3>{brief.title}</h3>
+				<>
 					<div>
-						{`Budget: ${moneyFormatter.format(brief.budget)}`} -
-						{`Due date: ${dateFormatter(brief.dueDate)}`}
+						<h1>this is a page to show brief and apply</h1>
+						<h3>{brief.title}</h3>
+						<div>
+							{`Budget: ${moneyFormatter.format(brief.budget)}`} -
+							{`Due date: ${dateFormatter(brief.dueDate)}`}
+						</div>
+						<p>{brief.description}</p>
 					</div>
-					<p>{brief.description}</p>
-				</div>
+					<hr />
+					<BriefApplication briefId={this.props.brief._id}/>
+				</>
 			);
 		}
 	}

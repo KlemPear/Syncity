@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchBriefs } from "../../actions";
+import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import BriefCard from "./BriefCard";
 
@@ -18,11 +19,19 @@ class ListBriefs extends React.Component {
 			);
 		} else {
 			return (
-				<div className="ui cards">
-					{this.props.briefs.map((brief) => (
-						<BriefCard key={brief._id} brief={brief} />
-					))}
-				</div>
+				<>
+					<div>
+						<Link className="ui blue button" to={`/create-brief`}>
+							Create Brief
+						</Link>
+					</div>
+					<div class="ui hidden divider"></div>
+					<div className="ui cards">
+						{this.props.briefs.map((brief) => (
+							<BriefCard key={brief._id} brief={brief} />
+						))}
+					</div>
+				</>
 			);
 		}
 	}

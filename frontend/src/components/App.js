@@ -10,6 +10,7 @@ import ListBriefs from "./Briefs/ListBriefs";
 import CreateBrief from "./Briefs/CreateBrief";
 import ShowBrief from "./Briefs/ShowBrief";
 import EditBrief from "./Briefs/EditBrief";
+import ListApplications from "./Applications/ListApplications";
 
 class App extends React.Component {
 	render() {
@@ -25,6 +26,7 @@ class App extends React.Component {
 					<Route path="/create-brief" exact component={CreateBrief} />
 					<Route path="/show-briefs/edit/:id" exact component={EditBrief} />
 					<Route path="/show-briefs/:id" exact component={ShowBrief} />
+					<Route path="/list-applications" exact component={ListApplications} />
 					<Redirect to="/" />
 				</Switch>
 			</div>

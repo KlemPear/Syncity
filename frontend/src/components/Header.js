@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-//import GoogleAuth from "./GoogleAuth";
 import { connect } from "react-redux";
 import { logOutUser } from "../actions";
 
@@ -22,8 +21,11 @@ class Header extends React.Component {
 					<Link to="/list-briefs" className="item">
 						All Briefs
 					</Link>
-					<Link to="/create-brief" className="item">
+					{/* <Link to="/create-brief" className="item">
 						Create Brief
+					</Link> */}
+					<Link to="/list-applications" className="item">
+						{`${this.props.user.firstName}'s Applications`}
 					</Link>
 					<Link
 						to="/"
@@ -55,6 +57,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		isSignedIn: state.auth.isSignedIn,
+		user: state.auth.user,
 	};
 };
 
