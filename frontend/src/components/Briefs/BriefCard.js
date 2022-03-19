@@ -1,8 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
 
 class BriefCard extends React.Component {
+	formatDate = (date) => {
+		return new Date(date).toLocaleDateString("en-Us");
+	};
+
 	render() {
 		return (
 			<div className="card">
@@ -13,9 +18,15 @@ class BriefCard extends React.Component {
 						src={this.props.brief.logo}
 					/>
 					<div className="header">{this.props.brief.title}</div>
-					<div className="meta">{`Budget: $${this.props.brief.budget}`}</div>
-					<div className="meta">{`Due Date: ${this.props.brief.dueDate}`}</div>
-					<div className="description">{this.props.brief.description}</div>
+					<div className="meta">{`Budget: ${moneyFormatter.format(
+						this.props.brief.budget
+					)}`}</div>
+					<div className="meta">{`Due Date: ${dateFormatter(
+						this.props.brief.dueDate
+					)}`}</div>
+					<div className="description">
+						{this.props.brief.description.substring(0, 240)}...
+					</div>
 				</div>
 				<div className="extra content">
 					{this.props.brief.author === this.props.userId ? (
