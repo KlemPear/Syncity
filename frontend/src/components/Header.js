@@ -19,10 +19,10 @@ class Header extends React.Component {
 						Profile
 					</Link>
 					<Link to="/list-briefs" className="item">
-						All Briefs
+						Briefs
 					</Link>
 					<Link to="/list-applications" className="item">
-						{`${this.props.user.firstName}'s Applications`}
+						{`Your Applications`}
 					</Link>
 					<Link
 						to="/"

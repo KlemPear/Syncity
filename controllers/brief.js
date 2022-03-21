@@ -2,8 +2,13 @@ const Brief = require("../models/Brief");
 
 module.exports.onGetAllBriefs = async (req, res, next) => {
 	try {
-		const brief = await Brief.find();
-		return res.status(200).json(brief);
+		if (req.query) {
+			const briefs = await Brief.find(req.query);
+			return res.status(200).json(briefs);
+		} else {
+			const briefs = await Brief.find();
+			return res.status(200).json(briefs);
+		}
 	} catch (error) {
 		return res.status(500).json(error);
 	}
@@ -28,7 +33,7 @@ module.exports.onCreateBrief = async (req, res, next) => {
 		newBrief.save();
 		return res.status(200).json(newBrief);
 	} catch (error) {
-    console.log(error);
+		console.log(error);
 		return res.status(500).json(error);
 	}
 };

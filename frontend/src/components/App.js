@@ -11,6 +11,7 @@ import CreateBrief from "./Briefs/CreateBrief";
 import ShowBrief from "./Briefs/ShowBrief";
 import EditBrief from "./Briefs/EditBrief";
 import ListApplications from "./Applications/ListApplications";
+import ShowBriefApplications from "./Applications/ShowBriefApplications";
 
 class App extends React.Component {
 	render() {
@@ -37,14 +38,21 @@ class App extends React.Component {
 						component={this.props.isSignedIn ? CreateBrief : LandingPage}
 					/>
 					<Route
-						path="/show-briefs/edit/:id"
+						path="/show-brief/edit/:id"
 						exact
 						component={this.props.isSignedIn ? EditBrief : LandingPage}
 					/>
 					<Route
-						path="/show-briefs/:id"
+						path="/show-brief/:id"
 						exact
 						component={this.props.isSignedIn ? ShowBrief : LandingPage}
+					/>
+					<Route
+						path="/show-brief/:id/applications"
+						exact
+						component={
+							this.props.isSignedIn ? ShowBriefApplications : LandingPage
+						}
 					/>
 					<Route
 						path="/list-applications"

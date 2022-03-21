@@ -5,7 +5,7 @@ import ApplicationCard from "./ApplicationCard";
 
 class ListApplications extends React.Component {
 	componentDidMount = () => {
-		this.props.fetchApplications(this.props.userId);
+		this.props.fetchApplications({ author: this.props.userId });
 	};
 
 	render() {

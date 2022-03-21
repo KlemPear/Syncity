@@ -6,9 +6,24 @@ import Loader from "../Loader";
 import BriefCard from "./BriefCard";
 
 class ListBriefs extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { allBriefsToggle: true };
+	}
+
 	componentDidMount() {
 		this.props.fetchBriefs();
 	}
+
+	onYourBriefsClick = () => {
+		this.props.fetchBriefs(this.props.userId);
+		this.setState({ allBriefsToggle: false });
+	};
+
+	onAllBriefsClick = () => {
+		this.props.fetchBriefs();
+		this.setState({ allBriefsToggle: true });
+	};
 
 	render() {
 		if (!this.props.briefs) {
@@ -24,6 +39,21 @@ class ListBriefs extends React.Component {
 						<Link className="ui blue button" to={`/create-brief`}>
 							Create Brief
 						</Link>
+						{this.state.allBriefsToggle ? (
+							<button
+								className="ui classic button"
+								onClick={() => this.onYourBriefsClick()}
+							>
+								Your Briefs
+							</button>
+						) : (
+							<button
+								className="ui classic button"
+								onClick={() => this.onAllBriefsClick()}
+							>
+								All Briefs
+							</button>
+						)}
 					</div>
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">

@@ -33,11 +33,17 @@ class BriefCard extends React.Component {
 							>
 								Edit
 							</Link>
+							<Link
+								className="ui basic blue button"
+								to={`show-brief/${this.props.brief._id}/applications`}
+							>
+								View Applications
+							</Link>
 						</>
 					) : (
 						<Link
 							className="ui basic green button"
-							to={`show-briefs/${this.props.brief._id}`}
+							to={`show-brief/${this.props.brief._id}`}
 						>
 							Apply
 						</Link>
