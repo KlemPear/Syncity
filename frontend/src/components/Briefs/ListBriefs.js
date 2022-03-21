@@ -25,7 +25,7 @@ class ListBriefs extends React.Component {
 							Create Brief
 						</Link>
 					</div>
-					<div class="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<div className="ui cards">
 						{this.props.briefs.map((brief) => (
 							<BriefCard key={brief._id} brief={brief} />

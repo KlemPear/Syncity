@@ -21,9 +21,6 @@ class Header extends React.Component {
 					<Link to="/list-briefs" className="item">
 						All Briefs
 					</Link>
-					{/* <Link to="/create-brief" className="item">
-						Create Brief
-					</Link> */}
 					<Link to="/list-applications" className="item">
 						{`${this.props.user.firstName}'s Applications`}
 					</Link>

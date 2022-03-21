@@ -73,14 +73,20 @@ export const deleteBrief = (id) => async (dispatch, getState) => {
 //#endregion
 
 //#region Application
-export const fetchApplications = (body) => async (dispatch, getState) => {
-	const response = await applications.get("/", body);
-	dispatch({ type: applicationsTypes.FETCH_APPLICATIONS, payload: response.data });
+export const fetchApplications = (userId) => async (dispatch, getState) => {
+	const response = await applications.get(`/`, { params: { author: userId } });
+	dispatch({
+		type: applicationsTypes.FETCH_APPLICATIONS,
+		payload: response.data,
+	});
 };
 
 export const createApplication = (body) => async (dispatch, getState) => {
 	const response = await applications.post(`/`, body);
-	dispatch({ type: applicationsTypes.CREATE_APPLICATION, payload: response.data });
+	dispatch({
+		type: applicationsTypes.CREATE_APPLICATION,
+		payload: response.data,
+	});
 	// do some programmatic navigation to get the user
 	// back to the main page
 	history.push("/list-briefs");

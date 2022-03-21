@@ -21,12 +21,36 @@ class App extends React.Component {
 					<Route path="/register" exact component={Register} />
 					<Route path="/login" exact component={Login} />
 					<Route path="/" exact component={LandingPage} />
-					<Route path="/profile" exact component={ShowUser} />
-					<Route path="/list-briefs" exact component={ListBriefs} />
-					<Route path="/create-brief" exact component={CreateBrief} />
-					<Route path="/show-briefs/edit/:id" exact component={EditBrief} />
-					<Route path="/show-briefs/:id" exact component={ShowBrief} />
-					<Route path="/list-applications" exact component={ListApplications} />
+					<Route
+						path="/profile"
+						exact
+						component={this.props.isSignedIn ? ShowUser : LandingPage}
+					/>
+					<Route
+						path="/list-briefs"
+						exact
+						component={this.props.isSignedIn ? ListBriefs : LandingPage}
+					/>
+					<Route
+						path="/create-brief"
+						exact
+						component={this.props.isSignedIn ? CreateBrief : LandingPage}
+					/>
+					<Route
+						path="/show-briefs/edit/:id"
+						exact
+						component={this.props.isSignedIn ? EditBrief : LandingPage}
+					/>
+					<Route
+						path="/show-briefs/:id"
+						exact
+						component={this.props.isSignedIn ? ShowBrief : LandingPage}
+					/>
+					<Route
+						path="/list-applications"
+						exact
+						component={this.props.isSignedIn ? ListApplications : LandingPage}
+					/>
 					<Redirect to="/" />
 				</Switch>
 			</div>

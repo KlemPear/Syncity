@@ -1,19 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchApplications } from "../../actions";
-import Loader from "../Loader";
 import ApplicationCard from "./ApplicationCard";
 
 class ListApplications extends React.Component {
 	componentDidMount = () => {
-		this.props.fetchApplications({ author: this.props.userId });
+		this.props.fetchApplications(this.props.userId);
 	};
 
 	render() {
-		if (!this.props.applications) {
+		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
 				<div>
-					You have never submitted any application.
+					<h3>You have not submitted any applications yet.</h3>
 				</div>
 			);
 		} else {

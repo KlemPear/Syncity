@@ -2,8 +2,7 @@ const Application = require("../models/Application");
 
 module.exports.onGetAllApplications = async (req, res, next) => {
 	try {
-		console.log("get all apps request: ", req.body);
-		const applications = await Application.find();
+		const applications = await Application.find(req.query);
 		return res.status(200).json(applications);
 	} catch (error) {
 		console.log(error);
