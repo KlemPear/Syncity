@@ -89,6 +89,15 @@ class CreateBriefForm extends React.Component {
 						placeholder={this.props.editBrief.dueDate}
 					/>
 					<Field
+						name="numberOfApplicationsWanted"
+						component={this.renderInput}
+						type="number"
+						label="Number of applications wanted:"
+						defaultValue={this.props.editBrief.numberOfApplicationsWanted}
+						value={this.props.editBrief.numberOfApplicationsWanted}
+						placeholder={this.props.editBrief.numberOfApplicationsWanted}
+					/>
+					<Field
 						name="logo"
 						component={this.renderInput}
 						label="Logo"
@@ -121,6 +130,12 @@ class CreateBriefForm extends React.Component {
 						component={this.renderInput}
 						type="date"
 						label="Due Date"
+					/>
+					<Field
+						name="numberOfApplicationsWanted"
+						component={this.renderInput}
+						type="number"
+						label="Number of applications wanted:"
 					/>
 					<Field name="logo" component={this.renderInput} label="Logo" />
 					<Field

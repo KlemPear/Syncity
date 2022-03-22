@@ -8,7 +8,7 @@ import BriefCard from "./BriefCard";
 class ListBriefs extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { allBriefsToggle: true };
+		this.state = { openBriefsToggle: false };
 	}
 
 	componentDidMount() {
@@ -16,13 +16,18 @@ class ListBriefs extends React.Component {
 	}
 
 	onYourBriefsClick = () => {
-		this.props.fetchBriefs(this.props.userId);
-		this.setState({ allBriefsToggle: false });
+		this.props.fetchBriefs({ author: this.props.userId });
+		this.setState({ openBriefsToggle: false });
 	};
 
 	onAllBriefsClick = () => {
 		this.props.fetchBriefs();
-		this.setState({ allBriefsToggle: true });
+		this.setState({ openBriefsToggle: false });
+	};
+
+	onOpenBriefsClick = () => {
+		this.props.fetchBriefs({ open: true });
+		this.setState({ openBriefsToggle: true });
 	};
 
 	render() {
@@ -39,27 +44,33 @@ class ListBriefs extends React.Component {
 						<Link className="ui blue button" to={`/create-brief`}>
 							Create Brief
 						</Link>
-						{this.state.allBriefsToggle ? (
-							<button
-								className="ui classic button"
-								onClick={() => this.onYourBriefsClick()}
-							>
-								Your Briefs
-							</button>
-						) : (
-							<button
-								className="ui classic button"
-								onClick={() => this.onAllBriefsClick()}
-							>
-								All Briefs
-							</button>
-						)}
+						<button
+							className="ui classic button"
+							onClick={() => this.onAllBriefsClick()}
+						>
+							All Briefs
+						</button>
+						<button
+							className="ui classic button"
+							onClick={() => this.onYourBriefsClick()}
+						>
+							Your Briefs
+						</button>
+						<button
+							className="ui classic button"
+							onClick={() => this.onOpenBriefsClick()}
+						>
+							Open Briefs
+						</button>
 					</div>
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">
-						{this.props.briefs.map((brief) => (
-							<BriefCard key={brief._id} brief={brief} />
-						))}
+						{this.props.briefs.map((brief) =>
+							this.state.openBriefsToggle &&
+							brief.author === this.props.userId ? null : (
+								<BriefCard key={brief._id} brief={brief} />
+							)
+						)}
 					</div>
 				</>
 			);

@@ -20,6 +20,9 @@ class BriefCard extends React.Component {
 					<div className="meta">{`Due Date: ${dateFormatter(
 						this.props.brief.dueDate
 					)}`}</div>
+					{this.props.brief.numberOfApplicationsWanted > 0 ? (
+						<div className="meta">{`Number of applications submitted: ${this.props.brief.numberOfApplicationsSubmitted} of ${this.props.brief.numberOfApplicationsWanted}`}</div>
+					) : null}
 					<div className="description">
 						{this.props.brief.description.substring(0, 240)}...
 					</div>
@@ -41,12 +44,19 @@ class BriefCard extends React.Component {
 							</Link>
 						</>
 					) : (
-						<Link
-							className="ui basic green button"
-							to={`show-brief/${this.props.brief._id}`}
-						>
-							Apply
-						</Link>
+						<>
+							{this.props.brief.numberOfApplicationsWanted ===
+							this.props.brief.numberOfApplicationsSubmitted ? (
+								<button className="ui basic red button">Closed</button>
+							) : (
+								<Link
+									className="ui basic green button"
+									to={`show-brief/${this.props.brief._id}`}
+								>
+									Apply
+								</Link>
+							)}
+						</>
 					)}
 				</div>
 			</div>

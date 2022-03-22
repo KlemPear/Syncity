@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchApplications, fetchBrief } from "../../actions";
 import history from "../../util/history";
-import Loader from "../Loader";
 import ApplicationCard from "./ApplicationCard";
 
 class ShowBriefApplications extends React.Component {
@@ -25,10 +24,10 @@ class ShowBriefApplications extends React.Component {
 	}
 
 	render() {
-		if (!this.props.applications) {
+		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
 				<div>
-					<Loader />
+					<h4>No applications were submitted for this brief so far...</h4>
 				</div>
 			);
 		} else {

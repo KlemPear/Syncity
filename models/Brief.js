@@ -6,11 +6,14 @@ const briefSchema = new mongoose.Schema({
 	description: String,
 	dueDate: Date,
 	budget: Number,
-  logo: String,
+	logo: String,
 	author: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
 	},
+	numberOfApplicationsWanted: { type: Number, default: -1 },
+	numberOfApplicationsSubmitted: { type: Number, default: 0 },
+	open: { type: Boolean, default: true },
 });
 
 const Brief = mongoose.model("Brief", briefSchema);

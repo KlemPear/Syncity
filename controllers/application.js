@@ -1,4 +1,5 @@
 const Application = require("../models/Application");
+const Brief = require("../models/Brief");
 
 module.exports.onGetAllApplications = async (req, res, next) => {
 	try {
@@ -21,10 +22,21 @@ module.exports.onGetApplicationById = async (req, res, next) => {
 
 module.exports.onCreateApplication = async (req, res, next) => {
 	try {
-		console.log(req.body);
-		const newApplication = new Application(req.body);
-		newApplication.save();
-		return res.status(200).json(newApplication);
+		const brief = await Brief.findById(req.body.brief);
+		if (!brief.open) {
+			return res.status(500).json("too many applications");
+		} else {
+			brief.numberOfApplicationsSubmitted += 1;
+			if(brief.numberOfApplicationsSubmitted === brief.numberOfApplicationsWanted){
+				brief.open = false;
+			}
+			const updatedBrief = await Brief.findByIdAndUpdate(brief._id, brief, {
+				returnDocument: "after",
+			});
+			const newApplication = new Application(req.body);
+			newApplication.save();
+			return res.status(200).json(newApplication);
+		}
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

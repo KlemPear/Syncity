@@ -32,7 +32,14 @@ class ShowBrief extends React.Component {
 						<p>{brief.description}</p>
 					</div>
 					<hr />
-					<BriefApplication briefId={this.props.brief._id}/>
+					{this.props.brief.numberOfApplicationsWanted ===
+					this.props.brief.numberOfApplicationsSubmitted ? (
+						<>
+							<h4>The applications are closed for this brief</h4>
+						</>
+					) : (
+						<BriefApplication briefId={this.props.brief._id} />
+					)}
 				</>
 			);
 		}

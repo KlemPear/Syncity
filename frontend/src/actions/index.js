@@ -37,10 +37,10 @@ export const logOutUser = () => async (dispatch, getState) => {
 
 //#region Briefs
 export const fetchBriefs =
-	(authorId = null) =>
+	(query = null) =>
 	async (dispatch, getState) => {
-		if (authorId) {
-			const response = await briefs.get("/", { params: { author: authorId } });
+		if (query) {
+			const response = await briefs.get("/", { params: query });
 			dispatch({ type: briefsTypes.FETCH_BRIEFS, payload: response.data });
 		} else {
 			const response = await briefs.get("/");
