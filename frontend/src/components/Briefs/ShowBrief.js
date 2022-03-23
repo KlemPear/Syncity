@@ -22,6 +22,9 @@ class ShowBrief extends React.Component {
 			const { brief } = this.props;
 			return (
 				<>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<div>
 						<h1>this is a page to show brief and apply</h1>
 						<h3>{brief.title}</h3>

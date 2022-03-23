@@ -77,6 +77,16 @@ module.exports.onDeleteUserById = async (req, res, next) => {
 			message: `Deleted a count of ${user.deletedCount} user.`,
 		});
 	} catch (error) {
-		return res.status(500).json({ success: false, error: error });
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onAddTokens = async (req, res, next) => {
+	try {
+		const userId = req.params.id;
+		const updatedUser = await User.updateTokensOfUser(userId, req.body.tokens);
+		return res.status(200).json(updatedUser);
+	} catch (error) {
+		return res.status(500).json(error);
 	}
 };

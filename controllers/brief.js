@@ -1,4 +1,5 @@
 const Brief = require("../models/Brief");
+const User = require("../models/User");
 
 module.exports.onGetAllBriefs = async (req, res, next) => {
 	try {
@@ -29,9 +30,14 @@ module.exports.onCreateBrief = async (req, res, next) => {
 			req.body.logo =
 				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpd8grPAcmeeZPO_pho-bOhFivjEq8MCTFPw&usqp=CAU";
 		}
-		const newBrief = new Brief(req.body);
-		newBrief.save();
-		return res.status(200).json(newBrief);
+		const updatedUser = await User.updateTokensOfUser(req.body.author, -10);
+		if (!updatedUser) {
+			return res.status(500).json("Not enough tokens to do this.");
+		} else {
+			const newBrief = new Brief(req.body);
+			newBrief.save();
+			return res.status(200).json(newBrief);
+		}
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

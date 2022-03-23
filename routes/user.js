@@ -14,6 +14,7 @@ router
 		passport.authenticate("local"),
 		user.login
 	)
+	.post("/:id/tokens", user.onAddTokens)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)
 	.delete("/:id", user.onDeleteUserById);

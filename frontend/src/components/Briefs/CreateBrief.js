@@ -11,6 +11,9 @@ class CreateBrief extends React.Component {
 	render() {
 		return (
 			<div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
 				<h3>Create New Brief</h3>
 				<CreateBriefForm onSubmit={this.onSubmit} />
 			</div>

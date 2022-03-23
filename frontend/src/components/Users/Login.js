@@ -11,6 +11,9 @@ class Login extends React.Component {
 	renderUnauthorizedMessage = () => {
 		return (
 			<div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
 				<p>These user name and/or password are not recognized</p>
 			</div>
 		);
@@ -19,6 +22,9 @@ class Login extends React.Component {
 	render() {
 		return (
 			<div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
+				<div className="ui hidden divider"></div>
 				<h3>Login</h3>
 				{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
 				<LoginForm onSubmit={this.onSubmit} />

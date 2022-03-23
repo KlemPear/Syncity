@@ -53,9 +53,13 @@ class CreateBriefForm extends React.Component {
 	};
 
 	onSubmit = () => {
-		//do whatever we need with the form values
-		//send to a server, call an api etc...
-		this.props.onSubmit(this.props.formValues);
+		if (this.props.user.tokens - 10 < 0) {
+			return console.log("not enough tokens to do this");
+		} else {
+			//do whatever we need with the form values
+			//send to a server, call an api etc...
+			this.props.onSubmit(this.props.formValues);
+		}
 	};
 
 	renderFormFields = () => {
@@ -156,7 +160,10 @@ class CreateBriefForm extends React.Component {
 					className="ui form error"
 				>
 					{this.renderFormFields()}
-					<button className="ui button primary">Submit</button>
+					<button className="ui button primary">
+						Submit for 10{" "}
+						<i className="gem fitted circular inverted outline icon" />
+					</button>
 				</form>
 			</div>
 		);
@@ -183,6 +190,7 @@ const validate = (formValues) => {
 const mapStateToProps = (state) => {
 	return {
 		formValues: state.form?.CreateBriefForm?.values,
+		user: state.auth?.user,
 	};
 };
 

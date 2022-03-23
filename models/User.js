@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
 			},
 		},
 		bio: String,
+		tokens: { type: Number, default: 10 },
 	},
 	{
 		timestamps: true,
@@ -38,8 +39,24 @@ userSchema.statics.findUsersByIds = async function (usersId) {
 	}
 };
 
+userSchema.statics.updateTokensOfUser = async function (userId, nbrOfTokens) {
+	try {
+		const user = await this.findById(userId);
+		user.tokens += nbrOfTokens;
+		if (user.tokens < 0) {
+			return false;
+		} else {
+			const updatedUser = await this.findByIdAndUpdate(userId, user, {
+				returnDocument: "after",
+			});
+			return updatedUser;
+		}
+	} catch (error) {
+		throw error;
+	}
+};
+
 userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
-

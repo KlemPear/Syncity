@@ -30,6 +30,9 @@ class EditBrief extends React.Component {
 		} else {
 			return (
 				<div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<h3>this is a page to edit a brief or to delete it.</h3>
 					<CreateBriefForm
 						onSubmit={this.onSubmit}

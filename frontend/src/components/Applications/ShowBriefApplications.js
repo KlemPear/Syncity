@@ -27,12 +27,18 @@ class ShowBriefApplications extends React.Component {
 		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
 				<div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<h4>No applications were submitted for this brief so far...</h4>
 				</div>
 			);
 		} else {
 			return (
 				<>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<div className="ui cards">
 						{this.props.applications.map((application) => (
 							<ApplicationCard

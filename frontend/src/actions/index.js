@@ -33,6 +33,11 @@ export const logOutUser = () => async (dispatch, getState) => {
 	history.push("/");
 };
 
+export const addTokensToUser = (userId, numberOfTokens) => async (dispatch, getState) => {
+	const response = await users.post(`${userId}/tokens`, {tokens: numberOfTokens});
+	dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
+};
+
 //#endregion
 
 //#region Briefs

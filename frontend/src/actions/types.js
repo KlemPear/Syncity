@@ -3,6 +3,7 @@ export const usersTypes = {
 	LOGIN_USER: "LOGIN_USER",
 	LOGOUT_USER: "LOGOUT_USER",
 	UNAUTHORIZED: "UNAUTHORIZED",
+	ADD_TOKENS: "ADD_TOKENS",
 };
 
 export const briefsTypes = {

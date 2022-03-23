@@ -12,16 +12,27 @@ class ListApplications extends React.Component {
 		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
 				<div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
 					<h3>You have not submitted any applications yet.</h3>
 				</div>
 			);
 		} else {
 			return (
-				<div className="ui cards">
-					{this.props.applications.map((application) => (
-						<ApplicationCard key={application._id} application={application} />
-					))}
-				</div>
+				<>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui hidden divider"></div>
+					<div className="ui cards">
+						{this.props.applications.map((application) => (
+							<ApplicationCard
+								key={application._id}
+								application={application}
+							/>
+						))}
+					</div>
+				</>
 			);
 		}
 	}

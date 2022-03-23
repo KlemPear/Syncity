@@ -11,12 +11,9 @@ class Header extends React.Component {
 	render() {
 		if (this.props.isSignedIn) {
 			return (
-				<div className="ui secondary pointing menu">
+				<div className="ui fixed top stackable menu">
 					<Link to="/" className="item">
 						Home
-					</Link>
-					<Link to="/profile" className="item">
-						Profile
 					</Link>
 					<Link to="/list-briefs" className="item">
 						Briefs
@@ -24,18 +21,32 @@ class Header extends React.Component {
 					<Link to="/list-applications" className="item">
 						{`Your Applications`}
 					</Link>
-					<Link
-						to="/"
-						className="ui negative basic button"
-						onClick={this.onLogOutSubmit}
-					>
-						Log out
-					</Link>
+					<div className="right menu">
+						<div className="ui simple dropdown item">
+							Account <i className="user large icon"></i>
+							<div className="menu">
+								<div className="item right">
+									{this.props.user.tokens}
+									<i className="gem fitted circular inverted outline icon" />
+								</div>
+								<Link to="/profile" className="item">
+									Profile
+								</Link>
+								<Link
+									to="/"
+									className="ui negative basic button item"
+									onClick={this.onLogOutSubmit}
+								>
+									Log out
+								</Link>
+							</div>
+						</div>
+					</div>
 				</div>
 			);
 		} else {
 			return (
-				<div className="ui secondary pointing menu">
+				<div className="ui top fixed stackable menu">
 					<Link to="/" className="item">
 						Home
 					</Link>
