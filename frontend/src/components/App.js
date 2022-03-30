@@ -12,6 +12,7 @@ import ShowBrief from "./Briefs/ShowBrief";
 import EditBrief from "./Briefs/EditBrief";
 import ListApplications from "./Applications/ListApplications";
 import ShowBriefApplications from "./Applications/ShowBriefApplications";
+import Paypal from "./Paypal";
 
 class App extends React.Component {
 	render() {
@@ -58,6 +59,11 @@ class App extends React.Component {
 						path="/list-applications"
 						exact
 						component={this.props.isSignedIn ? ListApplications : LandingPage}
+					/>
+					<Route
+						path="/paypal"
+						exact
+						component={this.props.isSignedIn ? Paypal : LandingPage}
 					/>
 					<Redirect to="/" />
 				</Switch>

@@ -25,10 +25,10 @@ class Header extends React.Component {
 						<div className="ui simple dropdown item">
 							Account <i className="user large icon"></i>
 							<div className="menu">
-								<div className="item right">
+								<Link to="/paypal" className="item right">
 									{this.props.user.tokens}
 									<i className="gem fitted circular inverted outline icon" />
-								</div>
+								</Link>
 								<Link to="/profile" className="item">
 									Profile
 								</Link>
