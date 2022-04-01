@@ -12,6 +12,7 @@ class Paypal extends React.Component {
 				<div className="ui hidden divider"></div>
 				<div className="ui hidden divider"></div>
 				<div className="ui hidden divider"></div>
+				<h3>{`Purchase tokens for $${this.props.amount}`}</h3>
 				<div style={{ maxWidth: "200px", minHeight: "200px" }}>
 					<PayPalScriptProvider
 						options={{
