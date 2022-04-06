@@ -48,7 +48,7 @@ class BriefApplicationForm extends React.Component {
 
 	onSubmit = (formValues) => {
 		if (this.props.user.tokens - 1 < 0) {
-			return console.log("not enough tokens to do this");
+			this.props.onNotEnoughTokens();
 		} else {
 			//do whatever we need with the form values
 			//send to a server, call an api etc...
@@ -89,7 +89,8 @@ class BriefApplicationForm extends React.Component {
 				>
 					{this.renderFormFields()}
 					<button className="ui button primary">
-						Submit for 1 <i className="gem fitted circular inverted outline icon" />
+						Submit for 1{" "}
+						<i className="gem fitted circular inverted outline icon" />
 					</button>
 				</form>
 			</div>

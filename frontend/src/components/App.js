@@ -12,7 +12,7 @@ import ShowBrief from "./Briefs/ShowBrief";
 import EditBrief from "./Briefs/EditBrief";
 import ListApplications from "./Applications/ListApplications";
 import ShowBriefApplications from "./Applications/ShowBriefApplications";
-import BuyTokens from "./BuyTokens";
+import BuyTokens from "./Payments/BuyTokens";
 
 class App extends React.Component {
 	render() {

@@ -4,15 +4,15 @@ import {
 	PayPalButtons,
 	usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import { addTokensToUser } from "../../actions";
+import { connect } from "react-redux";
+import history from "../../util/history";
 
 class Paypal extends React.Component {
 	render() {
 		return (
 			<>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<h3>{`Purchase tokens for $${this.props.amount}`}</h3>
+				<h3>{`Purchase ${this.props.tokens} tokens for $${this.props.amount}`}</h3>
 				<div style={{ maxWidth: "200px", minHeight: "200px" }}>
 					<PayPalScriptProvider
 						options={{
@@ -77,6 +77,11 @@ const ButtonWrapper = ({ currency, showSpinner, amount }) => {
 				onApprove={function (data, actions) {
 					return actions.order.capture().then(function () {
 						// Your code here after capture the order
+						this.props.addTokensToUser(
+							this.props.currentUser._id,
+							this.props.tokens
+						);
+						history.push("/profile");
 					});
 				}}
 			/>
@@ -84,4 +89,10 @@ const ButtonWrapper = ({ currency, showSpinner, amount }) => {
 	);
 };
 
-export default Paypal;
+const mapStateToProps = (state) => {
+	return {
+		currentUser: state.auth?.user,
+	};
+};
+
+export default connect(mapStateToProps, { addTokensToUser })(Paypal);

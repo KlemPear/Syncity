@@ -8,27 +8,27 @@ import BriefCard from "./BriefCard";
 class ListBriefs extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { openBriefsToggle: false };
+		//this.state = { openBriefsToggle: false };
 	}
 
 	componentDidMount() {
-		this.props.fetchBriefs();
+		this.props.fetchBriefs({ open: true });
 	}
 
 	onYourBriefsClick = () => {
 		this.props.fetchBriefs({ author: this.props.userId });
-		this.setState({ openBriefsToggle: false });
+		//this.setState({ openBriefsToggle: false });
 	};
 
 	onAllBriefsClick = () => {
-		this.props.fetchBriefs();
-		this.setState({ openBriefsToggle: false });
+		this.props.fetchBriefs({ open: true });
+		//this.setState({ openBriefsToggle: false });
 	};
 
-	onOpenBriefsClick = () => {
-		this.props.fetchBriefs({ open: true });
-		this.setState({ openBriefsToggle: true });
-	};
+	// onOpenBriefsClick = () => {
+	// 	this.props.fetchBriefs({ open: true });
+	// 	this.setState({ openBriefsToggle: true });
+	// };
 
 	render() {
 		if (!this.props.briefs) {
@@ -59,20 +59,22 @@ class ListBriefs extends React.Component {
 						>
 							Your Briefs
 						</button>
-						<button
+						{/* <button
 							className="ui classic button"
 							onClick={() => this.onOpenBriefsClick()}
 						>
 							Open Briefs
-						</button>
+						</button> */}
 					</div>
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">
-						{this.props.briefs.map((brief) =>
-							this.state.openBriefsToggle &&
-							brief.author === this.props.userId ? null : (
+						{this.props.briefs.map(
+							(brief) => (
+								//this.state.openBriefsToggle &&
+								//brief.author === this.props.userId ? null : (
 								<BriefCard key={brief._id} brief={brief} />
 							)
+							//)
 						)}
 					</div>
 				</>

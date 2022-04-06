@@ -54,7 +54,7 @@ class CreateBriefForm extends React.Component {
 
 	onSubmit = () => {
 		if (this.props.user.tokens - 10 < 0) {
-			return console.log("not enough tokens to do this");
+			this.props.onNotEnoughTokens();
 		} else {
 			//do whatever we need with the form values
 			//send to a server, call an api etc...
