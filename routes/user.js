@@ -9,12 +9,10 @@ router
 	.get("/", user.onGetAllUsers)
 	.get("/session", user.getSession)
 	.post("/register", user.onCreateUser)
-	.post(
-		"/login",
-		passport.authenticate("local"),
-		user.login
-	)
+	.post("/login", passport.authenticate("local"), user.login)
 	.post("/:id/tokens", user.onAddTokens)
+	.post("/search", user.onSearch)
+	.put("/:id", user.onUpdateUser)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)
 	.delete("/:id", user.onDeleteUserById);

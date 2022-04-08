@@ -4,6 +4,7 @@ const INITIAL_STATE = {
 	isSignedIn: null,
 	unauthorized: false,
 	user: null,
+	searchedUser: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -33,6 +34,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
 			return { ...state, isSignedIn: false, user: action.payload };
 		case usersTypes.UNAUTHORIZED:
 			return { ...state, isSignedIn: false, user: null, unauthorized: true };
+		case usersTypes.SEARCH_USER:
+			return { ...state, searchedUser: action.payload };
+		case usersTypes.CLEAN_SEARCH_USER:
+			return { ...state, searchedUser: null };
+		case usersTypes.EDIT_USER:
+			return { ...state, user: action.payload };
 		default:
 			return state;
 	}

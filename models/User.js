@@ -15,6 +15,13 @@ const userSchema = new mongoose.Schema(
 		},
 		bio: String,
 		tokens: { type: Number, default: 10 },
+		connections: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "User",
+				unique: true,
+			},
+		],
 	},
 	{
 		timestamps: true,

@@ -4,6 +4,9 @@ export const usersTypes = {
 	LOGOUT_USER: "LOGOUT_USER",
 	UNAUTHORIZED: "UNAUTHORIZED",
 	ADD_TOKENS: "ADD_TOKENS",
+	SEARCH_USER: "SEARCH_USER",
+	CLEAN_SEARCH_USER: "CLEAN_SEARCH_USER",
+	EDIT_USER: "EDIT_USER",
 };
 
 export const briefsTypes = {

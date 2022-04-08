@@ -46,7 +46,7 @@ app.disable("x-powered-by");
 
 //Session set up
 // Set up session with Mongo
-const secret = process.env.SECRET || "thisShouldBeASecret";
+const secret = process.env.SECRET || "MySecretIsThatILoveChocolate";
 const store = MongoStore.create({
 	mongoUrl: mongoDbSetUp._connectionString,
 	secret: secret,

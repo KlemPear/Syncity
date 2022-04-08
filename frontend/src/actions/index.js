@@ -33,9 +33,26 @@ export const logOutUser = () => async (dispatch, getState) => {
 	history.push("/");
 };
 
-export const addTokensToUser = (userId, numberOfTokens) => async (dispatch, getState) => {
-	const response = await users.post(`${userId}/tokens`, {tokens: numberOfTokens});
-	dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
+export const addTokensToUser =
+	(userId, numberOfTokens) => async (dispatch, getState) => {
+		const response = await users.post(`${userId}/tokens`, {
+			tokens: numberOfTokens,
+		});
+		dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
+	};
+
+export const searchUser = (query) => async (dispatch, getState) => {
+	const response = await users.post(`search`, query);
+	dispatch({ type: usersTypes.SEARCH_USER, payload: response.data });
+};
+
+export const cleanSearchedUser = () => async (dispatch, getState) => {
+	dispatch({ type: usersTypes.CLEAN_SEARCH_USER });
+};
+
+export const editUser = (user) => async (dispatch, getState) => {
+	const response = await users.put(`${user._id}`, user);
+	dispatch({ type: usersTypes.EDIT_USER, payload: response.data });
 };
 
 //#endregion
