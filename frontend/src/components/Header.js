@@ -48,7 +48,7 @@ class Header extends React.Component {
 			return (
 				<div className="ui top fixed stackable menu">
 					<Link to="/" className="item">
-						Home
+						akapela
 					</Link>
 					<Link to="/register" className="item">
 						Sign Up
