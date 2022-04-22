@@ -7,6 +7,7 @@ export const usersTypes = {
 	SEARCH_USER: "SEARCH_USER",
 	CLEAN_SEARCH_USER: "CLEAN_SEARCH_USER",
 	EDIT_USER: "EDIT_USER",
+	EDIT_USER_NO_PAYLOAD: "EDIT_USER_NO_PAYLOAD",
 };
 
 export const briefsTypes = {

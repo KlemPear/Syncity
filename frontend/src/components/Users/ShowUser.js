@@ -1,6 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTokensToUser, cleanSearchedUser, editUser } from "../../actions";
+import {
+	addTokensToUser,
+	cleanSearchedUser,
+	editUser,
+	editUserNoPayload,
+} from "../../actions";
 import Modal from "../Modal";
 import UserSearch from "./UserSearch";
 
@@ -24,15 +29,24 @@ class ShowUser extends React.Component {
 	};
 
 	onAddSearchedUser = () => {
+		console.log(this.props.searchedUser);
 		if (
-			!this.props.searchedUser ||
-			this.props.currentUser.connections.includes(this.props.searchedUser)
+			this.props.searchedUser == null ||
+			this.props.currentUser.connections
+				.map((c) => c._id)
+				.includes(this.props.searchedUser._id)
 		) {
+			alert("You are already connected with this person!");
 			return console.log("connection already made.");
 		} else {
 			const updatedUser = this.props.currentUser;
 			updatedUser.connections.push(this.props.searchedUser._id);
 			this.props.editUser(updatedUser);
+			// then we also need to update the search user
+			// to reflect the new connection
+			const updatedSearchedUser = this.props.searchedUser;
+			updatedSearchedUser.connections.push(updatedUser._id);
+			this.props.editUserNoPayload(updatedSearchedUser);
 			this.onDismissModal();
 		}
 	};
@@ -129,4 +143,5 @@ export default connect(mapStateToProps, {
 	addTokensToUser,
 	cleanSearchedUser,
 	editUser,
+	editUserNoPayload,
 })(ShowUser);

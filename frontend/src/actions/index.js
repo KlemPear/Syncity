@@ -55,6 +55,11 @@ export const editUser = (user) => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.EDIT_USER, payload: response.data });
 };
 
+export const editUserNoPayload = (user) => async (dispatch, getState) => {
+	const response = await users.put(`${user._id}`, user);
+	dispatch({ type: usersTypes.EDIT_USER_NO_PAYLOAD, payload: response.data });
+};
+
 //#endregion
 
 //#region Briefs

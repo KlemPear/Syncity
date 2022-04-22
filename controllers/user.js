@@ -50,6 +50,7 @@ module.exports.onCreateUser = async (req, res, next) => {
 		});
 		req.session.user = registeredUser;
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json(error);
 	}
 };
@@ -97,11 +98,15 @@ module.exports.onAddTokens = async (req, res, next) => {
 module.exports.onUpdateUser = async (req, res, next) => {
 	try {
 		const userId = req.params.id;
+		if (new Set(req.body.connections).size !== req.body.connections.length) {
+			return res.status(400).json("duplicated connection");
+		}
 		const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
 			returnDocument: "after",
 		}).populate("connections");
 		return res.status(200).json(updatedUser);
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json(error);
 	}
 };

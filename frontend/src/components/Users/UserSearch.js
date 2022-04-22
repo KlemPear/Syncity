@@ -5,7 +5,12 @@ import { connect } from "react-redux";
 
 class UserSearch extends React.Component {
 	onSubmit = (formValues) => {
-		this.props.searchUser(formValues);
+		if (Object.keys(formValues).length === 0) {
+			console.log("No email submitted");
+			return null;
+		} else {
+			this.props.searchUser(formValues);
+		}
 	};
 
 	onAddSearchedUser = () => {
