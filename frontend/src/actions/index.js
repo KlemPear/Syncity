@@ -75,6 +75,11 @@ export const fetchBriefs =
 		}
 	};
 
+export const fetchPrivateBriefs = (id) => async (dispatch, getState) => {
+	const response = await briefs.get(`/private/${id}`);
+	dispatch({ type: briefsTypes.FETCH_PRIVATE_BRIEFS, payload: response.data });
+};
+
 export const fetchBrief = (id) => async (dispatch, getState) => {
 	const response = await briefs.get(`/${id}`);
 	dispatch({ type: briefsTypes.FETCH_BRIEF, payload: response.data });

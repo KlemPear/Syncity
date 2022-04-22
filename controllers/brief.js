@@ -15,6 +15,22 @@ module.exports.onGetAllBriefs = async (req, res, next) => {
 	}
 };
 
+module.exports.onGetPrivateBriefs = async (req, res, next) => {
+	try {
+		const { connections } = await User.findById(req.params.id);
+		if (!connections) {
+			return res.status(200).json({});
+		}
+		const briefs = await Brief.find({
+			private: true,
+			author: { $in: connections },
+		});
+		return res.status(200).json(briefs);
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
 module.exports.onGetBriefById = async (req, res, next) => {
 	try {
 		const brief = await Brief.findById(req.params.id);
@@ -49,7 +65,7 @@ module.exports.onEditBriefById = async (req, res, next) => {
 		const { id } = req.params;
 		const brief = await Brief.findByIdAndUpdate(id, req.body, {
 			returnDocument: "after",
-		});
+		}).populate("author");
 		return res.status(200).json(brief);
 	} catch (error) {
 		return res.status(500).json(error);

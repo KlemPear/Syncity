@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchBriefs } from "../../actions";
+import { fetchBriefs, fetchPrivateBriefs } from "../../actions";
 import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import BriefCard from "./BriefCard";
@@ -12,7 +12,7 @@ class ListBriefs extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchBriefs({ open: true });
+		this.props.fetchBriefs({ open: true, private: false });
 	}
 
 	onYourBriefsClick = () => {
@@ -21,14 +21,14 @@ class ListBriefs extends React.Component {
 	};
 
 	onAllBriefsClick = () => {
-		this.props.fetchBriefs({ open: true });
+		this.props.fetchBriefs({ open: true, private: false });
 		//this.setState({ openBriefsToggle: false });
 	};
 
-	// onOpenBriefsClick = () => {
-	// 	this.props.fetchBriefs({ open: true });
-	// 	this.setState({ openBriefsToggle: true });
-	// };
+	onPrivateBriefsClick = () => {
+		this.props.fetchPrivateBriefs(this.props.userId);
+		// this.setState({ openBriefsToggle: true });
+	};
 
 	render() {
 		if (!this.props.briefs) {
@@ -51,7 +51,13 @@ class ListBriefs extends React.Component {
 							className="ui classic button"
 							onClick={() => this.onAllBriefsClick()}
 						>
-							All Briefs
+							All Public Briefs
+						</button>
+						<button
+							className="ui classic button"
+							onClick={() => this.onPrivateBriefsClick()}
+						>
+							Private Briefs
 						</button>
 						<button
 							className="ui classic button"
@@ -59,12 +65,6 @@ class ListBriefs extends React.Component {
 						>
 							Your Briefs
 						</button>
-						{/* <button
-							className="ui classic button"
-							onClick={() => this.onOpenBriefsClick()}
-						>
-							Open Briefs
-						</button> */}
 					</div>
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">
@@ -90,4 +90,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchBriefs })(ListBriefs);
+export default connect(mapStateToProps, { fetchBriefs, fetchPrivateBriefs })(
+	ListBriefs
+);

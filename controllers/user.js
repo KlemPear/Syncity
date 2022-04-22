@@ -113,7 +113,7 @@ module.exports.onUpdateUser = async (req, res, next) => {
 
 module.exports.onSearch = async (req, res, next) => {
 	try {
-		const user = await User.findOne(req.body);
+		const user = await User.findOne(req.body).populate("connections");
 		return res.status(200).json(user);
 	} catch (error) {
 		console.log(error);

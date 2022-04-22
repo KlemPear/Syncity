@@ -6,6 +6,7 @@ const router = express.Router();
 
 router
 	.get("/", brief.onGetAllBriefs)
+	.get("/private/:id", brief.onGetPrivateBriefs)
 	.get("/:id", brief.onGetBriefById)
 	.post("/", brief.onCreateBrief)
 	.put("/:id", brief.onEditBriefById)

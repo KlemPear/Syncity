@@ -14,6 +14,7 @@ const briefSchema = new mongoose.Schema({
 	numberOfApplicationsWanted: { type: Number, default: -1 },
 	numberOfApplicationsSubmitted: { type: Number, default: 0 },
 	open: { type: Boolean, default: true },
+	private: { type: Boolean, default: false },
 });
 
 const Brief = mongoose.model("Brief", briefSchema);

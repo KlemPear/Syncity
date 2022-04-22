@@ -54,7 +54,7 @@ userSchema.statics.updateTokensOfUser = async function (userId, nbrOfTokens) {
 		} else {
 			const updatedUser = await this.findByIdAndUpdate(userId, user, {
 				returnDocument: "after",
-			});
+			}).populate("connections");
 			return updatedUser;
 		}
 	} catch (error) {

@@ -75,6 +75,12 @@ class CreateBriefForm extends React.Component {
 						placeholder={this.props.editBrief.title}
 					/>
 					<Field
+						name="private"
+						component={this.renderInput}
+						type="checkbox"
+						label="Make this brief only visible to your connections?"
+					/>
+					<Field
 						name="budget"
 						component={this.renderInput}
 						type="number"
@@ -123,6 +129,12 @@ class CreateBriefForm extends React.Component {
 			return (
 				<>
 					<Field name="title" component={this.renderInput} label="Title" />
+					<Field
+						name="private"
+						component={this.renderInput}
+						type="checkbox"
+						label="Make this brief only visible to your connections?"
+					/>
 					<Field
 						name="budget"
 						component={this.renderInput}
