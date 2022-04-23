@@ -10,7 +10,7 @@ export const registerUser = (body) => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.REGISTER_USER, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
-	history.push("/");
+	history.push("/user-status-pending");
 };
 
 export const loginUser = (formValues) => async (dispatch, getState) => {
@@ -23,6 +23,12 @@ export const loginUser = (formValues) => async (dispatch, getState) => {
 	} catch (error) {
 		dispatch({ type: usersTypes.UNAUTHORIZED });
 	}
+};
+
+export const verifyUser = (confirmationCode) => async (dispatch, getState) => {
+	const response = await users.get(`/confirm/${confirmationCode}`);
+	console.log(response.data);
+	dispatch({ type: usersTypes.VERIFY_USER, payload: response.data });
 };
 
 export const logOutUser = () => async (dispatch, getState) => {

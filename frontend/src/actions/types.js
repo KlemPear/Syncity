@@ -8,6 +8,7 @@ export const usersTypes = {
 	CLEAN_SEARCH_USER: "CLEAN_SEARCH_USER",
 	EDIT_USER: "EDIT_USER",
 	EDIT_USER_NO_PAYLOAD: "EDIT_USER_NO_PAYLOAD",
+	VERIFY_USER: "VERIFY_USER",
 };
 
 export const briefsTypes = {

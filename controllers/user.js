@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const SendEmail = require("../emails/mail");
 const { welcomeEmailOptions } = require("../emails/emailTemplates");
+const { GenerateVerificationToken } = require("../utils/verificationToken");
 
 module.exports.onGetAllUsers = async (req, res, next) => {
 	try {
@@ -45,14 +46,20 @@ module.exports.onCreateUser = async (req, res, next) => {
 		// Do validation here with Joi
 		const { password } = req.body;
 		const user = new User(req.body.user);
+		user.confirmationCode = GenerateVerificationToken();
 		const registeredUser = await User.register(user, password);
 		await req.login(registeredUser, (err) => {
 			if (err) return res.status(500).json(error);
 			return res.status(200).json(registeredUser);
 		});
 		req.session.user = registeredUser;
-		welcomeEmailOptions.toAddress = registeredUser.email;
-		SendEmail(welcomeEmailOptions);
+		SendEmail(
+			welcomeEmailOptions(
+				registeredUser.firstName,
+				registeredUser.confirmationCode,
+				registeredUser.email
+			)
+		);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);
@@ -61,6 +68,11 @@ module.exports.onCreateUser = async (req, res, next) => {
 
 module.exports.login = async (req, res) => {
 	const user = await User.findById(req.user._id).populate("connections");
+	if (user.status != "Active") {
+		return res.status(401).send({
+			message: "Pending Account. Please Verify Your Email!",
+		});
+	}
 	return res.status(200).json(user);
 };
 
@@ -119,6 +131,30 @@ module.exports.onSearch = async (req, res, next) => {
 	try {
 		const user = await User.findOne(req.body).populate("connections");
 		return res.status(200).json(user);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.verifyUser = async (req, res) => {
+	try {
+		const user = await User.findOne({
+			confirmationCode: req.params.confirmationCode,
+		});
+		if (!user) {
+			return res.status(404).json({ message: "User Not found." });
+		}
+		user.status = "Active";
+		const updatedUser = await User.findByIdAndUpdate(user._id, user, {
+			returnDocument: "after",
+		}).populate("connections");
+		req.login(updatedUser, function (err) {
+			if (err) {
+				return console.log(err);
+			}
+			return res.status(200).json(updatedUser);
+		});
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

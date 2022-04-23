@@ -12,7 +12,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
 		case usersTypes.REGISTER_USER:
 			return {
 				...state,
-				isSignedIn: true,
+				isSignedIn: false,
 				user: action.payload,
 				unauthorized: false,
 			};
@@ -40,6 +40,13 @@ const authReducer = (state = INITIAL_STATE, action) => {
 			return { ...state, searchedUser: null };
 		case usersTypes.EDIT_USER:
 			return { ...state, user: action.payload };
+		case usersTypes.VERIFY_USER:
+			return {
+				...state,
+				user: action.payload,
+				isSignedIn: true,
+				unauthorized: false,
+			};
 		default:
 			return state;
 	}

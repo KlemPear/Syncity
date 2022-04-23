@@ -15,6 +15,7 @@ router
 	.put("/:id", user.onUpdateUser)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)
+	.get("/confirm/:confirmationCode", user.verifyUser)
 	.delete("/:id", user.onDeleteUserById);
 
 module.exports = router;

@@ -14,7 +14,10 @@ class Login extends React.Component {
 				<div className="ui hidden divider"></div>
 				<div className="ui hidden divider"></div>
 				<div className="ui hidden divider"></div>
-				<p>These user name and/or password are not recognized</p>
+				<p>
+					These user name and/or password are not recognized. Or you have not
+					verified your email address yet. Please check your mailbox!
+				</p>
 			</div>
 		);
 	};

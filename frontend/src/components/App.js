@@ -13,6 +13,8 @@ import EditBrief from "./Briefs/EditBrief";
 import ListApplications from "./Applications/ListApplications";
 import ShowBriefApplications from "./Applications/ShowBriefApplications";
 import BuyTokens from "./Payments/BuyTokens";
+import UserStatusPending from "./Users/UserStatusPending";
+import UserStatusVerified from "./Users/UserStatusVerified";
 
 class App extends React.Component {
 	render() {
@@ -20,8 +22,36 @@ class App extends React.Component {
 			<div className="ui container app">
 				<Header />
 				<Switch>
-					<Route path="/register" exact component={Register} />
-					<Route path="/login" exact component={Login} />
+					{this.props.isUserPending ? (
+						<>
+							<Route path="/" exact component={LandingPage} />
+							<Route
+								path="/register/confirm/:confirmationCode"
+								exact
+								component={UserStatusVerified}
+							/>
+							<Route
+								path="/user-status-pending"
+								exact
+								component={UserStatusPending}
+							/>
+						</>
+					) : null}
+					<Route
+						path="/register"
+						exact
+						component={this.props.isSignedIn ? LandingPage : Register}
+					/>
+					<Route
+						path="/login"
+						exact
+						component={this.props.isSignedIn ? LandingPage : Login}
+					/>
+					<Route
+						path="/register/confirm/:confirmationCode"
+						exact
+						component={UserStatusVerified}
+					/>
 					<Route path="/" exact component={LandingPage} />
 					<Route
 						path="/profile"
@@ -74,6 +104,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		isSignedIn: state.auth.isSignedIn,
+		isUserPending: state.auth.user?.status === "Pending",
 	};
 };
 
