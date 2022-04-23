@@ -48,6 +48,7 @@ module.exports.onCreateBrief = async (req, res, next) => {
 		}
 		const updatedUser = await User.updateTokensOfUser(req.body.author, -10);
 		if (!updatedUser) {
+			console.log("not enough tokens to do this.");
 			return res.status(500).json("Not enough tokens to do this.");
 		} else {
 			const newBrief = new Brief(req.body);

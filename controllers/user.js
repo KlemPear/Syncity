@@ -1,7 +1,7 @@
 // models
 const User = require("../models/User");
-const SendEmail = require("../utils/emails/mail");
-const { welcomeEmailOptions } = require("../utils/emails/emailTemplates");
+const SendEmail = require("../emails/mail");
+const { welcomeEmailOptions } = require("../emails/emailTemplates");
 
 module.exports.onGetAllUsers = async (req, res, next) => {
 	try {

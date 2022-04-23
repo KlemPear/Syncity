@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CreateBriefForm from "./CreateBriefForm";
-import { createBrief, addTokensToUser } from "../../actions";
+import { createBrief } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,6 @@ class CreateBrief extends React.Component {
 		this.state = { notEnoughTokens: false };
 	}
 	onSubmit = (formValues) => {
-		this.props.addTokensToUser(this.props.userId, -1);
 		this.props.createBrief({ ...formValues, author: `${this.props.userId}` });
 	};
 
@@ -65,6 +64,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { createBrief, addTokensToUser })(
-	CreateBrief
-);
+export default connect(mapStateToProps, { createBrief })(CreateBrief);
