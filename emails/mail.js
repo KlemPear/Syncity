@@ -23,7 +23,7 @@ transporter.verify(function (error, success) {
 const sendEmail = (options) => {
 	const mailOptions = {
 		from: options.fromAddress ?? "do-not-reply@akapela.com",
-		to: options.toAddress ?? "clem.poirier@gmail.com",
+		to: options.toAddress ?? "",
 		subject: options.subject ?? "",
 		text: options.text ?? "",
 		html: options.html ?? "",

@@ -51,7 +51,7 @@ module.exports.onCreateUser = async (req, res, next) => {
 			return res.status(200).json(registeredUser);
 		});
 		req.session.user = registeredUser;
-		welcomeEmailOptions.toAddress = user.userName;
+		welcomeEmailOptions.toAddress = registeredUser.email;
 		SendEmail(welcomeEmailOptions);
 	} catch (error) {
 		console.log(error);
