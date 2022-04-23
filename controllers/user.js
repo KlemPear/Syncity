@@ -1,5 +1,7 @@
 // models
 const User = require("../models/User");
+const SendEmail = require("../utils/emails/mail");
+const { welcomeEmailOptions } = require("../utils/emails/emailTemplates");
 
 module.exports.onGetAllUsers = async (req, res, next) => {
 	try {
@@ -49,6 +51,8 @@ module.exports.onCreateUser = async (req, res, next) => {
 			return res.status(200).json(registeredUser);
 		});
 		req.session.user = registeredUser;
+		welcomeEmailOptions.toAddress = user.userName;
+		SendEmail(welcomeEmailOptions);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);
