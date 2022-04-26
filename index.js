@@ -27,12 +27,15 @@ mongoDbSetUp.once("open", () => {
 });
 
 const port = process.env.PORT || "5000";
-const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000";
+const frontendURL = ["http://localhost:3000"];
+if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
+	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2];
+}
 
 app.set("port", port);
 
 //Configure CORS
-var whitelist = [frontendURL];
+var whitelist = [].push(...frontendURL);
 var corsOptions = {
 	origin: whitelist,
 	credentials: true,

@@ -61,7 +61,7 @@ const sendEmail = (options) => {
 		if (err) {
 			console.log("Error " + err);
 		} else {
-			console.log("Email sent successfully");
+			console.log("Email sent successfully: " + data.response);
 		}
 	});
 };
