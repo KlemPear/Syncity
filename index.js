@@ -27,7 +27,7 @@ mongoDbSetUp.once("open", () => {
 });
 
 const port = process.env.PORT || "5000";
-const frontendURL = ["http://localhost:3000"];
+let frontendURL = ["http://localhost:3000"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
 	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2];
 }
