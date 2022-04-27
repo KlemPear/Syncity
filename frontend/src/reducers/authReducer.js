@@ -5,6 +5,7 @@ const INITIAL_STATE = {
 	unauthorized: false,
 	user: null,
 	searchedUser: null,
+	invitedUser: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -47,6 +48,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
 				isSignedIn: true,
 				unauthorized: false,
 			};
+		case usersTypes.INVITE_NEW_USER:
+			return { ...state, invitedUser: action.payload };
 		default:
 			return state;
 	}

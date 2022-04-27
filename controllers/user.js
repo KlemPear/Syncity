@@ -1,7 +1,10 @@
 // models
 const User = require("../models/User");
 const SendEmail = require("../emails/mail");
-const { welcomeEmailOptions } = require("../emails/emailTemplates");
+const {
+	welcomeEmailOptions,
+	InviteEmailOptions,
+} = require("../emails/emailTemplates");
 const { GenerateVerificationToken } = require("../utils/verificationToken");
 
 module.exports.onGetAllUsers = async (req, res, next) => {
@@ -131,6 +134,17 @@ module.exports.onSearch = async (req, res, next) => {
 	try {
 		const user = await User.findOne(req.body).populate("connections");
 		return res.status(200).json(user);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onInviteNewUser = async (req, res, next) => {
+	try {
+		const { inviteFrom, inviteTo } = req.body;
+		SendEmail(InviteEmailOptions(inviteFrom, inviteTo));
+		res.status(200).json(inviteTo);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

@@ -52,6 +52,11 @@ export const searchUser = (query) => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.SEARCH_USER, payload: response.data });
 };
 
+export const inviteNewUser = (body) => async (dispatch, getState) => {
+	const response = await users.post(`invite`, body);
+	dispatch({ type: usersTypes.INVITE_NEW_USER, payload: response.data });
+};
+
 export const cleanSearchedUser = () => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.CLEAN_SEARCH_USER });
 };

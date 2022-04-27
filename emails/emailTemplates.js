@@ -11,3 +11,12 @@ module.exports.welcomeEmailOptions = (name, confirmationCode, email) => {
 		html: `<h1>Welcome to akapela ${name}!</h1><br><h3>thank you for registering.</h3><br><p>We hope that you will like it here :).</p><br><p>Please confirm your email by clicking on the following link</p><a href=${baseUrl}/register/confirm/${confirmationCode}> Click here!</a>`,
 	};
 };
+
+module.exports.InviteEmailOptions = (inviteFrom, inviteTo) => {
+	return {
+		subject: `${inviteFrom} would like you to join akapela!`,
+		toAddress: inviteTo,
+		text: `${inviteFrom} is inviting you to join akapela. Check it out here: ${baseUrl}`,
+		html: `<h1>${inviteFrom} is inviting you to join akapela</h1><br><h3>Check it out here: <a href=${baseUrl}>akapela.co</a></h3>`,
+	};
+};

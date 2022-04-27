@@ -119,8 +119,3 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
 	console.log(`Listening on port: ${port}`);
 });
-
-// console.log("Test email");
-// const SendEmail = require("./emails/mail");
-// const { welcomeEmailOptions } = require("./emails/emailTemplates");
-// SendEmail(welcomeEmailOptions("Clement", "123456", "clem.poirier@gmail.com"));

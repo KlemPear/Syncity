@@ -12,6 +12,7 @@ router
 	.post("/login", passport.authenticate("local"), user.login)
 	.post("/:id/tokens", user.onAddTokens)
 	.post("/search", user.onSearch)
+	.post("/invite", user.onInviteNewUser)
 	.put("/:id", user.onUpdateUser)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)

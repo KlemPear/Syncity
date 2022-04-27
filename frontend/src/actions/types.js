@@ -9,6 +9,7 @@ export const usersTypes = {
 	EDIT_USER: "EDIT_USER",
 	EDIT_USER_NO_PAYLOAD: "EDIT_USER_NO_PAYLOAD",
 	VERIFY_USER: "VERIFY_USER",
+	INVITE_NEW_USER: "INVITE_NEW_USER",
 };
 
 export const briefsTypes = {
