@@ -13,10 +13,12 @@ router
 	.post("/:id/tokens", user.onAddTokens)
 	.post("/search", user.onSearch)
 	.post("/invite", user.onInviteNewUser)
+	.post("/forgot-password", user.onForgotPassword)
 	.put("/:id", user.onUpdateUser)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)
 	.get("/confirm/:confirmationCode", user.verifyUser)
+	.get("/reset-password/:confirmationCode", user.onGetUserByConfirmationCode)
 	.delete("/:id", user.onDeleteUserById);
 
 module.exports = router;

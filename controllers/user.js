@@ -3,7 +3,8 @@ const User = require("../models/User");
 const SendEmail = require("../emails/mail");
 const {
 	welcomeEmailOptions,
-	InviteEmailOptions,
+	inviteEmailOptions,
+	forgotPasswordEmailOptions,
 } = require("../emails/emailTemplates");
 const { GenerateVerificationToken } = require("../utils/verificationToken");
 
@@ -40,6 +41,20 @@ module.exports.onGetUserById = async (req, res, next) => {
 		}
 		return res.status(200).json(user);
 	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onGetUserByConfirmationCode = async (req, res, next) => {
+	try {
+		const { confirmationCode } = req.params;
+		const user = await User.findOne({ confirmationCode: confirmationCode });
+		if (!user) {
+			throw { error: "No user with this confirmation code found" };
+		}
+		return res.status(200).json(user);
+	} catch (error) {
+		console.log(error);
 		return res.status(500).json(error);
 	}
 };
@@ -143,8 +158,29 @@ module.exports.onSearch = async (req, res, next) => {
 module.exports.onInviteNewUser = async (req, res, next) => {
 	try {
 		const { inviteFrom, inviteTo } = req.body;
-		SendEmail(InviteEmailOptions(inviteFrom, inviteTo));
+		SendEmail(inviteEmailOptions(inviteFrom, inviteTo));
 		res.status(200).json(inviteTo);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onForgotPassword = async (req, res, next) => {
+	try {
+		const { email } = req.body;
+		const user = await User.findOne({ email: email });
+		if (!user) {
+			return res.status(204).json("user not found");
+		}
+		SendEmail(
+			forgotPasswordEmailOptions(
+				user.firstName,
+				user.confirmationCode,
+				user.email
+			)
+		);
+		res.status(200).json(user);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

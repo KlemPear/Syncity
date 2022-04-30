@@ -52,9 +52,32 @@ export const searchUser = (query) => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.SEARCH_USER, payload: response.data });
 };
 
+export const getUserByConfirmationCode =
+	(confirmationCode) => async (dispatch, getState) => {
+		const response = await users.get(`reset-password/${confirmationCode}`);
+		dispatch({
+			type: usersTypes.GET_USER_BY_CONFIRMATION_CODE,
+			payload: response.data,
+		});
+	};
+
 export const inviteNewUser = (body) => async (dispatch, getState) => {
 	const response = await users.post(`invite`, body);
 	dispatch({ type: usersTypes.INVITE_NEW_USER, payload: response.data });
+};
+
+export const userForgotPassword = (body) => async (dispatch, getState) => {
+	const response = await users.post(`forgot-password`, body);
+	console.log(response);
+	if (response.status === 200) {
+		dispatch({
+			type: usersTypes.USER_FOUND,
+			payload: response.data,
+		});
+	} else {
+		console.log(response.status);
+		dispatch({ type: usersTypes.USER_NOT_FOUND });
+	}
 };
 
 export const cleanSearchedUser = () => async (dispatch, getState) => {

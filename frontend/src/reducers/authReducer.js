@@ -6,6 +6,7 @@ const INITIAL_STATE = {
 	user: null,
 	searchedUser: null,
 	invitedUser: null,
+	userNotFound: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -50,6 +51,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
 			};
 		case usersTypes.INVITE_NEW_USER:
 			return { ...state, invitedUser: action.payload };
+		case usersTypes.GET_USER_BY_CONFIRMATION_CODE:
+			return { ...state, user: action.payload, isSignedIn: false };
+		case usersTypes.USER_NOT_FOUND:
+			return { ...state, userNotFound: true };
+		case usersTypes.USER_FOUND:
+			return { ...state, userNotFound: false, user: action.payload };
 		default:
 			return state;
 	}

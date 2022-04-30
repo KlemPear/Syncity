@@ -15,6 +15,8 @@ import ShowBriefApplications from "./Applications/ShowBriefApplications";
 import BuyTokens from "./Payments/BuyTokens";
 import UserStatusPending from "./Users/UserStatusPending";
 import UserStatusVerified from "./Users/UserStatusVerified";
+import ForgotPassword from "./Users/ForgotPassword";
+import ResetPassword from "./Users/ResetPassword";
 
 class App extends React.Component {
 	render() {
@@ -52,7 +54,13 @@ class App extends React.Component {
 						exact
 						component={UserStatusVerified}
 					/>
+					<Route
+						path="/forgot-password/reset/:confirmationCode"
+						exact
+						component={ResetPassword}
+					/>
 					<Route path="/" exact component={LandingPage} />
+					<Route path="/forgot-password" exact component={ForgotPassword} />
 					<Route
 						path="/profile"
 						exact

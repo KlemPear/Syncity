@@ -63,9 +63,7 @@ class UserSearch extends React.Component {
 			return alert("Invite already sent!");
 		} else {
 			this.props.inviteNewUser(body);
-			if (this.props.invitedUser) {
-				return alert("Invitation sent!");
-			}
+			return alert("Invitation sent!");
 		}
 	}
 

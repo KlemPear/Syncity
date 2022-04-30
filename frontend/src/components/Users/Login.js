@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import LoginForm from "./LoginForm";
 import { loginUser } from "../../actions";
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
 	onSubmit = (formValues) => {
@@ -31,6 +32,9 @@ class Login extends React.Component {
 				<h3>Login</h3>
 				{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
 				<LoginForm onSubmit={this.onSubmit} />
+				<div>
+					<Link to="/forgot-password">Forgot Password?</Link>
+				</div>
 			</div>
 		);
 	}
