@@ -30,7 +30,7 @@ class UserStatusVerified extends React.Component {
 					<strong>Thank you for verifying your email address!</strong>
 				</h1>
 				<Link to="/" className="button classic primary">
-					Welcome to akapela!
+					Welcome to NOST!
 				</Link>
 			</div>
 		);

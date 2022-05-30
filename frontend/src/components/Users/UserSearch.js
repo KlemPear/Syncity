@@ -39,7 +39,7 @@ class UserSearch extends React.Component {
 		return (
 			<div>
 				<p>{`There are no user with the email address ${this.state.email} in our database.`}</p>
-				<p>Would you like to invite them to join akapela?</p>
+				<p>Would you like to invite them to join NOST?</p>
 				<div
 					className="button ui blue inverted"
 					onClick={() => this.sendInvite(this.state.email)}

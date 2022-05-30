@@ -9,7 +9,7 @@ const UserStatusPending = () => {
 			<h1>
 				<strong>Thank you for Registering!</strong>
 			</h1>
-			<h3>Please confirm your email address to access akapela.</h3>
+			<h3>Please confirm your email address to access NOST.</h3>
 		</div>
 	);
 };

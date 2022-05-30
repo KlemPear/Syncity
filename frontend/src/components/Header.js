@@ -39,7 +39,7 @@ class Header extends React.Component {
 			return (
 				<div className="ui fixed top stackable menu">
 					<Link to="/" className="item">
-						akapela
+						NOST
 					</Link>
 					<Link to="/list-briefs" className="item">
 						Briefs
@@ -54,7 +54,7 @@ class Header extends React.Component {
 			return (
 				<div className="ui fixed top stackable menu">
 					<Link to="/" className="item">
-						akapela
+						NOST
 					</Link>
 					<Link to="/user-status-pending" className="item">
 						Briefs
@@ -75,7 +75,7 @@ class Header extends React.Component {
 			return (
 				<div className="ui top fixed stackable menu">
 					<Link to="/" className="item">
-						akapela
+						NOST
 					</Link>
 					<Link to="/register" className="item">
 						Sign Up
