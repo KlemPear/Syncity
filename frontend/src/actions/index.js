@@ -80,6 +80,16 @@ export const userForgotPassword = (body) => async (dispatch, getState) => {
 	}
 };
 
+export const updateUserPassword =
+	(confirmationCode, formValues) => async (dispatch, getState) => {
+		const response = await users.post(
+			`/reset-password/${confirmationCode}`,
+			formValues
+		);
+		dispatch({ type: usersTypes.UPDATE_USER_PASSWORD, payload: response.data });
+		history.push("/login");
+	};
+
 export const cleanSearchedUser = () => async (dispatch, getState) => {
 	dispatch({ type: usersTypes.CLEAN_SEARCH_USER });
 };

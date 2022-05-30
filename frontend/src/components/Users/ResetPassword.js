@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ResetPasswordForm from "./ResetPasswordForm";
-import { getUserByConfirmationCode } from "../../actions";
+import { getUserByConfirmationCode, updateUserPassword } from "../../actions";
 
 class ResetPassword extends React.Component {
 	componentDidMount = () => {
@@ -11,8 +11,8 @@ class ResetPassword extends React.Component {
 	};
 
 	onSubmit = (formValues) => {
-		// do something
-		console.log(formValues);
+		// http://localhost:3000/forgot-password/reset/RZulVpO6b8OPwxTdLjvtELGTD
+		this.props.updateUserPassword(this.props.user.confirmationCode, formValues);
 	};
 
 	render() {
@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { getUserByConfirmationCode })(
-	ResetPassword
-);
+export default connect(mapStateToProps, {
+	getUserByConfirmationCode,
+	updateUserPassword,
+})(ResetPassword);

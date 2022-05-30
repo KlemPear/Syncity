@@ -187,6 +187,31 @@ module.exports.onForgotPassword = async (req, res, next) => {
 	}
 };
 
+module.exports.onResetPassword = async (req, res, next) => {
+	try {
+		const { password, passwordValidation } = req.body;
+		const { confirmationCode } = req.params;
+		if (password !== passwordValidation) {
+			return res.status(500).json("passwords don't match.");
+		}
+		const user = await User.findOne({ confirmationCode: confirmationCode });
+		if (!user) {
+			throw { error: "No user with this confirmation code found" };
+		}
+		user.setPassword(req.body.password, async function (err, user) {
+			if (!err) {
+				const updatedUser = await User.findByIdAndUpdate(user._id, user, {
+					returnDocument: "after",
+				});
+				res.status(200).json(updatedUser);
+			}
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
 module.exports.verifyUser = async (req, res) => {
 	try {
 		const user = await User.findOne({

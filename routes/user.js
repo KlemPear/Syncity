@@ -14,6 +14,7 @@ router
 	.post("/search", user.onSearch)
 	.post("/invite", user.onInviteNewUser)
 	.post("/forgot-password", user.onForgotPassword)
+	.post("/reset-password/:confirmationCode", user.onResetPassword)
 	.put("/:id", user.onUpdateUser)
 	.get("/logout", user.logout)
 	.get("/:id", user.onGetUserById)
