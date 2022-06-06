@@ -50,7 +50,7 @@ transporter.verify(function (error, success) {
 
 const sendEmail = (options) => {
 	const mailOptions = {
-		from: options.fromAddress ?? "do-not-reply@akapela.co",
+		from: options.fromAddress ?? "donotreply@nost.audio",
 		to: options.toAddress ?? "",
 		subject: options.subject ?? "",
 		text: options.text ?? "",
