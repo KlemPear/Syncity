@@ -39,7 +39,7 @@ class ShowBriefApplications extends React.Component {
 					<div className="ui hidden divider"></div>
 					<div className="ui hidden divider"></div>
 					<div className="ui hidden divider"></div>
-					<div className="ui cards">
+					<div className="ui divided items">
 						{this.props.applications.map((application) => (
 							<ApplicationCard
 								key={application._id}

@@ -1,6 +1,6 @@
 const baseUrl =
 	process.env.NODE_ENV === "production"
-		? "http://app.akapela.co"
+		? "http://app.nost.audio"
 		: "http://localhost:3000";
 
 module.exports.welcomeEmailOptions = (name, confirmationCode, email) => {

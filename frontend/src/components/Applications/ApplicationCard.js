@@ -10,37 +10,57 @@ class ApplicationCard extends React.Component {
 		}
 	};
 
+	renderApplicationItem(
+		title,
+		authorFirstName,
+		authorLastName,
+		description,
+		logo,
+		link
+	) {
+		return (
+			<div className="item">
+				<div className="image">
+					<img src={logo} />
+				</div>
+				<div className="content">
+					<a className="header">{title}</a>
+					<div className="meta">
+						<span className="cinema">
+							{authorFirstName} {authorLastName}
+						</span>
+					</div>
+					<div className="description">
+						<p>{description}</p>
+					</div>
+					<div className="extra">
+						<div className="ui label basic button red">
+							<i class="big thumbs down outline icon"></i>
+						</div>
+						<div className="ui label basic button green">
+							<i class="big thumbs up outline icon"></i>
+						</div>
+						<a href={link} className="ui right floated primary button">
+							Link to song
+							<i className="right chevron icon"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	render() {
 		if (!this.props.brief) {
 			return <div></div>;
 		} else {
-			return (
-				<div className="card">
-					<div className="content">
-						<img
-							className="right floated mini ui image"
-							alt="logo"
-							src={this.props.brief.logo}
-						/>
-						<div className="header">{this.props.brief.title}</div>
-						<div className="meta">{`Budget: ${moneyFormatter.format(
-							this.props.brief.budget
-						)}`}</div>
-						<div className="meta">{`Due Date: ${dateFormatter(
-							this.props.brief.dueDate
-						)}`}</div>
-						<div className="description">
-							{this.props.brief.description.substring(0, 240)}...
-						</div>
-					</div>
-					<div className="extra content">
-						<div className="description">
-							<a href={this.props.application.link}>
-								{this.props.application.title}
-							</a>
-						</div>
-					</div>
-				</div>
+			return this.renderApplicationItem(
+				this.props.application.title,
+				this.props.application.author.firstName,
+				this.props.application.author.lastName,
+				this.props.brief.description,
+				this.props.brief.logo,
+				this.props.application.link
 			);
 		}
 	}

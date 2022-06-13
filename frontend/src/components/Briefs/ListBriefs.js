@@ -68,14 +68,9 @@ class ListBriefs extends React.Component {
 					</div>
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">
-						{this.props.briefs.map(
-							(brief) => (
-								//this.state.openBriefsToggle &&
-								//brief.author === this.props.userId ? null : (
-								<BriefCard key={brief._id} brief={brief} />
-							)
-							//)
-						)}
+						{this.props.briefs.map((brief) => (
+							<BriefCard key={brief._id} brief={brief} />
+						))}
 					</div>
 				</>
 			);

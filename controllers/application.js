@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 module.exports.onGetAllApplications = async (req, res, next) => {
 	try {
-		const applications = await Application.find(req.query);
+		const applications = await Application.find(req.query).populate("author");
 		return res.status(200).json(applications);
 	} catch (error) {
 		console.log(error);

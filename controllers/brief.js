@@ -21,10 +21,15 @@ module.exports.onGetPrivateBriefs = async (req, res, next) => {
 		if (!connections) {
 			return res.status(200).json({});
 		}
-		const briefs = await Brief.find({
+		const privateBriefs = await Brief.find({
 			private: true,
 			author: { $in: connections },
 		});
+		const ownPrivateBriefs = await Brief.find({
+			private: true,
+			author: req.params.id,
+		});
+		const briefs = privateBriefs.concat(ownPrivateBriefs);
 		return res.status(200).json(briefs);
 	} catch (error) {
 		return res.status(500).json(error);
