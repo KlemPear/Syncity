@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
 import CheckoutForm from "./StripeCheckoutForm";
+import "./StripeCheckoutForm.css";
 import payments from "../../apis/payments";
 
 // Make sure to call loadStripe outside of a component’s render to avoid
@@ -11,15 +12,17 @@ import payments from "../../apis/payments";
 // Don’t submit any personally identifiable information in requests made with this key.
 // Sign in to see your own test API key embedded in code samples.
 const stripePromise = loadStripe(
-	"pk_test_51L7uFQItHoi23Au1PZ3w7fzYv5O69MdB1t7Eeg4qkEui5qBN2IWGvBd4BpT7gA1yKvAO96Vj5rdl8O7bkAQwstVo00thGwU8Ma"
+	"pk_test_51L7tnlAJKEnyYMFYvezpbVOJNUjONpVLlbXHxjtaJjzBSwSphSqJ19Et68ulMIyfGpEhaDYozIk3aFei7ytKMPDS008JEaf2vN"
 );
 
-export default function Stripe(itemId) {
+export default function Stripe(props) {
 	const [clientSecret, setClientSecret] = useState("");
-
-	useEffect(async () => {
-		const response = await payments.post(`/create-payment-intent`, itemId);
-		setClientSecret(response.data.clientSecret);
+	useEffect(() => {
+		async function fetchData() {
+			const response = await payments.post(`/create-payment-intent`, props);
+			setClientSecret(response.data.clientSecret);
+		}
+		fetchData();
 	}, []);
 
 	//Create PaymentIntent as soon as the page loads

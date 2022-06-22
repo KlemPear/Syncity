@@ -9,7 +9,7 @@ export default function CheckoutForm() {
 	const stripe = useStripe();
 	const elements = useElements();
 
-	const [email, setEmail] = useState("");
+	// const [email, setEmail] = useState("");
 	const [message, setMessage] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -59,8 +59,7 @@ export default function CheckoutForm() {
 			elements,
 			confirmParams: {
 				// Make sure to change this to your payment completion page
-				return_url: "http://localhost:3000",
-				receipt_email: email,
+				return_url: "http://localhost:3000/profile",
 			},
 		});
 
@@ -80,13 +79,21 @@ export default function CheckoutForm() {
 
 	return (
 		<form id="payment-form" onSubmit={handleSubmit}>
-			<input
+			<div className="product">
+				<div className="description">
+					{/* <h3>{`${product.tokens} Tokens`}</h3>
+					<h5>{`$${product.amount} USD`}</h5> */}
+					<h3>{`10 Tokens`}</h3>
+					<h5>{`$10 USD`}</h5>
+				</div>
+			</div>
+			{/* <input
 				id="email"
 				type="text"
 				value={email}
 				onChange={(e) => setEmail(e.target.value)}
 				placeholder="Enter email address"
-			/>
+			/> */}
 			<PaymentElement id="payment-element" />
 			<button disabled={isLoading || !stripe || !elements} id="submit">
 				<span id="button-text">
