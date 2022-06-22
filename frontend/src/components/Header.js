@@ -38,9 +38,9 @@ class Header extends React.Component {
 		if (this.props.isSignedIn && !this.props.isUserPending) {
 			return (
 				<div className="ui fixed top stackable menu">
-					<Link to="/" className="item">
+					<a href="https://www.nost.audio/" className="item">
 						NOST
-					</Link>
+					</a>
 					<Link to="/list-briefs" className="item">
 						Briefs
 					</Link>
@@ -53,9 +53,9 @@ class Header extends React.Component {
 		} else if (this.props.isUserPending) {
 			return (
 				<div className="ui fixed top stackable menu">
-					<Link to="/" className="item">
+					<a href="https://www.nost.audio/" className="item">
 						NOST
-					</Link>
+					</a>
 					<Link to="/user-status-pending" className="item">
 						Briefs
 					</Link>
@@ -74,9 +74,9 @@ class Header extends React.Component {
 		} else {
 			return (
 				<div className="ui top fixed stackable menu">
-					<Link to="/" className="item">
+					<a href="https://www.nost.audio/" className="item">
 						NOST
-					</Link>
+					</a>
 					<Link to="/register" className="item">
 						Sign Up
 					</Link>
