@@ -28,7 +28,7 @@ mongoDbSetUp.once("open", () => {
 });
 
 const port = process.env.PORT || "5000";
-let frontendURL = ["http://localhost:3000"];
+let frontendURL = ["http://localhost:3000", "https://stripe.com"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
 	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2];
 }
@@ -44,7 +44,17 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(
+	express.json({
+		// need this to use stripe webhook
+		verify: function (req, res, buf) {
+			var url = req.originalUrl;
+			if (url.startsWith("/payments/webhook")) {
+				req.rawBody = buf.toString();
+			}
+		},
+	})
+);
 // less easy for user to see that we are using express, less hacking
 app.disable("x-powered-by");
 
