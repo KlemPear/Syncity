@@ -13,6 +13,8 @@ import EditBrief from "./Briefs/EditBrief";
 import ListApplications from "./Applications/ListApplications";
 import ShowBriefApplications from "./Applications/ShowBriefApplications";
 import BuyTokens from "./Payments/BuyTokens";
+import PaymentSucceded from "./Payments/PaymentSucceded";
+import PaymentCanceled from "./Payments/PaymentCanceled";
 import UserStatusPending from "./Users/UserStatusPending";
 import UserStatusVerified from "./Users/UserStatusVerified";
 import ForgotPassword from "./Users/ForgotPassword";
@@ -48,6 +50,16 @@ class App extends React.Component {
 						path="/login"
 						exact
 						component={this.props.isSignedIn ? LandingPage : Login}
+					/>
+					<Route
+						path="/payment-success"
+						exact
+						component={this.props.isSignedIn ? PaymentSucceded : Login}
+					/>
+					<Route
+						path="/payment-canceled"
+						exact
+						component={this.props.isSignedIn ? PaymentCanceled : Login}
 					/>
 					<Route
 						path="/register/confirm/:confirmationCode"

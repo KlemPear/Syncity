@@ -1,14 +1,17 @@
 const paymentsHelper = require("../utils/paymentsHelper");
 
-const stripe = require("stripe")(
-	"sk_test_51L7tnlAJKEnyYMFYvjDVXUFBxF2ZubAOwZLoFdKxS8yJhPawIVGqQMtWa02fw87T40ACNpWMansZCrF2M7XZsyaF00tVXYflEp"
-);
+const StripeApiKey = process.env.NODE_ENV === "production"
+? process.env.STRIPE_API_KEY
+: process.env.STRIPE_TEST_API_KEY;
+
+const stripe = require("stripe")(StripeApiKey);
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-const endpointSecret =
-	"whsec_1eda0809488a8d16fa62249513d1a8325a2405054831a826c607599a72e19c51";
+const endpointSecret = process.env.NODE_ENV === "production"
+? process.env.STRIPE_WEBHOOK_ENDPOINT
+: process.env.STRIPE_TEST_WEBHOOK_ENDPOINT;
 
-const itemToProductId = {
+const frontendItemToProductId = {
 	//price is in cents.
 	smallPitchTokens: "price_1LDKVdAJKEnyYMFYYjAKemmx",
 	mediumPitchTokens: "price_1LDNRVAJKEnyYMFYetuicXSg",
@@ -62,13 +65,13 @@ module.exports.onCreateCheckoutSession = async (req, res, next) => {
 			line_items: [
 				{
 					// Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-					price: itemToProductId[itemId],
+					price: frontendItemToProductId[itemId],
 					quantity: 1,
 				},
 			],
 			mode: "payment",
-			success_url:`${baseUrl}/buy-tokens`, // `http://localhost:5000/payments/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${baseUrl}/buy-tokens`,
+			success_url: `${baseUrl}/payment-success`, // `http://localhost:5000/payments/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${baseUrl}/paymentcanceld`,
 		});
 
 		res.status(200).json(session.url);

@@ -30,7 +30,7 @@ mongoDbSetUp.once("open", () => {
 const port = process.env.PORT || "5000";
 let frontendURL = ["http://localhost:3000", "https://stripe.com"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
-	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2];
+	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2, "https://stripe.com"];
 }
 
 app.set("port", port);
