@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import payments from "../../apis/payments";
 
-const onCheckoutSubmit = async (event, itemId) => {
+const onCheckoutSubmit = async (event, itemId, userId, subscription) => {
 	event.preventDefault();
-	const response = await payments.post(`/create-checkout-session`, { itemId });
+	const response = await payments.post(`/create-checkout-session`, {
+		itemId,
+		userId,
+		subscription,
+	});
 	const redirectUrl = response.data;
 	window.location.href = redirectUrl;
 };
 
-const ProductDisplay = ({ itemId, name, amount }) => (
+const ProductDisplay = ({ itemId, name, amount, userId, subscription }) => (
 	<section>
 		<div className="product">
 			<img
@@ -16,11 +20,15 @@ const ProductDisplay = ({ itemId, name, amount }) => (
 				alt="The cover of Stubborn Attachments"
 			/>
 			<div className="description">
-				<h3>{`${name} Tokens`}</h3>
-				<h5>{`$${amount}.00 USD`}</h5>
+				<h3>{`${name}`}</h3>
+				<h5>{`$${amount} USD`}</h5>
 			</div>
 		</div>
-		<form onSubmit={(event) => onCheckoutSubmit(event, itemId)}>
+		<form
+			onSubmit={(event) =>
+				onCheckoutSubmit(event, itemId, userId, subscription)
+			}
+		>
 			<button type="submit" className="btn primary">
 				Checkout
 			</button>
@@ -34,7 +42,13 @@ const Message = ({ message }) => (
 	</section>
 );
 
-export default function SimpleStripe({ itemId, name, amount }) {
+export default function SimpleStripe({
+	itemId,
+	name,
+	amount,
+	userId,
+	subscription,
+}) {
 	const [message, setMessage] = useState("");
 	useEffect(() => {
 		// Check to see if this is a redirect back from Checkout
@@ -54,6 +68,12 @@ export default function SimpleStripe({ itemId, name, amount }) {
 	return message ? (
 		<Message message={message} />
 	) : (
-		<ProductDisplay itemId={itemId} name={name} amount={amount} />
+		<ProductDisplay
+			itemId={itemId}
+			name={name}
+			amount={amount}
+			userId={userId}
+			subscription={subscription}
+		/>
 	);
 }

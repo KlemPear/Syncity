@@ -7,6 +7,7 @@ const router = express.Router();
 router
 	.post("/create-payment-intent", payments.onCreatePaymentIntent)
 	.post("/create-checkout-session", payments.onCreateCheckoutSession)
+	.post("/create-portal-session", payments.onCreatePortalSession)
 	.post("/webhook", payments.onWebhookEvent)
 	.get("/success", payments.onPaymentSuccess);
 

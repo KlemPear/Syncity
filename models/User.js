@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 		},
+		stripeCustomerId: String,
 	},
 	{
 		timestamps: true,

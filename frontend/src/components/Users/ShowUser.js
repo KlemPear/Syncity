@@ -8,6 +8,7 @@ import {
 } from "../../actions";
 import Modal from "../Modal";
 import UserSearch from "./UserSearch";
+import payments from "../../apis/payments";
 
 class ShowUser extends React.Component {
 	constructor(props) {
@@ -39,6 +40,15 @@ class ShowUser extends React.Component {
 		updatedSearchedUser.connections.push(updatedUser._id);
 		this.props.editUserNoPayload(updatedSearchedUser);
 		this.onDismissModal();
+	};
+
+	onStripeBillingSubmit = async (event, customerId) => {
+		event.preventDefault();
+		const response = await payments.post(`/create-portal-session`, {
+			customerId,
+		});
+		const redirectUrl = response.data;
+		window.location.href = redirectUrl;
 	};
 
 	renderModalContent() {
@@ -82,6 +92,22 @@ class ShowUser extends React.Component {
 					>
 						Add 10 <i className="gem fitted circular inverted outline icon" />
 					</button>
+					<div>
+						{this.props.currentUser.stripeCustomerId ? (
+							<form
+								onSubmit={(event) =>
+									this.onStripeBillingSubmit(
+										event,
+										this.props.currentUser.stripeCustomerId
+									)
+								}
+							>
+								<button id="checkout-and-portal-button" type="submit">
+									Manage your billing information
+								</button>
+							</form>
+						) : null}
+					</div>
 					<hr />
 					<div>
 						<h2>Connections</h2>
