@@ -18,6 +18,7 @@ const userRouter = require("./routes/user");
 const briefRouter = require("./routes/brief");
 const applicationRouter = require("./routes/application");
 const paymentsRouter = require("./routes/payments");
+const trackRouter = require("./routes/track");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
 const mongoDbSetUp = require("./config/mongo");
@@ -30,7 +31,11 @@ mongoDbSetUp.once("open", () => {
 const port = process.env.PORT || "5000";
 let frontendURL = ["http://localhost:3000", "https://stripe.com"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
-	frontendURL = [process.env.FRONTEND_URL_1, process.env.FRONTEND_URL_2, "https://stripe.com"];
+	frontendURL = [
+		process.env.FRONTEND_URL_1,
+		process.env.FRONTEND_URL_2,
+		"https://stripe.com",
+	];
 }
 
 app.set("port", port);
@@ -110,6 +115,7 @@ app.use("/users", userRouter);
 app.use("/briefs", briefRouter);
 app.use("/applications", applicationRouter);
 app.use("/payments", paymentsRouter);
+app.use("/tracks", trackRouter);
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production

@@ -45,7 +45,10 @@ class Header extends React.Component {
 						Briefs
 					</Link>
 					<Link to="/list-applications" className="item">
-						{`Your Applications`}
+						{`My Applications`}
+					</Link>
+					<Link to="/catalog" className="item">
+						Music Catalog
 					</Link>
 					{this.renderUserDrowndownMenu()}
 				</div>

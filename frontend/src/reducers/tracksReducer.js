@@ -1,30 +1,30 @@
-import { applicationsTypes } from "../actions/types";
+import { tracksTypes } from "../actions/types";
 import _ from "lodash";
 
-const applicationsReducer = (state = {}, action) => {
+const tracksReducer = (state = {}, action) => {
 	switch (action.type) {
-		case applicationsTypes.FETCH_APPLICATIONS:
+		case tracksTypes.FETCH_TRACKS:
 			return { ..._.mapKeys(action.payload, "_id") };
-		case applicationsTypes.CREATE_APPLICATION:
+		case tracksTypes.CREATE_TRACK:
 			return {
 				...state,
 				[action.payload._id]: action.payload,
 			};
-		case applicationsTypes.FETCH_APPLICATION:
+		case tracksTypes.FETCH_TRACK:
 			return {
 				...state,
 				[action.payload._id]: action.payload,
 			};
-		case applicationsTypes.EDIT_APPLICATION:
+		case tracksTypes.EDIT_TRACK:
 			return {
 				...state,
 				[action.payload._id]: action.payload,
 			};
-		case applicationsTypes.DELETE_APPLICATION:
+		case tracksTypes.DELETE_TRACK:
 			return _.omit(state, action.payload._id);
 		default:
 			return state;
 	}
 };
 
-export default applicationsReducer;
+export default tracksReducer;

@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const applicationSchema = new mongoose.Schema({
-	title: String,
-	link: String,
-	masterContact: String,
-	publisherContact: String,
-	artistContact: String,
+	tracks: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: "Track",
+		},
+	],
 	author: {
 		type: Schema.Types.ObjectId,
 		ref: "User",

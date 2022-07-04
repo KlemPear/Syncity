@@ -19,6 +19,9 @@ import UserStatusPending from "./Users/UserStatusPending";
 import UserStatusVerified from "./Users/UserStatusVerified";
 import ForgotPassword from "./Users/ForgotPassword";
 import ResetPassword from "./Users/ResetPassword";
+import CreateTrack from "./Catalog/CreateTrack";
+import ListTracks from "./Catalog/ListTracks";
+import EditTrack from "./Catalog/EditTrack";
 
 class App extends React.Component {
 	render() {
@@ -114,6 +117,21 @@ class App extends React.Component {
 						path="/buy-tokens"
 						exact
 						component={this.props.isSignedIn ? BuyTokens : LandingPage}
+					/>
+					<Route
+						path="/catalog"
+						exact
+						component={this.props.isSignedIn ? ListTracks : LandingPage}
+					/>
+					<Route
+						path="/catalog/:trackId"
+						exact
+						component={this.props.isSignedIn ? EditTrack : LandingPage}
+					/>
+					<Route
+						path="/create-track"
+						exact
+						component={this.props.isSignedIn ? CreateTrack : LandingPage}
 					/>
 					<Redirect to="/" />
 				</Switch>

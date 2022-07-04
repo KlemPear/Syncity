@@ -1,8 +1,14 @@
-import { usersTypes, briefsTypes, applicationsTypes } from "./types";
+import {
+	usersTypes,
+	briefsTypes,
+	applicationsTypes,
+	tracksTypes,
+} from "./types";
 import history from "../util/history";
 import users from "../apis/users";
 import briefs from "../apis/briefs";
 import applications from "../apis/applications";
+import tracks from "../apis/tracks";
 
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
@@ -175,4 +181,41 @@ export const createApplication = (body) => async (dispatch, getState) => {
 	history.push("/list-briefs");
 };
 
+//#endregion
+
+//#region Tracks
+
+export const fetchTracks = (userId) => async (dispatch, getState) => {
+	const response = await tracks.get(`/`, { params: { userId } });
+	dispatch({ type: tracksTypes.FETCH_TRACKS, payload: response.data });
+};
+
+export const createTrack = (body) => async (dispatch, getState) => {
+	const response = await tracks.post(`/`, body);
+	dispatch({ type: tracksTypes.CREATE_TRACK, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the catalog page
+	history.push("/catalog");
+};
+
+export const fetchTrack = (trackId) => async (dispatch, getState) => {
+	const response = await tracks.get(`/${trackId}`);
+	dispatch({ type: tracksTypes.FETCH_TRACK, payload: response.data });
+};
+
+export const editTrack = (body) => async (dispatch, getState) => {
+	const response = await tracks.post(`/${body._id}`, body);
+	dispatch({ type: tracksTypes.EDIT_TRACK, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the catalog page
+	history.push("/catalog");
+};
+
+export const deleteTrack = (id) => async (dispatch, getState) => {
+	const response = await tracks.delete(`/${id}`);
+	dispatch({ type: briefsTypes.DELETE_TRACK, payload: response.data });
+	// do some programmatic navigation to get the user
+	// back to the main page
+	history.push("/catalog");
+};
 //#endregion
