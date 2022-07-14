@@ -26,13 +26,13 @@ class ListTracks extends React.Component {
 					</div>
 					<div className="ui divided items">
 						{this.props.tracks.map((track) => (
-							<div className="item">
+							<div key={track._id} className="item">
 								<div className="middle aligned content">
 									<div className="header">
 										<a href={track.link}>{track.title}</a> -{" "}
-										<span class="cinema">{track.artist}</span>
+										<span className="cinema">{track.artist}</span>
 									</div>
-									<div class="meta">
+									<div className="meta">
 										<p>
 											Master: {track.masterContact} - Publisher:{" "}
 											{track.publisherContact}

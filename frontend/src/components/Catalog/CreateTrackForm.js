@@ -7,6 +7,7 @@ class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
 		if (this.props.editTrack) {
 			this.props.initialize(this.props.editTrack);
+			console.log(this.props.editTrack);
 		}
 	};
 
@@ -20,7 +21,7 @@ class CreateTrackForm extends React.Component {
 		}
 	}
 
-	renderInput = ({ input, label, meta, type, value }) => {
+	renderInput = ({ input, label, meta, type, placeholder, value }) => {
 		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
 		return (
 			<div className={className}>
@@ -29,7 +30,7 @@ class CreateTrackForm extends React.Component {
 					type={type}
 					{...input}
 					autoComplete="off"
-					placeholder={value}
+					placeholder={placeholder}
 					value={value}
 				/>
 				{this.renderError(meta)}
@@ -43,13 +44,10 @@ class CreateTrackForm extends React.Component {
 		this.props.onSubmit(this.props.formValues);
 	};
 
-	render() {
-		return (
-			<div>
-				<form
-					onSubmit={this.props.handleSubmit(this.onSubmit)}
-					className="ui form error"
-				>
+	renderFormFields = () => {
+		if (this.props.editTrack) {
+			return (
+				<>
 					<Field
 						name="title"
 						component={this.renderInput}
@@ -57,6 +55,50 @@ class CreateTrackForm extends React.Component {
 						defaultValue={this.props.editTrack.title}
 						value={this.props.editTrack.title}
 						placeholder={this.props.editTrack.title}
+					/>
+					<Field
+						name="artist"
+						component={this.renderInput}
+						label="Artist"
+						defaultValue={this.props.editTrack.artist}
+						value={this.props.editTrack.artist}
+						placeholder={this.props.editTrack.artist}
+					/>
+					<Field
+						name="link"
+						component={this.renderInput}
+						label="Link to media"
+						defaultValue={this.props.editTrack.link}
+						value={this.props.editTrack.link}
+						placeholder={this.props.editTrack.link}
+					/>
+					<Field
+						name="masterContact"
+						component={this.renderInput}
+						label="Master owner email"
+						type="email"
+						defaultValue={this.props.editTrack.masterContact}
+						value={this.props.editTrack.masterContact}
+						placeholder={this.props.editTrack.masterContact}
+					/>
+					<Field
+						name="publisherContact"
+						component={this.renderInput}
+						label="Publisher email"
+						type="email"
+						defaultValue={this.props.editTrack.publisherContact}
+						value={this.props.editTrack.publisherContact}
+						placeholder={this.props.editTrack.publisherContact}
+					/>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<Field
+						name="title"
+						component={this.renderInput}
+						label="Track Title"
 					/>
 					<Field name="artist" component={this.renderInput} label="Artist" />
 					<Field
@@ -76,6 +118,19 @@ class CreateTrackForm extends React.Component {
 						label="Publisher email"
 						type="email"
 					/>
+				</>
+			);
+		}
+	};
+
+	render() {
+		return (
+			<div>
+				<form
+					onSubmit={this.props.handleSubmit(this.onSubmit)}
+					className="ui form error"
+				>
+					{this.renderFormFields()}
 					<button className="ui button primary">Submit</button>
 					<Link className="ui button" to="/catalog">
 						Cancel
@@ -110,7 +165,6 @@ const validate = (formValues) => {
 const mapStateToProps = (state, ownProps) => {
 	return {
 		formValues: state.form?.CreateTrackForm?.values,
-		initialValues: ownProps.editTrack,
 		user: state.auth?.user,
 	};
 };
