@@ -4,6 +4,7 @@ import BriefApplicationForm from "./BriefApplicationForm";
 import { createApplication, addTokensToUser } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
+import TrackSelector from "../Catalog/TrackSelector";
 
 class BriefApplication extends React.Component {
 	constructor(props) {
@@ -44,10 +45,15 @@ class BriefApplication extends React.Component {
 			<div>
 				<h3>Submit an application</h3>
 				<p>You can submit up to 3 tracks.</p>
-				<BriefApplicationForm
-					onSubmit={this.onSubmit}
-					onNotEnoughTokens={this.onNotEnoughTokens}
-				/>
+				<p>Select tracks from your catalog: </p>
+				<TrackSelector/>
+				<div>
+					<p>Submit new tracks directly</p>
+					<BriefApplicationForm
+						onSubmit={this.onSubmit}
+						onNotEnoughTokens={this.onNotEnoughTokens}
+					/>
+				</div>
 				{this.state.notEnoughTokens ? (
 					<Modal
 						title={"Not Enough Tokens"}

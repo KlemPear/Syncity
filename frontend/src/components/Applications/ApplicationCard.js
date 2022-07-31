@@ -38,7 +38,7 @@ class ApplicationCard extends React.Component {
 							<i class="big thumbs down outline icon"></i>
 						</div>
 						<div className="ui label basic button green">
-							<i class="big thumbs up outline icon"></i>
+							<i className="big thumbs up outline icon"></i>
 						</div>
 						<a href={link} className="ui right floated primary button">
 							Link to song
