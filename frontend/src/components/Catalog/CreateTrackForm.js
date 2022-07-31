@@ -7,7 +7,6 @@ class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
 		if (this.props.editTrack) {
 			this.props.initialize(this.props.editTrack);
-			console.log(this.props.editTrack);
 		}
 	};
 

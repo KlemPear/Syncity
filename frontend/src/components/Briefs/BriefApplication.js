@@ -43,6 +43,7 @@ class BriefApplication extends React.Component {
 		return (
 			<div>
 				<h3>Submit an application</h3>
+				<p>You can submit up to 3 tracks.</p>
 				<BriefApplicationForm
 					onSubmit={this.onSubmit}
 					onNotEnoughTokens={this.onNotEnoughTokens}

@@ -204,7 +204,7 @@ export const fetchTrack = (trackId) => async (dispatch, getState) => {
 };
 
 export const editTrack = (body) => async (dispatch, getState) => {
-	const response = await tracks.post(`/${body._id}`, body);
+	const response = await tracks.put(`/${body._id}`, body);
 	dispatch({ type: tracksTypes.EDIT_TRACK, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the catalog page
