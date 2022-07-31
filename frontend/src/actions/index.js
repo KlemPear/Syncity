@@ -190,13 +190,17 @@ export const fetchTracks = (userId) => async (dispatch, getState) => {
 	dispatch({ type: tracksTypes.FETCH_TRACKS, payload: response.data });
 };
 
-export const createTrack = (body) => async (dispatch, getState) => {
-	const response = await tracks.post(`/`, body);
-	dispatch({ type: tracksTypes.CREATE_TRACK, payload: response.data });
-	// do some programmatic navigation to get the user
-	// back to the catalog page
-	history.push("/catalog");
-};
+export const createTrack =
+	(body, pushToCatalog) =>
+	async (dispatch, getState) => {
+		const response = await tracks.post(`/`, body);
+		dispatch({ type: tracksTypes.CREATE_TRACK, payload: response.data });
+		// do some programmatic navigation to get the user
+		// back to the catalog page
+		if (pushToCatalog) {
+			history.push("/catalog");
+		}
+	};
 
 export const fetchTrack = (trackId) => async (dispatch, getState) => {
 	const response = await tracks.get(`/${trackId}`);

@@ -10,6 +10,14 @@ class ListTracks extends React.Component {
 		this.props.fetchTracks(this.props.userId);
 	}
 
+	renderTrackEditButton = (track) => {
+		return (
+			<Link to={`/catalog/${track._id}`} className="ui right floated button">
+				Edit
+			</Link>
+		);
+	};
+
 	render() {
 		if (!this.props.tracks) {
 			return (
@@ -27,7 +35,12 @@ class ListTracks extends React.Component {
 					</div>
 					<div className="ui divided items">
 						{this.props.tracks.map((track) => (
-							<ShowTrack track={track} />
+							<div key={track._id} className="item">
+								<ShowTrack
+									track={track}
+									button={this.renderTrackEditButton(track)}
+								/>
+							</div>
 						))}
 					</div>
 				</>

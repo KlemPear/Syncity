@@ -5,14 +5,19 @@ import { createApplication, addTokensToUser } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
+import CreateTrack from "../Catalog/CreateTrack";
 
 class BriefApplication extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { notEnoughTokens: false };
+		this.state = { notEnoughTokens: false, addNewTrackToCatalog: false };
 	}
 	onNotEnoughTokens = () => {
 		this.setState({ notEnoughTokens: true });
+	};
+
+	onAddNewTrackToggle = () => {
+		this.setState({ addNewTrackToCatalog: !this.state.addNewTrackToCatalog });
 	};
 
 	renderModalContent() {
@@ -30,7 +35,7 @@ class BriefApplication extends React.Component {
 			</React.Fragment>
 		);
 	}
-
+  // TODO: Modify this so that it takes an array of tracks to submit
 	onSubmit = (formValues) => {
 		this.props.addTokensToUser(this.props.userId, -1);
 		this.props.createApplication({
@@ -46,13 +51,19 @@ class BriefApplication extends React.Component {
 				<h3>Submit an application</h3>
 				<p>You can submit up to 3 tracks.</p>
 				<p>Select tracks from your catalog: </p>
-				<TrackSelector/>
+				<TrackSelector />
 				<div>
-					<p>Submit new tracks directly</p>
-					<BriefApplicationForm
-						onSubmit={this.onSubmit}
-						onNotEnoughTokens={this.onNotEnoughTokens}
-					/>
+					<button
+						className="ui button"
+						onClick={() => this.onAddNewTrackToggle()}
+					>
+						{!this.state.addNewTrackToCatalog
+							? "Add a new track to your catalog"
+							: "Hide new track form"}
+					</button>
+					{this.state.addNewTrackToCatalog ? (
+						<CreateTrack pushToCalalog={false} />
+					) : null}
 				</div>
 				{this.state.notEnoughTokens ? (
 					<Modal
@@ -62,6 +73,14 @@ class BriefApplication extends React.Component {
 						onDismiss={() => this.setState({ notEnoughTokens: false })}
 					/>
 				) : null}
+				<div>
+					<button
+						className="ui button primary green"
+						onClick={() => this.onSubmit()}
+					>
+						Submit
+					</button>
+				</div>
 			</div>
 		);
 	}
