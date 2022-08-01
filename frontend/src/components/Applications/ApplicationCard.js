@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchBrief } from "../../actions";
-import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
 
 class ApplicationCard extends React.Component {
 	componentDidMount = () => {
@@ -21,10 +20,10 @@ class ApplicationCard extends React.Component {
 		return (
 			<div className="item">
 				<div className="image">
-					<img src={logo} />
+					<img src={logo} alt="" />
 				</div>
 				<div className="content">
-					<a className="header">{title}</a>
+					<div className="header">{title}</div>
 					<div className="meta">
 						<span className="cinema">
 							{authorFirstName} {authorLastName}

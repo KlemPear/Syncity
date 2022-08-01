@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import BriefApplicationForm from "./BriefApplicationForm";
 import { createApplication, addTokensToUser } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
