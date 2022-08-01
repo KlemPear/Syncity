@@ -14,6 +14,10 @@ class TrackSelector extends React.Component {
 		this.props.fetchTracks({ user: this.props.userId });
 	};
 
+	componentDidUpdate = () => {
+		this.relaySelectedTracks();
+	};
+
 	handleCheckboxToggle = (track) => {
 		if (!this.state.selectedTracks.includes(track._id)) {
 			if (this.state.selectedTracks.length >= 3) {
@@ -58,6 +62,10 @@ class TrackSelector extends React.Component {
 		this.setState({ tooManyTracksSelected: false });
 		window.location.reload(false);
 	}
+
+	relaySelectedTracks = () => {
+		this.props.getSelectedTracks(this.state.selectedTracks);
+	};
 
 	render() {
 		if (!this.props.tracks) {

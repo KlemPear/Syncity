@@ -29,6 +29,17 @@ class ListTracks extends React.Component {
 			return (
 				<>
 					<div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
+						<div className="ui hidden divider"></div>
 						<Link className="ui blue button" to={`/create-track`}>
 							Add a track to your catalog
 						</Link>

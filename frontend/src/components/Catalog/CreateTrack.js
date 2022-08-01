@@ -5,17 +5,19 @@ import { createTrack } from "../../actions";
 
 class CreateTrack extends React.Component {
 	onSubmit = (formValues) => {
-		if (!this.props.pushToCatalog) {
+		if (this.props.pushToCatalog == null) {
 			this.props.createTrack(
 				{ ...formValues, author: `${this.props.userId}` },
 				true
 			);
+		} else {
+			this.props.createTrack(
+				{ ...formValues, author: `${this.props.userId}` },
+				this.props.pushToCatalog
+			);
 		}
-		this.props.createTrack(
-			{ ...formValues, author: `${this.props.userId}` },
-			this.props.pushToCatalog
-		);
 	};
+
 	render() {
 		return (
 			<div>

@@ -10,7 +10,11 @@ import CreateTrack from "../Catalog/CreateTrack";
 class BriefApplication extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { notEnoughTokens: false, addNewTrackToCatalog: false };
+		this.state = {
+			notEnoughTokens: false,
+			addNewTrackToCatalog: false,
+			selectedTracks: [],
+		};
 	}
 	onNotEnoughTokens = () => {
 		this.setState({ notEnoughTokens: true });
@@ -35,14 +39,19 @@ class BriefApplication extends React.Component {
 			</React.Fragment>
 		);
 	}
-  // TODO: Modify this so that it takes an array of tracks to submit
-	onSubmit = (formValues) => {
+	// TODO: Modify this so that it takes an array of tracks to submit
+	onSubmit = () => {
 		this.props.addTokensToUser(this.props.userId, -1);
-		this.props.createApplication({
-			...formValues,
+		const applicationValues = {
+			tracks: this.state.selectedTracks,
 			author: `${this.props.userId}`,
 			brief: `${this.props.briefId}`,
-		});
+		};
+		this.props.createApplication(applicationValues);
+	};
+
+	selectedTracks = (selectedTracks) => {
+		this.setState({ selectedTracks: selectedTracks });
 	};
 
 	render() {
@@ -51,7 +60,7 @@ class BriefApplication extends React.Component {
 				<h3>Submit an application</h3>
 				<p>You can submit up to 3 tracks.</p>
 				<p>Select tracks from your catalog: </p>
-				<TrackSelector />
+				<TrackSelector getSelectedTracks={this.selectedTracks} />
 				<div>
 					<button
 						className="ui button"
@@ -62,7 +71,7 @@ class BriefApplication extends React.Component {
 							: "Hide new track form"}
 					</button>
 					{this.state.addNewTrackToCatalog ? (
-						<CreateTrack pushToCalalog={false} />
+						<CreateTrack pushToCatalog={false} />
 					) : null}
 				</div>
 				{this.state.notEnoughTokens ? (

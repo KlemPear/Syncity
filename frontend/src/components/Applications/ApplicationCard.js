@@ -35,7 +35,7 @@ class ApplicationCard extends React.Component {
 					</div>
 					<div className="extra">
 						<div className="ui label basic button red">
-							<i class="big thumbs down outline icon"></i>
+							<i className="big thumbs down outline icon"></i>
 						</div>
 						<div className="ui label basic button green">
 							<i className="big thumbs up outline icon"></i>

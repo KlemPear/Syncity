@@ -217,7 +217,7 @@ export const editTrack = (body) => async (dispatch, getState) => {
 
 export const deleteTrack = (id) => async (dispatch, getState) => {
 	const response = await tracks.delete(`/${id}`);
-	dispatch({ type: briefsTypes.DELETE_TRACK, payload: response.data });
+	dispatch({ type: tracksTypes.DELETE_TRACK, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
 	history.push("/catalog");
