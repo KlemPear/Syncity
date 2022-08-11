@@ -4,54 +4,54 @@ import { Link } from "react-router-dom";
 import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
 
 class BriefCard extends React.Component {
-	render() {
+	renderBrief(brief) {
 		return (
 			<div className="card">
 				<div className="content">
 					<img
 						className="right floated mini ui image"
 						alt="logo"
-						src={this.props.brief.logo}
+						src={brief.logo}
 					/>
-					<div className="header">{this.props.brief.title}</div>
+					<div className="header">{brief.title}</div>
 					<div className="meta">{`Budget: ${moneyFormatter.format(
-						this.props.brief.budget
+						brief.budget
 					)}`}</div>
 					<div className="meta">{`Due Date: ${dateFormatter(
-						this.props.brief.dueDate
+						brief.dueDate
 					)}`}</div>
-					{this.props.brief.numberOfApplicationsWanted > 0 ? (
-						<div className="meta">{`Number of applications submitted: ${this.props.brief.numberOfApplicationsSubmitted} of ${this.props.brief.numberOfApplicationsWanted}`}</div>
+					{brief.numberOfApplicationsWanted > 0 ? (
+						<div className="meta">{`Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`}</div>
 					) : null}
 					<div className="description">
-						{this.props.brief.description.substring(0, 240)}...
+						{brief.description?.substring(0, 240)}...
 					</div>
 				</div>
 				<div className="extra content">
-					{this.props.brief.author === this.props.userId ? (
+					{brief.author === this.props.userId ? (
 						<>
 							<Link
 								className="ui basic blue button"
-								to={`show-brief/edit/${this.props.brief._id}`}
+								to={`show-brief/edit/${brief._id}`}
 							>
 								Edit
 							</Link>
 							<Link
 								className="ui basic blue button"
-								to={`show-brief/${this.props.brief._id}/applications`}
+								to={`show-brief/${brief._id}/applications`}
 							>
 								View Applications
 							</Link>
 						</>
 					) : (
 						<>
-							{this.props.brief.numberOfApplicationsWanted ===
-							this.props.brief.numberOfApplicationsSubmitted ? (
+							{brief.numberOfApplicationsWanted ===
+							brief.numberOfApplicationsSubmitted ? (
 								<button className="ui basic red button">Closed</button>
 							) : (
 								<Link
 									className="ui basic green button"
-									to={`show-brief/${this.props.brief._id}`}
+									to={`show-brief/${brief._id}`}
 								>
 									Apply
 								</Link>
@@ -61,6 +61,53 @@ class BriefCard extends React.Component {
 				</div>
 			</div>
 		);
+	}
+
+	renderApplication(application) {
+		const brief = application.brief;
+		return (
+			<div className="card">
+				<div className="content">
+					<img
+						className="right floated mini ui image"
+						alt="logo"
+						src={brief.logo}
+					/>
+					<div className="header">{brief.title}</div>
+					<div className="meta">{`Budget: ${moneyFormatter.format(
+						brief.budget
+					)}`}</div>
+					<div className="meta">{`Due Date: ${dateFormatter(
+						brief.dueDate
+					)}`}</div>
+					<div className="description">
+						{brief.description?.substring(0, 240)}...
+					</div>
+				</div>
+				<div className="extra content">
+					<h4>Tracks that you submitted for this brief:</h4>
+					<ul>
+						{application.tracks.length != 0
+							? application.tracks.map((track) => (
+									<li key={track._id}>
+										<a href={track.link}>
+											{track.title} - {track.artist}
+										</a>
+									</li>
+							  ))
+							: null}
+					</ul>
+				</div>
+			</div>
+		);
+	}
+
+	render() {
+		if (!this.props.application) {
+			return this.renderBrief(this.props.brief);
+		} else {
+			return this.renderApplication(this.props.application);
+		}
 	}
 }
 

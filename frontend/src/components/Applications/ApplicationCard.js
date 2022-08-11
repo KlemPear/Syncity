@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchBrief } from "../../actions";
 
+
 class ApplicationCard extends React.Component {
 	componentDidMount = () => {
 		if (!this.props.brief) {
@@ -61,6 +62,11 @@ class ApplicationCard extends React.Component {
 				this.props.brief.logo,
 				this.props.application.link
 			);
+			// return (
+			// 	<div className="ui cards">
+			// 		<BriefCard key={this.props.brief._id} brief={this.props.brief} />
+			// 	</div>
+			// );
 		}
 	}
 }

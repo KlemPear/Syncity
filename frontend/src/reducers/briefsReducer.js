@@ -13,6 +13,14 @@ const briefsReducer = (state = {}, action) => {
 				[action.payload._id]: action.payload,
 			};
 		case briefsTypes.FETCH_BRIEF:
+			// if (state[action.payload._id]) {
+			// 	return state;
+			// } else {
+			// 	return {
+			// 		...state,
+			// 		[action.payload._id]: action.payload,
+			// 	};
+			// }
 			return {
 				...state,
 				[action.payload._id]: action.payload,

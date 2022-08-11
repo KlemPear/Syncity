@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchApplications } from "../../actions";
-import ApplicationCard from "./ApplicationCard";
+import BriefCard from "../Briefs/BriefCard";
 
 class ListApplications extends React.Component {
 	componentDidMount = () => {
+		// fetch applications of the user
 		this.props.fetchApplications({ author: this.props.userId });
 	};
 
@@ -26,10 +27,7 @@ class ListApplications extends React.Component {
 					<div className="ui hidden divider"></div>
 					<div className="ui cards">
 						{this.props.applications.map((application) => (
-							<ApplicationCard
-								key={application._id}
-								application={application}
-							/>
+							<BriefCard key={application._id} application={application} />
 						))}
 					</div>
 				</>

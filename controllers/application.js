@@ -4,7 +4,10 @@ const User = require("../models/User");
 
 module.exports.onGetAllApplications = async (req, res, next) => {
 	try {
-		const applications = await Application.find(req.query).populate("author");
+		const applications = await Application.find(req.query)
+			.populate("author")
+			.populate("brief")
+			.populate("tracks");
 		return res.status(200).json(applications);
 	} catch (error) {
 		console.log(error);
@@ -14,7 +17,9 @@ module.exports.onGetAllApplications = async (req, res, next) => {
 
 module.exports.onGetApplicationById = async (req, res, next) => {
 	try {
-		const application = await Application.findById(req.params.id);
+		const application = await Application.findById(req.params.id)
+			.populate("brief")
+			.populate("tracks");
 		return res.status(200).json(application);
 	} catch (error) {
 		return res.status(500).json(error);
