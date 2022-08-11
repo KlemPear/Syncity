@@ -162,6 +162,7 @@ export const deleteBrief = (id) => async (dispatch, getState) => {
 //#endregion
 
 //#region Application
+
 export const fetchApplications = (query) => async (dispatch, getState) => {
 	const response = await applications.get(`/`, { params: query });
 	dispatch({
@@ -179,6 +180,14 @@ export const createApplication = (body) => async (dispatch, getState) => {
 	// do some programmatic navigation to get the user
 	// back to the main page
 	history.push("/list-briefs");
+};
+
+export const editApplication = (body) => async (dispatch, getState) => {
+	const response = await applications.put(`/${body._id}`, body);
+	dispatch({
+		type: applicationsTypes.EDIT_APPLICATION,
+		payload: response.data,
+	});
 };
 
 //#endregion

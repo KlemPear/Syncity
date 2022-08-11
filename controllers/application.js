@@ -18,6 +18,7 @@ module.exports.onGetAllApplications = async (req, res, next) => {
 module.exports.onGetApplicationById = async (req, res, next) => {
 	try {
 		const application = await Application.findById(req.params.id)
+			.populate("author")
 			.populate("brief")
 			.populate("tracks");
 		return res.status(200).json(application);
@@ -62,7 +63,10 @@ module.exports.onEditApplicationById = async (req, res, next) => {
 		const { id } = req.params;
 		const application = await Application.findByIdAndUpdate(id, req.body, {
 			returnDocument: "after",
-		});
+		})
+			.populate("author")
+			.populate("brief")
+			.populate("tracks");
 		return res.status(200).json(application);
 	} catch (error) {
 		return res.status(500).json(error);

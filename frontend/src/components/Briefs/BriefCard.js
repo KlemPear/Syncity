@@ -74,6 +74,12 @@ class BriefCard extends React.Component {
 						src={brief.logo}
 					/>
 					<div className="header">{brief.title}</div>
+					{application.liked ? (
+						<div className="meta">
+							Your application was LIKED!{" "}
+							<i className={`big thumbs up green icon`}></i>
+						</div>
+					) : null}
 					<div className="meta">{`Budget: ${moneyFormatter.format(
 						brief.budget
 					)}`}</div>

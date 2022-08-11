@@ -1,18 +1,25 @@
 import React from "react";
 import { connect } from "react-redux";
+import { editApplication } from "../../actions/index";
 
 class ApplicationCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { thumbUp: false };
+		this.state = { thumbUp: this.props.application.liked };
 	}
 
 	onThumbUp = () => {
 		this.setState({ thumbUp: true });
+		const updatedApp = this.props.application;
+		updatedApp.liked = true;
+		this.props.editApplication(updatedApp);
 	};
 
 	onThumbDown = () => {
 		this.setState({ thumbUp: false });
+		const updatedApp = this.props.application;
+		updatedApp.liked = false;
+		this.props.editApplication(updatedApp);
 	};
 
 	renderApplicationItem(authorFirstName, authorLastName, tracks) {
@@ -43,16 +50,28 @@ class ApplicationCard extends React.Component {
 					</div>
 					<div className="extra">
 						<div
-							className={`ui label ${!this.state.thumbUp ? "" : "basic"} button red`}
+							className={`ui label ${
+								!this.state.thumbUp ? "" : "basic"
+							} button red`}
 							onClick={() => this.onThumbDown()}
 						>
-							<i className={`big thumbs down ${!this.state.thumbUp ? "outline" : ""} icon`}></i>
+							<i
+								className={`big thumbs down ${
+									!this.state.thumbUp ? "outline" : ""
+								} icon`}
+							></i>
 						</div>
 						<div
-							className={`ui label ${this.state.thumbUp ? "" : "basic"} button green`}
+							className={`ui label ${
+								this.state.thumbUp ? "" : "basic"
+							} button green`}
 							onClick={() => this.onThumbUp()}
 						>
-							<i className={`big thumbs up ${this.state.thumbUp ? "outline" : ""} icon`}></i>
+							<i
+								className={`big thumbs up ${
+									this.state.thumbUp ? "outline" : ""
+								} icon`}
+							></i>
 						</div>
 					</div>
 				</div>
@@ -79,4 +98,4 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps)(ApplicationCard);
+export default connect(mapStateToProps, { editApplication })(ApplicationCard);

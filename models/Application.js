@@ -16,6 +16,7 @@ const applicationSchema = new mongoose.Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Brief",
 	},
+	liked: { type: Boolean, default: false },
 });
 
 const Application = mongoose.model("Application", applicationSchema);
