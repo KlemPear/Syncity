@@ -87,7 +87,7 @@ class BriefCard extends React.Component {
 				<div className="extra content">
 					<h4>Tracks that you submitted for this brief:</h4>
 					<ul>
-						{application.tracks.length != 0
+						{application.tracks.length !== 0
 							? application.tracks.map((track) => (
 									<li key={track._id}>
 										<a href={track.link}>
