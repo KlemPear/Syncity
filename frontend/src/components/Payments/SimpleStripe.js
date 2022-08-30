@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import payments from "../../apis/payments";
 
 const onCheckoutSubmit = async (event, itemId, userId, subscription) => {
@@ -12,68 +12,28 @@ const onCheckoutSubmit = async (event, itemId, userId, subscription) => {
 	window.location.href = redirectUrl;
 };
 
-const ProductDisplay = ({ itemId, name, amount, userId, subscription }) => (
+const ProductDisplay = ({ itemId, userId, subscription }) => (
 	<section>
-		<div className="product">
-			<img
-				src="https://i.imgur.com/EHyR2nP.png"
-				alt="The cover of Stubborn Attachments"
-			/>
-			<div className="description">
-				<h3>{`${name}`}</h3>
-				<h5>{`$${amount} USD`}</h5>
-			</div>
-		</div>
 		<form
 			onSubmit={(event) =>
 				onCheckoutSubmit(event, itemId, userId, subscription)
 			}
 		>
-			<button type="submit" className="btn primary">
-				Checkout
+			<button type="submit" className="ui button primary">
+				Subscribe
 			</button>
 		</form>
 	</section>
 );
 
-const Message = ({ message }) => (
-	<section>
-		<p>{message}</p>
-	</section>
-);
-
-export default function SimpleStripe({
-	itemId,
-	name,
-	amount,
-	userId,
-	subscription,
-}) {
-	const [message, setMessage] = useState("");
-	useEffect(() => {
-		// Check to see if this is a redirect back from Checkout
-		const query = new URLSearchParams(window.location.search);
-
-		if (query.get("success")) {
-			setMessage("Order placed! You will receive an email confirmation.");
-		}
-
-		if (query.get("canceled")) {
-			setMessage(
-				"Order canceled -- continue to shop around and checkout when you're ready."
-			);
-		}
-	}, []);
-
-	return message ? (
-		<Message message={message} />
-	) : (
-		<ProductDisplay
-			itemId={itemId}
-			name={name}
-			amount={amount}
-			userId={userId}
-			subscription={subscription}
-		/>
+export default function SimpleStripe({ itemId, userId, subscription = true}) {
+	return (
+		<>
+			<ProductDisplay
+				itemId={itemId}
+				userId={userId}
+				subscription={subscription}
+			/>
+		</>
 	);
 }

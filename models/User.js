@@ -31,6 +31,8 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 		},
 		stripeCustomerId: String,
+		BriefSubscriptionPlan: String,
+		PitchSubscriptionPlan: String,
 	},
 	{
 		timestamps: true,

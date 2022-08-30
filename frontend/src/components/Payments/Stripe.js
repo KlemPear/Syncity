@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 
-import CheckoutForm from "./StripeCheckoutForm";
+import StripeCheckoutForm from "./StripeCheckoutForm";
 import "./StripeCheckoutForm.css";
 import payments from "../../apis/payments";
 
@@ -47,7 +47,7 @@ export default function Stripe(props) {
 		<div className="Stripe">
 			{clientSecret && (
 				<Elements options={options} stripe={stripePromise}>
-					<CheckoutForm />
+					<StripeCheckoutForm />
 				</Elements>
 			)}
 		</div>

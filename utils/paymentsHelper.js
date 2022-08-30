@@ -6,9 +6,10 @@ const {
 	forgotPasswordEmailOptions,
 } = require("../emails/emailTemplates");
 
-const StripeApiKey = process.env.NODE_ENV === "production"
-? process.env.STRIPE_API_KEY
-: process.env.STRIPE_TEST_API_KEY;
+const StripeApiKey =
+	process.env.NODE_ENV === "production"
+		? process.env.STRIPE_API_KEY
+		: process.env.STRIPE_TEST_API_KEY;
 const stripe = require("stripe")(StripeApiKey);
 
 const ProductIdToTokens = {
@@ -37,4 +38,11 @@ module.exports.fullfilPayment = async (session) => {
 			nbrOfTokensToAdd
 		);
 	}
+};
+
+module.exports.updateSubscription = async (subscription) => {
+	const user = await User.findOne({ stripeCustomerId: subscription.customer });
+	console.log("Update Subscription for user: ", user.firstName);
+	const productId = subscription.plan.id;
+	console.log("New subscritpion plan: ", productId);
 };

@@ -14,19 +14,26 @@ const endpointSecret =
 		? process.env.STRIPE_WEBHOOK_ENDPOINT
 		: process.env.STRIPE_TEST_WEBHOOK_ENDPOINT;
 
-const frontendItemToProductId = {
-	//price is in cents.
-	smallPitchTokens: "price_1LDKVdAJKEnyYMFYYjAKemmx",
-	mediumPitchTokens: "price_1LDNRVAJKEnyYMFYetuicXSg",
-	largePitchTokens: "price_1LDNT5AJKEnyYMFYD2TpgWKc",
-	basicBriefPlan: "price_1LF6GBAJKEnyYMFYHHAsfZxR",
-	proBriefPlan: "price_1LF7HJAJKEnyYMFY5mJ7j6W9",
-	businessBriefPlan: "price_1LF7IDAJKEnyYMFYIWy343RR",
-	basicPitchPlan: "price_1LF7JJAJKEnyYMFYPijW95kO",
-	proPitchPlan: "price_1LF7JsAJKEnyYMFYKjZbX8j8",
-	businessPitchPlan: "price_1LF7KPAJKEnyYMFYF44VKJfY",
-	freePlan: "price_1LF80PAJKEnyYMFYZF8MzwUj",
-};
+const frontendItemToProductId =
+	process.env.NODE_ENV === "production"
+		? {
+				basicBriefPlan: "price_1LWnTQAJKEnyYMFYZv5EXxDm",
+				proBriefPlan: "price_1LWnUvAJKEnyYMFYwiMO2LCo",
+				businessBriefPlan: "price_1LWnUZAJKEnyYMFYINexbfQE",
+				basicPitchPlan: "price_1LWnU8AJKEnyYMFYAVMFhUUC",
+				proPitchPlan: "price_1LWnTpAJKEnyYMFYvxvlSM2d",
+				businessPitchPlan: "price_1LWnRyAJKEnyYMFYcyLTKgMJ",
+				freePlan: "price_1LWnSvAJKEnyYMFYMRyTPGDZ",
+		  }
+		: {
+				basicBriefPlan: "price_1LF6GBAJKEnyYMFYHHAsfZxR",
+				proBriefPlan: "price_1LF7HJAJKEnyYMFY5mJ7j6W9",
+				businessBriefPlan: "price_1LF7IDAJKEnyYMFYIWy343RR",
+				basicPitchPlan: "price_1LF7JJAJKEnyYMFYPijW95kO",
+				proPitchPlan: "price_1LF7JsAJKEnyYMFYKjZbX8j8",
+				businessPitchPlan: "price_1LF7KPAJKEnyYMFYF44VKJfY",
+				freePlan: "price_1LF80PAJKEnyYMFYZF8MzwUj",
+		  };
 
 const itemToPrice = {
 	//price is in cents.
@@ -92,9 +99,9 @@ module.exports.onCreateCheckoutSession = async (req, res, next) => {
 				},
 			],
 			mode: subscription ? "subscription" : "payment",
-			customer: user.stripeCustomerId,
+			customer: user.stripeCustomerId ?? updatedUser.stripeCustomerId,
 			success_url: `${baseUrl}/payment-success`, // `http://localhost:5000/payments/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${baseUrl}/paymentcanceld`,
+			cancel_url: `${baseUrl}/paymentcanceled`,
 		});
 
 		res.status(200).json(session.url);
@@ -122,6 +129,7 @@ module.exports.onCreatePortalSession = async (req, res, next) => {
 };
 
 module.exports.onWebhookEvent = async (req, res, next) => {
+	//stripe listen --forward-to localhost:5000/payments/webhook
 	const sig = req.headers["stripe-signature"];
 	let event;
 	try {
@@ -167,6 +175,7 @@ module.exports.onWebhookEvent = async (req, res, next) => {
 			subscription = event.data.object;
 			status = subscription.status;
 			console.log(`Subscription status is ${status}.`);
+			paymentsHelper.updateSubscription(subscription);
 			// Then define and call a method to handle the subscription update.
 			// handleSubscriptionUpdated(subscription);
 			break;
