@@ -148,7 +148,7 @@ module.exports.onWebhookEvent = async (req, res, next) => {
 		// ... handle other event types
 		case "checkout.session.completed":
 			const session = event.data.object;
-			paymentsHelper.fullfilPayment(session);
+			// paymentsHelper.fullfilPayment(session);
 			break;
 		case "customer.subscription.trial_will_end":
 			subscription = event.data.object;
@@ -176,6 +176,14 @@ module.exports.onWebhookEvent = async (req, res, next) => {
 			status = subscription.status;
 			console.log(`Subscription status is ${status}.`);
 			paymentsHelper.updateSubscription(subscription);
+			// Then define and call a method to handle the subscription update.
+			// handleSubscriptionUpdated(subscription);
+			break;
+		case "invoice.paid":
+			invoice = event.data.object;
+			status = invoice.status;
+			console.log(`Subscription status is ${status}.`);
+			paymentsHelper.renewTokens(invoice);
 			// Then define and call a method to handle the subscription update.
 			// handleSubscriptionUpdated(subscription);
 			break;

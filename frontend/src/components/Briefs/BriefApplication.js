@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createApplication, addTokensToUser } from "../../actions";
+import { createApplication, burnPitchToken } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
@@ -25,7 +25,10 @@ class BriefApplication extends React.Component {
 
 	renderModalContent() {
 		return (
-			<div>You do not have enough tokens to do this. Consider buying more!</div>
+			<div>
+				You do not have enough application tokens to do this. Consider
+				subscribing to a different plan!
+			</div>
 		);
 	}
 
@@ -33,20 +36,27 @@ class BriefApplication extends React.Component {
 		return (
 			<React.Fragment>
 				<Link to="/buy-tokens" className="ui button blue">
-					Buy Tokens
+					Subscribe to a plan
 				</Link>
 			</React.Fragment>
 		);
 	}
 	// TODO: Modify this so that it takes an array of tracks to submit
 	onSubmit = () => {
-		this.props.addTokensToUser(this.props.userId, -1);
-		const applicationValues = {
-			tracks: this.state.selectedTracks,
-			author: `${this.props.userId}`,
-			brief: `${this.props.briefId}`,
-		};
-		this.props.createApplication(applicationValues);
+		if (
+			this.props.user.pitchTokens !== -1 &&
+			this.props.user.pitchTokens - 1 < 0
+		) {
+			this.onNotEnoughTokens();
+		} else {
+			this.props.burnPitchToken(this.props.userId);
+			const applicationValues = {
+				tracks: this.state.selectedTracks,
+				author: `${this.props.userId}`,
+				brief: `${this.props.briefId}`,
+			};
+			this.props.createApplication(applicationValues);
+		}
 	};
 
 	selectedTracks = (selectedTracks) => {
@@ -97,9 +107,10 @@ class BriefApplication extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		userId: state.auth.user._id,
+		user: state.auth.user,
 	};
 };
 
-export default connect(mapStateToProps, { createApplication, addTokensToUser })(
+export default connect(mapStateToProps, { createApplication, burnPitchToken })(
 	BriefApplication
 );

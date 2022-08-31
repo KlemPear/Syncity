@@ -11,6 +11,8 @@ router
 	.post("/register", user.onCreateUser)
 	.post("/login", passport.authenticate("local"), user.login)
 	.post("/:id/tokens", user.onAddTokens)
+	.post("/:id/burn-brief-token", user.onBurnBriefToken)
+	.post("/:id/burn-pitch-token", user.onBurnPitchToken)
 	.post("/search", user.onSearch)
 	.post("/invite", user.onInviteNewUser)
 	.post("/forgot-password", user.onForgotPassword)

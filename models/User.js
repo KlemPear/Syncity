@@ -31,8 +31,10 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 		},
 		stripeCustomerId: String,
-		BriefSubscriptionPlan: String,
-		PitchSubscriptionPlan: String,
+		briefSubscriptionPlan: String,
+		pitchSubscriptionPlan: String,
+		briefTokens: { type: Number, default: 0 },
+		pitchTokens: { type: Number, default: 0 },
 	},
 	{
 		timestamps: true,
@@ -64,6 +66,46 @@ userSchema.statics.updateTokensOfUser = async function (userId, nbrOfTokens) {
 		if (user.tokens < 0) {
 			return false;
 		} else {
+			const updatedUser = await this.findByIdAndUpdate(userId, user, {
+				returnDocument: "after",
+			}).populate("connections");
+			return updatedUser;
+		}
+	} catch (error) {
+		throw error;
+	}
+};
+
+userSchema.statics.burnOneBriefTokenOfUser = async function (userId) {
+	try {
+		const user = await this.findById(userId);
+		if(user.briefTokens === -1){
+			return;
+		}
+		if (user.briefTokens === 0) {
+			return false;
+		} else {
+			user.briefTokens += -1;
+			const updatedUser = await this.findByIdAndUpdate(userId, user, {
+				returnDocument: "after",
+			}).populate("connections");
+			return updatedUser;
+		}
+	} catch (error) {
+		throw error;
+	}
+};
+
+userSchema.statics.burnOnePitchTokenOfUser = async function (userId) {
+	try {
+		const user = await this.findById(userId);
+		if(user.pitchTokens === -1){
+			return;
+		}
+		if (user.pitchTokens === 0) {
+			return false;
+		} else {
+			user.pitchTokens += -1;
 			const updatedUser = await this.findByIdAndUpdate(userId, user, {
 				returnDocument: "after",
 			}).populate("connections");

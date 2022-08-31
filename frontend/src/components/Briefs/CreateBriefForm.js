@@ -53,7 +53,10 @@ class CreateBriefForm extends React.Component {
 	};
 
 	onSubmit = () => {
-		if (this.props.user.tokens - 10 < 0) {
+		if (
+			this.props.user.briefTokens !== -1 &&
+			this.props.user.briefTokens - 1 < 0
+		) {
 			this.props.onNotEnoughTokens();
 		} else {
 			//do whatever we need with the form values
@@ -172,10 +175,7 @@ class CreateBriefForm extends React.Component {
 					className="ui form error"
 				>
 					{this.renderFormFields()}
-					<button className="ui button primary">
-						Submit for 10{" "}
-						<i className="gem fitted circular inverted outline icon" />
-					</button>
+					<button className="ui button primary">Submit</button>
 				</form>
 			</div>
 		);

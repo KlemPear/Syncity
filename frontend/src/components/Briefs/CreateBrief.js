@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CreateBriefForm from "./CreateBriefForm";
-import { createBrief } from "../../actions";
+import { createBrief, burnBriefToken } from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
 
@@ -11,6 +11,7 @@ class CreateBrief extends React.Component {
 		this.state = { notEnoughTokens: false };
 	}
 	onSubmit = (formValues) => {
+		this.props.burnBriefToken(this.props.userId);
 		this.props.createBrief({ ...formValues, author: `${this.props.userId}` });
 	};
 
@@ -20,7 +21,10 @@ class CreateBrief extends React.Component {
 
 	renderModalContent() {
 		return (
-			<div>You do not have enough tokens to do this. Consider buying more!</div>
+			<div>
+				You do not have enough brief tokens to do this. Consider subscribing to
+				a different plan!
+			</div>
 		);
 	}
 
@@ -28,7 +32,7 @@ class CreateBrief extends React.Component {
 		return (
 			<React.Fragment>
 				<Link to="/buy-tokens" className="ui button blue">
-					Buy Tokens
+					Subscribe to a plan
 				</Link>
 			</React.Fragment>
 		);
@@ -64,4 +68,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { createBrief })(CreateBrief);
+export default connect(mapStateToProps, { createBrief, burnBriefToken })(
+	CreateBrief
+);

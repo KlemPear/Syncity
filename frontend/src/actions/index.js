@@ -53,6 +53,16 @@ export const addTokensToUser =
 		dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
 	};
 
+export const burnBriefToken = (userId) => async (dispatch, getState) => {
+	const response = await users.post(`${userId}/burn-brief-token`, {});
+	dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
+};
+
+export const burnPitchToken = (userId) => async (dispatch, getState) => {
+	const response = await users.post(`${userId}/burn-pitch-token`, {});
+	dispatch({ type: usersTypes.ADD_TOKENS, payload: response.data });
+};
+
 export const searchUser = (query) => async (dispatch, getState) => {
 	const response = await users.post(`search`, query);
 	dispatch({ type: usersTypes.SEARCH_USER, payload: response.data });
@@ -200,8 +210,7 @@ export const fetchTracks = (userId) => async (dispatch, getState) => {
 };
 
 export const createTrack =
-	(body, pushToCatalog) =>
-	async (dispatch, getState) => {
+	(body, pushToCatalog) => async (dispatch, getState) => {
 		const response = await tracks.post(`/`, body);
 		dispatch({ type: tracksTypes.CREATE_TRACK, payload: response.data });
 		// do some programmatic navigation to get the user

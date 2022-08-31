@@ -47,7 +47,10 @@ class BriefApplicationForm extends React.Component {
 	};
 
 	onSubmit = (formValues) => {
-		if (this.props.user.tokens - 1 < 0) {
+		if (
+			this.props.user.pitchTokens != -1 &&
+			this.props.user.pitchTokens - 1 < 0
+		) {
 			this.props.onNotEnoughTokens();
 		} else {
 			//do whatever we need with the form values

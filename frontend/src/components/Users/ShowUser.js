@@ -92,6 +92,28 @@ class ShowUser extends React.Component {
 					>
 						Add 10 <i className="gem fitted circular inverted outline icon" />
 					</button>
+					<hr />
+					<div>
+						<h4>Subscription Plans</h4>
+						<ul>
+							<li>
+								Brief Plan:{" "}
+								{this.props.currentUser.briefSubscriptionPlan ?? "no plan"},{" "}
+								{this.props.currentUser.briefTokens === -1
+									? "unlimited"
+									: this.props.currentUser.briefTokens}{" "}
+								briefs remaining for this billing period.
+							</li>
+							<li>
+								Pitch Plan:{" "}
+								{this.props.currentUser.pitchSubscriptionPlan ?? "no plan"},{" "}
+								{this.props.currentUser.pitchTokens === -1
+									? "unlimited"
+									: this.props.currentUser.pitchTokens}{" "}
+								pitches remaining for this billing period.
+							</li>
+						</ul>
+					</div>
 					<div>
 						{this.props.currentUser.stripeCustomerId ? (
 							<form
@@ -102,7 +124,11 @@ class ShowUser extends React.Component {
 									)
 								}
 							>
-								<button id="checkout-and-portal-button" type="submit">
+								<button
+									className="ui button primary"
+									id="checkout-and-portal-button"
+									type="submit"
+								>
 									Manage your billing information
 								</button>
 							</form>

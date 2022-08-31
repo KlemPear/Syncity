@@ -129,6 +129,26 @@ module.exports.onAddTokens = async (req, res, next) => {
 	}
 };
 
+module.exports.onBurnBriefToken = async (req, res, next) => {
+	try {
+		const userId = req.params.id;
+		const updatedUser = await User.burnOneBriefTokenOfUser(userId);
+		return res.status(200).json(updatedUser);
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onBurnPitchToken = async (req, res, next) => {
+	try {
+		const userId = req.params.id;
+		const updatedUser = await User.burnOnePitchTokenOfUser(userId);
+		return res.status(200).json(updatedUser);
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
 module.exports.onUpdateUser = async (req, res, next) => {
 	try {
 		const userId = req.params.id;

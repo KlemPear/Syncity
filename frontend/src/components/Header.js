@@ -15,8 +15,7 @@ class Header extends React.Component {
 					Account <i className="user large icon"></i>
 					<div className="menu">
 						<Link to="/buy-tokens" className="item right">
-							{this.props.user.tokens}
-							<i className="gem fitted circular inverted outline icon" />
+							Subscription Plans
 						</Link>
 						<Link to="/profile" className="item">
 							Profile
