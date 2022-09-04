@@ -96,7 +96,7 @@ const sessionConfig = {
 	name: "SessionId",
 	domain: process.env.NODE_ENV === "production" ? "https://app.nost.audio/" : null,
 	resave: false,
-	saveUninitialized: false,
+	saveUninitialized: true,
 	cookie: {
 		sameSite: false,
 		secure: process.env.NODE_ENV === "production", // session cookies can only be configured over HTTPS
@@ -104,6 +104,11 @@ const sessionConfig = {
 		maxAge: 1000 * 60 * 60 * 24 * 7,
 	},
 };
+
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+}
+
 app.use(session(sessionConfig));
 
 //Passport set up
