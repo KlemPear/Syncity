@@ -94,10 +94,11 @@ const sessionConfig = {
 	store: store,
 	secret: secret,
 	name: "SessionId",
+	domain: process.env.NODE_ENV === "production" ? "https://app.nost.audio/" : null,
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
-		sameSite: process.env.NODE_ENV === "production",
+		sameSite: false,
 		secure: process.env.NODE_ENV === "production", // session cookies can only be configured over HTTPS
 		expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
 		maxAge: 1000 * 60 * 60 * 24 * 7,
