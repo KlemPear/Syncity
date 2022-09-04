@@ -48,19 +48,22 @@ class BuyTokens extends React.Component {
 					"basicBriefPlan",
 					"19.00/month",
 					"Basic Brief Plan",
-					this.props.user
+					this.props.user,
+					"5 briefs per month"
 				)}
 				{this.renderPlanOption(
 					"proBriefPlan",
 					"49.00/month",
 					"Pro Brief Plan",
-					this.props.user
+					this.props.user,
+					"15 briefs per month"
 				)}
 				{this.renderPlanOption(
 					"businessBriefPlan",
 					"99.00/month",
 					"Business Brief Plan",
-					this.props.user
+					this.props.user,
+					"Unlimited briefs."
 				)}
 			</div>
 		);
@@ -73,25 +76,29 @@ class BuyTokens extends React.Component {
 					"freePlan",
 					"0.00/month",
 					"Free Plan",
-					this.props.user
+					this.props.user,
+					"5 applications per month"
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
 					"15.00/month",
-					"Basic Pitch Plan",
-					this.props.user
+					"Basic Applications Plan",
+					this.props.user,
+					"25 applications per month"
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
 					"29.00/month",
-					"Pro Pitch Plan",
-					this.props.user
+					"Pro Applications Plan",
+					this.props.user,
+					"50 applications per month"
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
 					"49.00/month",
-					"Business Pitch Plan",
-					this.props.user
+					"Business Applications Plan",
+					this.props.user,
+					"Unlimited applications."
 				)}
 			</div>
 		);

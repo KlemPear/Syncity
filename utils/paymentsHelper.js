@@ -48,7 +48,7 @@ const updatePlans = async (user, plan) => {
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "basicPitchPlan":
-			user.pitchTokens = 20;
+			user.pitchTokens = 25;
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "proPitchPlan":
@@ -60,11 +60,11 @@ const updatePlans = async (user, plan) => {
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "basicBriefPlan":
-			user.briefTokens = 10;
+			user.briefTokens = 5;
 			user.briefSubscriptionPlan = plan;
 			break;
 		case "proBriefPlan":
-			user.briefTokens = 50;
+			user.briefTokens = 15;
 			user.briefSubscriptionPlan = plan;
 			break;
 		case "businessBriefPlan":
