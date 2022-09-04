@@ -6,6 +6,20 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const path = require("path");
+
+// SSL Cert
+// const fs = require("fs");
+// const http = require("http");
+// const https = require("https");
+// const httpsPort = 443;
+// const httpsOptions = {
+// 	cert: fs.readFileSync("./ssl/nost_audio.crt"),
+// 	ca: fs.readFileSync("./ssl/nost_audio.ca-bundle"),
+// 	key: fs.readFileSync("./ssl/nost.audio.key"),
+// };
+// httpServer = http.createServer(app);
+// httpsServer = https.createServer(httpsOptions, app);
+
 // session
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -29,12 +43,12 @@ mongoDbSetUp.once("open", () => {
 });
 
 const port = process.env.PORT || "5000";
-let frontendURL = ["http://localhost:3000", "https://stripe.com"];
+let frontendURL = ["http://localhost:3000", "https://dashboard.stripe.com/"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
 	frontendURL = [
 		process.env.FRONTEND_URL_1,
 		process.env.FRONTEND_URL_2,
-		"https://stripe.com",
+		"https://dashboard.stripe.com/",
 	];
 }
 
@@ -137,3 +151,13 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
 	console.log(`Listening on port: ${port}`);
 });
+
+// app.use((req, res, next) => {
+// 	if (req.protocol === "http") {
+// 		res.redirect(301, `https://${req.headers.host}${req.url}`);
+// 	}
+// 	next();
+// });
+
+// httpsServer.listen(httpsPort, "www.nost.audio");
+// httpServer.listen(port, "localhost");
