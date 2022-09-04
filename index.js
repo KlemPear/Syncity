@@ -97,8 +97,8 @@ const sessionConfig = {
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
-		sameSite: false,
-		//secure: true, // session cookies can only be configured over HTTPS
+		sameSite: process.env.NODE_ENV === "production",
+		secure: process.env.NODE_ENV === "production", // session cookies can only be configured over HTTPS
 		expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
 		maxAge: 1000 * 60 * 60 * 24 * 7,
 	},
