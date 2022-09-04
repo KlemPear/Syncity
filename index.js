@@ -96,7 +96,7 @@ const sessionConfig = {
 	name: "SessionId",
 	domain: process.env.NODE_ENV === "production" ? "https://app.nost.audio/" : null,
 	resave: false,
-	saveUninitialized: true,
+	saveUninitialized: false,
 	cookie: {
 		sameSite: false,
 		secure: process.env.NODE_ENV === "production", // session cookies can only be configured over HTTPS
