@@ -44,7 +44,7 @@ const itemToPrice = {
 
 const baseUrl =
 	process.env.NODE_ENV === "production"
-		? "http://app.nost.audio"
+		? "https://app.nost.audio"
 		: "http://localhost:3000";
 
 const calculateOrderAmount = (itemId) => {
