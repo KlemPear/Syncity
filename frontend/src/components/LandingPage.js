@@ -6,7 +6,7 @@ const LandingPage = (props) => {
 			<div className="ui hidden divider"></div>
 			<div className="ui hidden divider"></div>
 			<div className="ui hidden divider"></div>
-			This is the landing page.
+			<h1>Welcome to nost.audio<h1/>
 		</div>
 	);
 };

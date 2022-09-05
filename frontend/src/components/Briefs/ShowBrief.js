@@ -67,13 +67,13 @@ class ShowBrief extends React.Component {
 							<li>Tempo: {brief.tempo}</li>
 							<li>Exclusivity: {brief.exclusivity}</li>
 						</ul>
-						{brief.references !== null ? (
+						{brief.references?.length !== 0 ? (
 							<>
 								<hr />
 								<h4>Reference(s)</h4>
+								{brief.references?.map((ref) => this.renderReference(ref))}
 							</>
 						) : null}
-						{brief.references?.map((ref) => this.renderReference(ref))}
 					</div>
 					<hr />
 					{this.props.brief.numberOfApplicationsWanted ===
