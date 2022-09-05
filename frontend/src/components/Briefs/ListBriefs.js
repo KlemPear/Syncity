@@ -6,10 +6,6 @@ import Loader from "../Loader";
 import BriefCard from "./BriefCard";
 
 class ListBriefs extends React.Component {
-	constructor(props) {
-		super(props);
-		//this.state = { openBriefsToggle: false };
-	}
 
 	componentDidMount() {
 		this.props.fetchBriefs({ open: true, private: false });
@@ -17,17 +13,14 @@ class ListBriefs extends React.Component {
 
 	onYourBriefsClick = () => {
 		this.props.fetchBriefs({ author: this.props.userId });
-		//this.setState({ openBriefsToggle: false });
 	};
 
 	onAllBriefsClick = () => {
 		this.props.fetchBriefs({ open: true, private: false });
-		//this.setState({ openBriefsToggle: false });
 	};
 
 	onPrivateBriefsClick = () => {
 		this.props.fetchPrivateBriefs(this.props.userId);
-		// this.setState({ openBriefsToggle: true });
 	};
 
 	render() {
