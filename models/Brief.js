@@ -13,8 +13,25 @@ const briefSchema = new mongoose.Schema({
 	},
 	numberOfApplicationsWanted: { type: Number, default: -1 },
 	numberOfApplicationsSubmitted: { type: Number, default: 0 },
+	media: String,
+	use: String,
+	licenseDuration: String,
+	extractDuration: String,
+	territory: String,
+	genres: String,
+	vocals: String,
+	moods: String,
+	instruments: String,
+	tempo: String,
+	exclusivity: String,
 	open: { type: Boolean, default: true },
 	private: { type: Boolean, default: false },
+	references: [
+		{
+			link: String,
+			comment: String,
+		},
+	],
 });
 
 const Brief = mongoose.model("Brief", briefSchema);

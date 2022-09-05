@@ -66,16 +66,17 @@ class CreateBriefForm extends React.Component {
 	};
 
 	renderFormFields = () => {
-		if (this.props.editBrief) {
+		const editBrief = this.props.editBrief;
+		if (editBrief) {
 			return (
 				<>
 					<Field
 						name="title"
 						component={this.renderInput}
 						label="Title"
-						defaultValue={this.props.editBrief.title}
-						value={this.props.editBrief.title}
-						placeholder={this.props.editBrief.title}
+						defaultValue={editBrief.title}
+						value={editBrief.title}
+						placeholder={editBrief.title}
 					/>
 					<Field
 						name="private"
@@ -84,47 +85,189 @@ class CreateBriefForm extends React.Component {
 						label="Make this brief only visible to your connections?"
 					/>
 					<Field
-						name="budget"
-						component={this.renderInput}
-						type="number"
-						label="Budget"
-						defaultValue={this.props.editBrief.budget}
-						value={this.props.editBrief.budget}
-						placeholder={this.props.editBrief.budget}
-					/>
-					<Field
 						name="dueDate"
 						component={this.renderInput}
 						type="date"
 						label="Due Date"
-						defaultValue={this.props.editBrief.budget}
-						value={this.props.editBrief.budget}
-						placeholder={this.props.editBrief.dueDate}
+						defaultValue={editBrief.budget}
+						value={editBrief.budget}
+						placeholder={editBrief.dueDate}
 					/>
 					<Field
 						name="numberOfApplicationsWanted"
 						component={this.renderInput}
 						type="number"
 						label="Number of applications wanted:"
-						defaultValue={this.props.editBrief.numberOfApplicationsWanted}
-						value={this.props.editBrief.numberOfApplicationsWanted}
-						placeholder={this.props.editBrief.numberOfApplicationsWanted}
+						defaultValue={editBrief.numberOfApplicationsWanted}
+						value={editBrief.numberOfApplicationsWanted}
+						placeholder={editBrief.numberOfApplicationsWanted}
 					/>
 					<Field
 						name="logo"
 						component={this.renderInput}
 						label="Logo"
-						defaultValue={this.props.editBrief.budget}
-						value={this.props.editBrief.budget}
-						placeholder={this.props.editBrief.logo}
+						defaultValue={editBrief.budget}
+						value={editBrief.budget}
+						placeholder={editBrief.logo}
 					/>
 					<Field
 						name="description"
 						component={this.renderTextInput}
 						label="description"
-						defaultValue={this.props.editBrief.budget}
-						value={this.props.editBrief.budget}
-						placeholder={this.props.editBrief.description}
+						defaultValue={editBrief.budget}
+						value={editBrief.budget}
+						placeholder={editBrief.description}
+					/>
+					<hr />
+					<h5>License Terms</h5>
+					<Field
+						name="media"
+						component={this.renderInput}
+						label="Media"
+						defaultValue={editBrief.media}
+						value={editBrief.media}
+						placeholder={editBrief.media}
+					/>
+					<Field
+						name="use"
+						component={this.renderInput}
+						label="Use"
+						defaultValue={editBrief.use}
+						value={editBrief.use}
+						placeholder={editBrief.use}
+					/>
+					<Field
+						name="budget"
+						component={this.renderInput}
+						type="number"
+						label="Budget"
+						defaultValue={editBrief.budget}
+						value={editBrief.budget}
+						placeholder={editBrief.budget}
+					/>
+					<Field
+						name="licenseDuration"
+						component={this.renderInput}
+						label="License Duration"
+						defaultValue={editBrief.licenseDuration}
+						value={editBrief.licenseDuration}
+						placeholder={editBrief.licenseDuration}
+					/>
+					<Field
+						name="extractDuration"
+						component={this.renderInput}
+						label="Extract Duration"
+						defaultValue={editBrief.extractDuration}
+						value={editBrief.extractDuration}
+						placeholder={editBrief.extractDuration}
+					/>
+					<Field
+						name="territory"
+						component={this.renderInput}
+						label="Territory"
+						defaultValue={editBrief.territory}
+						value={editBrief.territory}
+						placeholder={editBrief.territory}
+					/>
+					<hr />
+					<h5>Type Of Music Needed</h5>
+					<Field
+						name="genres"
+						component={this.renderInput}
+						label="Genre(s)"
+						defaultValue={editBrief.genres}
+						value={editBrief.genres}
+						placeholder={editBrief.genres}
+					/>
+					<Field
+						name="vocals"
+						component={this.renderInput}
+						label="Vocals"
+						defaultValue={editBrief.vocals}
+						value={editBrief.vocals}
+						placeholder={editBrief.vocals}
+					/>
+					<Field
+						name="moods"
+						component={this.renderInput}
+						label="Mood(s)"
+						defaultValue={editBrief.moods}
+						value={editBrief.moods}
+						placeholder={editBrief.moods}
+					/>
+					<Field
+						name="instruments"
+						component={this.renderInput}
+						label="Instrument(s)"
+						defaultValue={editBrief.instruments}
+						value={editBrief.instruments}
+						placeholder={editBrief.instruments}
+					/>
+					<Field
+						name="tempo"
+						component={this.renderInput}
+						label="Tempo"
+						defaultValue={editBrief.tempo}
+						value={editBrief.tempo}
+						placeholder={editBrief.tempo}
+					/>
+					<Field
+						name="exclusivity"
+						component={this.renderInput}
+						label="Exclusivity"
+						defaultValue={editBrief.exclusivity}
+						value={editBrief.exclusivity}
+						placeholder={editBrief.exclusivity}
+					/>
+					<hr />
+					<h5>Reference(s)</h5>
+					<Field
+						name="references[0].link"
+						component={this.renderInput}
+						label="Link #1"
+						defaultValue={editBrief.references != null ? editBrief.references[0]?.link : null}
+						value={editBrief.references != null ? editBrief.references[0]?.link : null}
+						placeholder={editBrief.references != null ? editBrief.references[0]?.link : null}
+					/>
+					<Field
+						name="references[0].comment"
+						component={this.renderTextInput}
+						label="Comment #1"
+						defaultValue={editBrief.references != null ? editBrief.references[0]?.comment : null}
+						value={editBrief.references != null ? editBrief.references[0]?.comment : null}
+						placeholder={editBrief.references != null ? editBrief.references[0]?.comment : null}
+					/>
+					<Field
+						name="references[1].link"
+						component={this.renderInput}
+						label="Link #2"
+						defaultValue={editBrief.references != null ? editBrief.references[1]?.link : null}
+						value={editBrief.references != null ? editBrief.references[1]?.link : null}
+						placeholder={editBrief.references != null ? editBrief.references[1]?.link : null}
+					/>
+					<Field
+						name="references[1].comment"
+						component={this.renderTextInput}
+						label="Comment #2"
+						defaultValue={editBrief.references != null ? editBrief.references[1]?.comment : null}
+						value={editBrief.references != null ? editBrief.references[1]?.comment : null}
+						placeholder={editBrief.references != null ? editBrief.references[1]?.comment : null}
+					/>
+					<Field
+						name="references[2].link"
+						component={this.renderInput}
+						label="Link #3"
+						defaultValue={editBrief.references != null ? editBrief.references[2]?.link : null}
+						value={editBrief.references != null ? editBrief.references[2]?.link : null}
+						placeholder={editBrief.references != null ? editBrief.references[2]?.link : null}
+					/>
+					<Field
+						name="references[2].comment"
+						component={this.renderTextInput}
+						label="Comment #3"
+						defaultValue={editBrief.references != null ? editBrief.references[2]?.comment : null}
+						value={editBrief.references != null ? editBrief.references[2]?.comment : null}
+						placeholder={editBrief.references != null ? editBrief.references[2]?.comment : null}
 					/>
 				</>
 			);
@@ -137,12 +280,6 @@ class CreateBriefForm extends React.Component {
 						component={this.renderInput}
 						type="checkbox"
 						label="Make this brief only visible to your connections?"
-					/>
-					<Field
-						name="budget"
-						component={this.renderInput}
-						type="number"
-						label="Budget"
 					/>
 					<Field
 						name="dueDate"
@@ -161,6 +298,79 @@ class CreateBriefForm extends React.Component {
 						name="description"
 						component={this.renderTextInput}
 						label="description"
+					/>
+					<hr />
+					<h5>License Terms</h5>
+					<Field name="media" component={this.renderInput} label="Media" />
+					<Field name="use" component={this.renderInput} label="Use" />
+					<Field
+						name="budget"
+						component={this.renderInput}
+						type="number"
+						label="Budget"
+					/>
+					<Field
+						name="licenseDuration"
+						component={this.renderInput}
+						label="License Duration"
+					/>
+					<Field
+						name="extractDuration"
+						component={this.renderInput}
+						label="Extract Duration"
+					/>
+					<Field
+						name="territory"
+						component={this.renderInput}
+						label="Territory"
+					/>
+					<hr />
+					<h5>Type Of Music Needed</h5>
+					<Field name="genres" component={this.renderInput} label="Genre(s)" />
+					<Field name="vocals" component={this.renderInput} label="Vocals" />
+					<Field name="moods" component={this.renderInput} label="Mood(s)" />
+					<Field
+						name="instruments"
+						component={this.renderInput}
+						label="Instrument(s)"
+					/>
+					<Field name="tempo" component={this.renderInput} label="Tempo" />
+					<Field
+						name="exclusivity"
+						component={this.renderInput}
+						label="Exclusivity"
+					/>
+					<hr />
+					<h5>Reference(s)</h5>
+					<Field
+						name="references[0].link"
+						component={this.renderInput}
+						label="Link #1"
+					/>
+					<Field
+						name="references[0].comment"
+						component={this.renderTextInput}
+						label="Comment #1"
+					/>
+					<Field
+						name="references[1].link"
+						component={this.renderInput}
+						label="Link #2"
+					/>
+					<Field
+						name="references[1].comment"
+						component={this.renderTextInput}
+						label="Comment #2"
+					/>
+					<Field
+						name="references[2].link"
+						component={this.renderInput}
+						label="Link #3"
+					/>
+					<Field
+						name="references[2].comment"
+						component={this.renderTextInput}
+						label="Comment #3"
 					/>
 				</>
 			);
