@@ -1,15 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reportWebVitals from "./reportWebVitals";
-import App from './components/App';
+import App from "./components/App";
 import reducers from "./reducers";
 import { checkLoggedIn } from "./util/session";
 import history from "./util/history";
 import { Router } from "react-router-dom";
-
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./style/theme";
 
 const renderApp = (preloadedState) => {
 	const composeEnhancers =
@@ -22,15 +23,15 @@ const renderApp = (preloadedState) => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<Router history={history}>
-				<App />
+				<ThemeProvider theme={theme}>
+					<App />
+				</ThemeProvider>
 			</Router>
 		</Provider>,
 		document.getElementById("root")
 	);
 };
 (async () => renderApp(await checkLoggedIn()))();
-
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
