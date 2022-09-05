@@ -22,12 +22,13 @@ import ResetPassword from "./Users/ResetPassword";
 import CreateTrack from "./Catalog/CreateTrack";
 import ListTracks from "./Catalog/ListTracks";
 import EditTrack from "./Catalog/EditTrack";
+import Appbar from "./Appbar";
 
 class App extends React.Component {
 	render() {
 		return (
 			<div className="ui container app">
-				<Header />
+				<Appbar />
 				<Switch>
 					{this.props.isUserPending ? (
 						<>
