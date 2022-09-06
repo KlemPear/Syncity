@@ -34,9 +34,6 @@ class ListBriefs extends React.Component {
 			return (
 				<>
 					<div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
 						<Link className="ui blue button" to={`/create-brief`}>
 							Create Brief
 						</Link>
