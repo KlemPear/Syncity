@@ -82,7 +82,7 @@ class ResponsiveAppBar extends React.Component {
 	render() {
     const {pages, settings} = this.getPagesAndSettings();
 		return (
-			<AppBar position="static">
+			<AppBar position="static" sx={{mb: 2}}>
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
 						<LibraryMusicIcon

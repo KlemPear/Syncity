@@ -23,11 +23,11 @@ import {
 	pink,
 } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
-import {Box, Stack, Divider} from "@mui/material";
+import { Box, Stack, Divider, Badge, ButtonGroup } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
-import MuiLink from '@mui/material/Link';
-
+import MuiLink from "@mui/material/Link";
 
 const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
 
@@ -73,7 +73,7 @@ class BriefCard extends React.Component {
 				<CardHeader
 					avatar={
 						<Avatar
-							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500]}}
+							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
 							aria-label="media"
 						>
 							{brief.media}
@@ -85,7 +85,7 @@ class BriefCard extends React.Component {
 					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
 				/>
 				<CardContent>
-					<Divider variant="middle" sx={{margin: 1}}/>
+					<Divider variant="middle" sx={{ margin: 1 }} />
 					<Typography variant="body2" color="text.secondary">
 						{brief.numberOfApplicationsWanted > 0
 							? `Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`
@@ -99,9 +99,14 @@ class BriefCard extends React.Component {
 					</Typography>
 				</CardContent>
 				<CardActions disableSpacing>
-				  <Divider variant="middle" sx={{margin: 1}} />
+					<Divider variant="middle" sx={{ margin: 1 }} />
 					{brief.author === this.props.userId ? (
-						<>
+						<ButtonGroup
+							variant="outlined"
+							color="secondary"
+							size="small"
+							aria-label="outlined button group"
+						>
 							<Button component={Link} to={`show-brief/edit/${brief._id}`}>
 								Edit
 							</Button>
@@ -111,14 +116,21 @@ class BriefCard extends React.Component {
 							>
 								View Applications
 							</Button>
-						</>
+						</ButtonGroup>
 					) : (
 						<>
 							{brief.numberOfApplicationsWanted ===
 							brief.numberOfApplicationsSubmitted ? (
-								<Button>Closed</Button>
+								<Button variant="contained" color="primary">
+									Closed
+								</Button>
 							) : (
-								<Button component={Link} to={`show-brief/${brief._id}`}>
+								<Button
+									variant="contained"
+									color="secondary"
+									component={Link}
+									to={`show-brief/${brief._id}`}
+								>
 									Apply
 								</Button>
 							)}
@@ -135,7 +147,7 @@ class BriefCard extends React.Component {
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 					<CardContent>
-					 <Divider variant="middle" sx={{margin: 1}} />
+						<Divider variant="middle" sx={{ margin: 1 }} />
 						<Typography>License Terms:</Typography>
 						<ul>
 							<li>Media: {brief.media}</li>
@@ -167,37 +179,69 @@ class BriefCard extends React.Component {
 		);
 	}
 
+	renderApplicationAvatar(application) {
+		const brief = application.brief;
+		const SmallAvatar = styled(Avatar)(({ theme }) => ({
+			width: 22,
+			height: 22,
+			border: `2px solid ${theme.palette.background.paper}`,
+		}));
+
+		if (application.liked) {
+			return (
+				<Badge
+					overlap="circular"
+					anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+					badgeContent={
+						<SmallAvatar sx={{ bgcolor: "white" }} aria-label="media">
+							<FavoriteIcon sx={{ color: red[500] }} />
+						</SmallAvatar>
+					}
+				>
+					<Avatar
+						sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
+						aria-label="media"
+					>
+						{brief.media}
+					</Avatar>
+				</Badge>
+			);
+		} else {
+			return (
+				<Avatar
+					sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
+					aria-label="media"
+				>
+					{brief.media}
+				</Avatar>
+			);
+		}
+	}
+
 	renderMuiApplication(application) {
 		const brief = application.brief;
 		return (
 			<Card sx={{ maxWidth: 350 }} variant="outlined">
 				<CardHeader
-					avatar={
-						<Avatar
-							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
-							aria-label="media"
-						>
-							{brief.media}
-						</Avatar>
-					}
+					avatar={this.renderApplicationAvatar(application)}
 					title={brief.title}
 					subheader={`Due Date: ${dateFormatter(
 						brief.dueDate
 					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
 				/>
 				<CardContent>
-				  <Divider variant="middle" sx={{margin: 1}} />
+					<Divider variant="middle" sx={{ margin: 1 }} />
 					<Stack direction="row" justifyContent="space-between">
-					<Typography>Description:</Typography>
-					<ExpandMore
-						expand={this.state.expanded}
-						onClick={this.handleExpandClick}
-						aria-expanded={this.state.expanded}
-						aria-label="show more"
-						align="right"
-					>
-						<ExpandMoreIcon align="right" />
-					</ExpandMore>
+						<Typography>Description:</Typography>
+						<ExpandMore
+							expand={this.state.expanded}
+							onClick={this.handleExpandClick}
+							aria-expanded={this.state.expanded}
+							aria-label="show more"
+							align="right"
+						>
+							<ExpandMoreIcon align="right" />
+						</ExpandMore>
 					</Stack>
 					<Typography variant="body1" color="text.primary">
 						{brief.description}
@@ -233,7 +277,7 @@ class BriefCard extends React.Component {
 					</CardContent>
 				</Collapse>
 				<CardContent>
-				  <Divider variant="middle" sx={{margin: 1}} />
+					<Divider variant="middle" sx={{ margin: 1 }} />
 					<h4>Tracks that you submitted for this brief:</h4>
 					<ul>
 						{application.tracks.length !== 0
