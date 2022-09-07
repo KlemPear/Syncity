@@ -103,7 +103,7 @@ class BriefCard extends React.Component {
 					{brief.author === this.props.userId ? (
 						<ButtonGroup
 							variant="outlined"
-							color="secondary"
+							color="primary"
 							size="small"
 							aria-label="outlined button group"
 						>
