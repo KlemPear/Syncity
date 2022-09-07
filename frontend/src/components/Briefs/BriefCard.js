@@ -13,12 +13,23 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red, deepPurple, blue, green, deepOrange, yellow, pink } from "@mui/material/colors";
+import {
+	red,
+	deepPurple,
+	blue,
+	green,
+	deepOrange,
+	yellow,
+	pink,
+} from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import {Box, Stack, Divider} from "@mui/material";
+import ListItem from "@mui/material/ListItem";
+import MuiLink from '@mui/material/Link';
 
-const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink ];
+
+const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
 
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
@@ -58,10 +69,13 @@ class BriefCard extends React.Component {
 
 	renderMuiBrief(brief) {
 		return (
-			<Card sx={{ maxWidth: 350 }}>
+			<Card sx={{ maxWidth: 350 }} variant="outlined">
 				<CardHeader
 					avatar={
-						<Avatar sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }} aria-label="media">
+						<Avatar
+							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500]}}
+							aria-label="media"
+						>
 							{brief.media}
 						</Avatar>
 					}
@@ -71,6 +85,7 @@ class BriefCard extends React.Component {
 					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
 				/>
 				<CardContent>
+					<Divider variant="middle" sx={{margin: 1}}/>
 					<Typography variant="body2" color="text.secondary">
 						{brief.numberOfApplicationsWanted > 0
 							? `Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`
@@ -84,6 +99,7 @@ class BriefCard extends React.Component {
 					</Typography>
 				</CardContent>
 				<CardActions disableSpacing>
+				  <Divider variant="middle" sx={{margin: 1}} />
 					{brief.author === this.props.userId ? (
 						<>
 							<Button component={Link} to={`show-brief/edit/${brief._id}`}>
@@ -119,6 +135,7 @@ class BriefCard extends React.Component {
 				</CardActions>
 				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 					<CardContent>
+					 <Divider variant="middle" sx={{margin: 1}} />
 						<Typography>License Terms:</Typography>
 						<ul>
 							<li>Media: {brief.media}</li>
@@ -150,107 +167,87 @@ class BriefCard extends React.Component {
 		);
 	}
 
-	renderBrief(brief) {
-		return (
-			<div className="card">
-				<div className="content">
-					<img
-						className="right floated mini ui image"
-						alt="logo"
-						src={brief.logo}
-					/>
-					<div className="header">{brief.title}</div>
-					<div className="meta">{`Budget: ${moneyFormatter.format(
-						brief.budget
-					)}`}</div>
-					<div className="meta">{`Due Date: ${dateFormatter(
-						brief.dueDate
-					)}`}</div>
-					{brief.numberOfApplicationsWanted > 0 ? (
-						<div className="meta">{`Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`}</div>
-					) : null}
-					<div className="description">
-						{brief.description?.substring(0, 240)}...
-					</div>
-				</div>
-				<div className="extra content">
-					{brief.author === this.props.userId ? (
-						<>
-							<Link
-								className="ui basic blue button"
-								to={`show-brief/edit/${brief._id}`}
-							>
-								Edit
-							</Link>
-							<Link
-								className="ui basic blue button"
-								to={`show-brief/${brief._id}/applications`}
-							>
-								View Applications
-							</Link>
-						</>
-					) : (
-						<>
-							{brief.numberOfApplicationsWanted ===
-							brief.numberOfApplicationsSubmitted ? (
-								<button className="ui basic red button">Closed</button>
-							) : (
-								<Link
-									className="ui basic green button"
-									to={`show-brief/${brief._id}`}
-								>
-									Apply
-								</Link>
-							)}
-						</>
-					)}
-				</div>
-			</div>
-		);
-	}
-
-	renderApplication(application) {
+	renderMuiApplication(application) {
 		const brief = application.brief;
 		return (
-			<div className="card">
-				<div className="content">
-					<img
-						className="right floated mini ui image"
-						alt="logo"
-						src={brief.logo}
-					/>
-					<div className="header">{brief.title}</div>
-					{application.liked ? (
-						<div className="meta">
-							Your application was LIKED!{" "}
-							<i className={`big thumbs up green icon`}></i>
-						</div>
-					) : null}
-					<div className="meta">{`Budget: ${moneyFormatter.format(
-						brief.budget
-					)}`}</div>
-					<div className="meta">{`Due Date: ${dateFormatter(
+			<Card sx={{ maxWidth: 350 }} variant="outlined">
+				<CardHeader
+					avatar={
+						<Avatar
+							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
+							aria-label="media"
+						>
+							{brief.media}
+						</Avatar>
+					}
+					title={brief.title}
+					subheader={`Due Date: ${dateFormatter(
 						brief.dueDate
-					)}`}</div>
-					<div className="description">
-						{brief.description?.substring(0, 240)}...
-					</div>
-				</div>
-				<div className="extra content">
+					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
+				/>
+				<CardContent>
+				  <Divider variant="middle" sx={{margin: 1}} />
+					<Stack direction="row" justifyContent="space-between">
+					<Typography>Description:</Typography>
+					<ExpandMore
+						expand={this.state.expanded}
+						onClick={this.handleExpandClick}
+						aria-expanded={this.state.expanded}
+						aria-label="show more"
+						align="right"
+					>
+						<ExpandMoreIcon align="right" />
+					</ExpandMore>
+					</Stack>
+					<Typography variant="body1" color="text.primary">
+						{brief.description}
+					</Typography>
+				</CardContent>
+				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+					<CardContent>
+						<Typography>License Terms:</Typography>
+						<ul>
+							<li>Media: {brief.media}</li>
+							<li>Use: {brief.use}</li>
+							<li>License Duration: {brief.licenseDuration}</li>
+							<li>Extract Duration: {brief.licenseDuration}</li>
+							<li>Territory: {brief.territory}</li>
+						</ul>
+						<br />
+						<Typography>Type Of Music Needed:</Typography>
+						<ul>
+							<li>Genre(s): {brief.genres}</li>
+							<li>Vocal(s): {brief.vocals}</li>
+							<li>Mood(s): {brief.moods}</li>
+							<li>Instrument(s): {brief.instruments}</li>
+							<li>Tempo: {brief.tempo}</li>
+							<li>Exclusivity: {brief.exclusivity}</li>
+						</ul>
+						<br />
+						{brief.references?.length !== 0 ? (
+							<>
+								<Typography>Reference(s):</Typography>
+								{brief.references?.map((ref) => this.renderReference(ref))}
+							</>
+						) : null}
+					</CardContent>
+				</Collapse>
+				<CardContent>
+				  <Divider variant="middle" sx={{margin: 1}} />
 					<h4>Tracks that you submitted for this brief:</h4>
 					<ul>
 						{application.tracks.length !== 0
 							? application.tracks.map((track) => (
 									<li key={track._id}>
-										<a href={track.link}>
+										<ListItem button component={MuiLink} href={track.link}>
 											{track.title} - {track.artist}
-										</a>
+										</ListItem>
 									</li>
 							  ))
 							: null}
 					</ul>
-				</div>
-			</div>
+				</CardContent>
+			</Card>
 		);
 	}
 
@@ -258,7 +255,7 @@ class BriefCard extends React.Component {
 		if (!this.props.application) {
 			return this.renderMuiBrief(this.props.brief);
 		} else {
-			return this.renderApplication(this.props.application);
+			return this.renderMuiApplication(this.props.application);
 		}
 	}
 }
