@@ -5,7 +5,6 @@ import SimpleStripe from "./SimpleStripe";
 //mui
 import {
 	Grid,
-	Box,
 	Button,
 	ButtonGroup,
 	Typography,
@@ -14,7 +13,6 @@ import {
 	CardContent,
 	CardActions,
 } from "@mui/material";
-import { Public, Lock, AccountBox, Add } from "@mui/icons-material";
 
 class BuyTokens extends React.Component {
 	constructor(props) {
@@ -32,33 +30,50 @@ class BuyTokens extends React.Component {
 
 	renderPlanOption = (itemId, amount, name, user, description = null) => {
 		return (
-			<Card
-				variant="outlined"
-				elevation={3}
-				sx={{ m: 1, padding: 1, minWidth: 250, maxWidth: 350, alignContent: 'center'}}
-			>
-				<CardContent>
-					<Typography variant="h4" centered>{name}</Typography>
-					<Typography sx={{ mb: 1.5 }} color="text.secondary">
-						${amount}
-					</Typography>
-					<Typography variant="body2">{description}</Typography>
-				</CardContent>
-				<CardActions>
-					<SimpleStripe
-						itemId={itemId}
-						amount={amount}
-						name={name}
-						userId={user._id}
-					/>
-				</CardActions>
-			</Card>
+			<Grid item xs={1} sm={1} md={1} lg={1}>
+				<Card
+					variant="outlined"
+					elevation={3}
+					sx={{
+						m: 0.5,
+						minWidth: 250,
+						minHeight: 275,
+						alignItems: "stretch",
+						display: "flex",
+						flexDirection: 'column',
+						justifyContent: 'space-between'
+					}}
+				>
+					<CardContent>
+						<Typography variant="h4" centered>
+							{name}
+						</Typography>
+						<Typography sx={{ mb: 1.5 }} color="text.secondary">
+							${amount}
+						</Typography>
+						<Typography variant="body2">{description}</Typography>
+					</CardContent>
+					<CardActions sx={{justifyContent: 'center'}}>
+						<SimpleStripe
+							itemId={itemId}
+							amount={amount}
+							name={name}
+							userId={user._id}
+						/>
+					</CardActions>
+				</Card>
+			</Grid>
 		);
 	};
 
 	renderBriefPlans = () => {
 		return (
-			<Stack direction="row" justifyContent="space-evenly">
+			<Grid
+				container
+				spacing={{ xs: 1, md: 2 }}
+				columns={{ xs: 1, sm: 2, lg: 4 }}
+				justifyContent="space-evenly"
+			>
 				{this.renderPlanOption(
 					"freePlan",
 					"0.00/month",
@@ -71,14 +86,14 @@ class BuyTokens extends React.Component {
 					"19.00/month",
 					"Basic Brief Plan",
 					this.props.user,
-					"5 briefs per month"
+					"5 briefs per month."
 				)}
 				{this.renderPlanOption(
 					"proBriefPlan",
 					"49.00/month",
 					"Pro Brief Plan",
 					this.props.user,
-					"15 briefs per month"
+					"15 briefs per month."
 				)}
 				{this.renderPlanOption(
 					"businessBriefPlan",
@@ -87,33 +102,38 @@ class BuyTokens extends React.Component {
 					this.props.user,
 					"Unlimited briefs."
 				)}
-			</Stack>
+			</Grid>
 		);
 	};
 
 	renderPitchPlans = () => {
 		return (
-			<Stack direction="row" justifyContent="space-evenly">
+			<Grid
+				container
+				spacing={{ xs: 1, md: 2 }}
+				columns={{ xs: 1, sm: 2, lg: 4 }}
+				justifyContent="space-evenly"
+			>
 				{this.renderPlanOption(
 					"freePlan",
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"5 applications per month"
+					"5 applications per month."
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
 					"15.00/month",
 					"Basic Applications Plan",
 					this.props.user,
-					"25 applications per month"
+					"25 applications per month."
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
 					"29.00/month",
 					"Pro Applications Plan",
 					this.props.user,
-					"50 applications per month"
+					"50 applications per month."
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
@@ -122,7 +142,7 @@ class BuyTokens extends React.Component {
 					this.props.user,
 					"Unlimited applications."
 				)}
-			</Stack>
+			</Grid>
 		);
 	};
 
