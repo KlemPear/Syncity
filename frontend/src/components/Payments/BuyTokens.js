@@ -12,6 +12,7 @@ import {
 	Card,
 	CardContent,
 	CardActions,
+	CardHeader,
 } from "@mui/material";
 
 class BuyTokens extends React.Component {
@@ -37,23 +38,21 @@ class BuyTokens extends React.Component {
 					sx={{
 						m: 0.5,
 						minWidth: 250,
-						minHeight: 275,
+						minHeight: 250,
 						alignItems: "stretch",
 						display: "flex",
-						flexDirection: 'column',
-						justifyContent: 'space-between'
+						flexDirection: "column",
+						justifyContent: "space-between",
 					}}
 				>
+					<CardHeader
+						title={name}
+						subheader={`$${amount}`}
+					/>
 					<CardContent>
-						<Typography variant="h4" centered>
-							{name}
-						</Typography>
-						<Typography sx={{ mb: 1.5 }} color="text.secondary">
-							${amount}
-						</Typography>
 						<Typography variant="body2">{description}</Typography>
 					</CardContent>
-					<CardActions sx={{justifyContent: 'center'}}>
+					<CardActions sx={{ justifyContent: "center" }}>
 						<SimpleStripe
 							itemId={itemId}
 							amount={amount}

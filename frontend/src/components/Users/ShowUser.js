@@ -10,6 +10,22 @@ import Modal from "../Modal";
 import UserSearch from "./UserSearch";
 import payments from "../../apis/payments";
 
+//mui
+import {
+	Grid,
+	Button,
+	ButtonGroup,
+	Typography,
+	Stack,
+	Card,
+	CardContent,
+	CardActions,
+	CardHeader,
+	Box,
+	Container,
+	Divider,
+} from "@mui/material";
+
 class ShowUser extends React.Component {
 	constructor(props) {
 		super(props);
@@ -21,9 +37,9 @@ class ShowUser extends React.Component {
 		this.setState({ showModal: false });
 	};
 
-	onMoreTokensClick = () => {
-		this.props.addTokensToUser(this.props.currentUser._id, 10);
-	};
+	// onMoreTokensClick = () => {
+	// 	this.props.addTokensToUser(this.props.currentUser._id, 10);
+	// };
 
 	onAddConnectionsClick = () => {
 		this.setState({ showModal: true });
@@ -71,50 +87,56 @@ class ShowUser extends React.Component {
 
 	renderUserProfile() {
 		return (
-			<div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<h3>User Profile</h3>
-				<div>First Name: {this.props.currentUser.firstName}</div>
-				<div>Last Name: {this.props.currentUser.lastName}</div>
-				<div>
-					Number of <i className="gem fitted circular inverted outline icon" />:{" "}
-					{this.props.currentUser.tokens}
-				</div>
-				<hr />
-				<div>Bio: {this.props.currentUser.bio}</div>
-				<hr />
-				<div>
-					<button
-						className="ui classic green button"
-						onClick={() => this.onMoreTokensClick()}
-					>
-						Add 10 <i className="gem fitted circular inverted outline icon" />
-					</button>
-					<hr />
-					<div>
-						<h4>Subscription Plans</h4>
-						<ul>
-							<li>
-								Brief Plan:{" "}
-								{this.props.currentUser.briefSubscriptionPlan ?? "no plan"},{" "}
-								{this.props.currentUser.briefTokens === -1
-									? "unlimited"
-									: this.props.currentUser.briefTokens}{" "}
-								briefs remaining for this billing period.
-							</li>
-							<li>
-								Pitch Plan:{" "}
-								{this.props.currentUser.pitchSubscriptionPlan ?? "no plan"},{" "}
-								{this.props.currentUser.pitchTokens === -1
-									? "unlimited"
-									: this.props.currentUser.pitchTokens}{" "}
-								pitches remaining for this billing period.
-							</li>
-						</ul>
-					</div>
-					<div>
+			<Box
+				sx={{
+					display: "flex",
+					justifyContent: "space-evenly",
+					alignItems: "center",
+					flexDirection: "column",
+					minHeight: 500,
+				}}
+			>
+				<Typography
+					variant="h2"
+					sx={{
+						mr: 2,
+						display: { xs: "none", md: "flex" },
+						fontWeight: 700,
+						letterSpacing: ".2rem",
+						color: "inherit",
+						textDecoration: "none",
+					}}
+				>
+					{this.props.currentUser.firstName} {this.props.currentUser.lastName}
+				</Typography>
+				<Typography>{this.props.currentUser.bio}</Typography>
+				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Box
+					sx={{
+						justifyContent: "space-evenly",
+					}}
+				>
+					<Typography variant="h5">Current Subscription Plans</Typography>
+					<ul>
+						<li>
+							Brief Plan:{" "}
+							{this.props.currentUser.briefSubscriptionPlan ?? "no plan"},{" "}
+							{this.props.currentUser.briefTokens === -1
+								? "unlimited"
+								: this.props.currentUser.briefTokens}{" "}
+							briefs remaining for this billing period.
+						</li>
+						<li>
+							Pitch Plan:{" "}
+							{this.props.currentUser.pitchSubscriptionPlan ?? "no plan"},{" "}
+							{this.props.currentUser.pitchTokens === -1
+								? "unlimited"
+								: this.props.currentUser.pitchTokens}{" "}
+							pitches remaining for this billing period.
+						</li>
+					</ul>
+
+					<Box>
 						{this.props.currentUser.stripeCustomerId ? (
 							<form
 								onSubmit={(event) =>
@@ -124,51 +146,59 @@ class ShowUser extends React.Component {
 									)
 								}
 							>
-								<button
-									className="ui button primary"
+								<Button
+									variant="contained"
+									color="secondary"
 									id="checkout-and-portal-button"
 									type="submit"
 								>
 									Manage your billing information
-								</button>
+								</Button>
 							</form>
 						) : null}
-					</div>
-					<hr />
+					</Box>
+				</Box>
+				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Box
+					spacing={2}
+					sx={{
+						justifyContent: "space-evenly",
+					}}
+				>
+					<Typography variant="h5">Connections</Typography>
 					<div>
-						<h2>Connections</h2>
-						<div>
-							{this.props.currentUser.connections
-								? this.props.currentUser.connections.map((connection) => (
-										<div
-											key={connection._id}
-										>{`${connection.firstName} ${connection.lastName} - ${connection.email}`}</div>
-								  ))
-								: null}
-						</div>
-						<button
-							className="ui classic blue button"
-							onClick={() => this.onAddConnectionsClick()}
-						>
-							Find new connections
-						</button>
-						{this.state.showModal ? (
-							<Modal
-								title={"Find new connections"}
-								content={this.renderModalContent()}
-								actions={this.renderModalActions()}
-								onDismiss={() => this.onDismissModal()}
-							/>
-						) : null}
+						{this.props.currentUser.connections
+							? this.props.currentUser.connections.map((connection) => (
+									<div
+										key={connection._id}
+									>{`${connection.firstName} ${connection.lastName} - ${connection.email}`}</div>
+							  ))
+							: null}
 					</div>
-				</div>
-			</div>
+					<Button
+						variant="contained"
+						color="secondary"
+						className="ui classic blue button"
+						onClick={() => this.onAddConnectionsClick()}
+					>
+						Find new connections
+					</Button>
+					{this.state.showModal ? (
+						<Modal
+							title={"Find new connections"}
+							content={this.renderModalContent()}
+							actions={this.renderModalActions()}
+							onDismiss={() => this.onDismissModal()}
+						/>
+					) : null}
+				</Box>
+			</Box>
 		);
 	}
 
 	render() {
 		if (!this.props.currentUser) {
-			return <div>There are no signed in user.</div>;
+			return <Box>There are no signed in user.</Box>;
 		}
 		return this.renderUserProfile();
 	}
