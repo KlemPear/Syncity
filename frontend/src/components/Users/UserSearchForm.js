@@ -6,28 +6,13 @@ import { Button, Stack, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 class UserSearchForm extends React.Component {
-	renderError({ error, touched }) {
-		if (touched && error) {
-			return (
-				<div className="ui error message">
-					<div className="header">{error}</div>
-				</div>
-			);
-		}
-	}
-
-	renderInput = ({ input, label, meta, type }) => {
-		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-		return (
-			<div className={className}>
-				<label>{label}</label>
-				<input type={type} {...input} autoComplete="off" />
-				{this.renderError(meta)}
-			</div>
-		);
-	};
-
-	renderTextField = ({ input, label, type, meta: { touched, error }, ...custom }) => {
+	renderTextField = ({
+		input,
+		label,
+		type,
+		meta: { touched, error },
+		...custom
+	}) => {
 		return (
 			<>
 				<TextField
@@ -62,7 +47,9 @@ class UserSearchForm extends React.Component {
 							type={"email"}
 							label="Email Address"
 						/>
-						<Button type="submit" startIcon={<SearchIcon />}>Search</Button>
+						<Button type="submit" startIcon={<SearchIcon />}>
+							Search
+						</Button>
 					</Stack>
 				</form>
 			</div>
