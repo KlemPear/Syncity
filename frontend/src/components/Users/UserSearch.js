@@ -3,6 +3,9 @@ import UserSearchForm from "./UserSearchForm";
 import { searchUser, inviteNewUser } from "../../actions";
 import { connect } from "react-redux";
 
+//mui
+import { Button, Typography, Box } from "@mui/material";
+
 class UserSearch extends React.Component {
 	constructor(props) {
 		super(props);
@@ -37,16 +40,13 @@ class UserSearch extends React.Component {
 
 	renderUserNotFound() {
 		return (
-			<div>
-				<p>{`There are no user with the email address ${this.state.email} in our database.`}</p>
-				<p>Would you like to invite them to join NOST?</p>
-				<div
-					className="button ui blue inverted"
-					onClick={() => this.sendInvite(this.state.email)}
-				>
+			<Box>
+				<Typography>{`There are no user with the email address ${this.state.email} in our database.`}</Typography>
+				<Typography>Would you like to invite them to join NOST?</Typography>
+				<Button onClick={() => this.sendInvite(this.state.email)}>
 					Send Invite
-				</div>
-			</div>
+				</Button>
+			</Box>
 		);
 	}
 
@@ -69,26 +69,26 @@ class UserSearch extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h5>Search for an email address</h5>
+			<Box>
+				<Typography variant="h6">Search for an email address</Typography>
 				<UserSearchForm onSubmit={this.onSubmit} />
-				<div>
+				<Box>
 					{this.props.searchedUser != null
 						? `${this.props.searchedUser?.firstName} ${this.props.searchedUser?.lastName} - ${this.props.searchedUser?.email}`
 						: this.state.search === 0
 						? null
 						: this.renderUserNotFound()}
-				</div>
-				<hr></hr>
-				<div>
-					<button
-						className="ui green button"
+				</Box>
+				<Box sx={{ m: 1 }}>
+					<Button
+						variant="contained"
+						color="secondary"
 						onClick={() => this.onAddSearchedUser()}
 					>
 						Add connection
-					</button>
-				</div>
-			</div>
+					</Button>
+				</Box>
+			</Box>
 		);
 	}
 }

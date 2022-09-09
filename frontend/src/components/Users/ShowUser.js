@@ -6,25 +6,12 @@ import {
 	editUser,
 	editUserNoPayload,
 } from "../../actions";
-import Modal from "../Modal";
+import TransitionModal from "../Modal";
 import UserSearch from "./UserSearch";
 import payments from "../../apis/payments";
 
 //mui
-import {
-	Grid,
-	Button,
-	ButtonGroup,
-	Typography,
-	Stack,
-	Card,
-	CardContent,
-	CardActions,
-	CardHeader,
-	Box,
-	Container,
-	Divider,
-} from "@mui/material";
+import { Button, Typography, Box, Divider } from "@mui/material";
 
 class ShowUser extends React.Component {
 	constructor(props) {
@@ -69,19 +56,19 @@ class ShowUser extends React.Component {
 
 	renderModalContent() {
 		return (
-			<div>
+			<>
 				<UserSearch onAddSearchedUser={this.onAddSearchedUser} />
-			</div>
+			</>
 		);
 	}
 
 	renderModalActions() {
 		return (
-			<div>
-				<button className="ui button" onClick={() => this.onDismissModal()}>
+			<>
+				<Button variant="contained" color="primary" onClick={() => this.onDismissModal()}>
 					Cancel
-				</button>
-			</div>
+				</Button>
+			</>
 		);
 	}
 
@@ -99,8 +86,6 @@ class ShowUser extends React.Component {
 				<Typography
 					variant="h2"
 					sx={{
-						mr: 2,
-						display: { xs: "none", md: "flex" },
 						fontWeight: 700,
 						letterSpacing: ".2rem",
 						color: "inherit",
@@ -109,6 +94,7 @@ class ShowUser extends React.Component {
 				>
 					{this.props.currentUser.firstName} {this.props.currentUser.lastName}
 				</Typography>
+				<Typography>Email: {this.props.currentUser.email}</Typography>
 				<Typography>{this.props.currentUser.bio}</Typography>
 				<Divider variant="middle" sx={{ margin: 1 }} />
 				<Box
@@ -116,7 +102,9 @@ class ShowUser extends React.Component {
 						justifyContent: "space-evenly",
 					}}
 				>
-					<Typography variant="h5">Current Subscription Plans</Typography>
+					<Typography sx={{ mb: 2 }} variant="h5">
+						Current Subscription Plans
+					</Typography>
 					<ul>
 						<li>
 							Brief Plan:{" "}
@@ -136,7 +124,7 @@ class ShowUser extends React.Component {
 						</li>
 					</ul>
 
-					<Box>
+					<Box sx={{ mt: 2 }}>
 						{this.props.currentUser.stripeCustomerId ? (
 							<form
 								onSubmit={(event) =>
@@ -165,8 +153,10 @@ class ShowUser extends React.Component {
 						justifyContent: "space-evenly",
 					}}
 				>
-					<Typography variant="h5">Connections</Typography>
-					<div>
+					<Typography sx={{ mb: 2 }} variant="h5">
+						Connections
+					</Typography>
+					<Box sx={{ maxHeight: 300 }}>
 						{this.props.currentUser.connections
 							? this.props.currentUser.connections.map((connection) => (
 									<div
@@ -174,23 +164,23 @@ class ShowUser extends React.Component {
 									>{`${connection.firstName} ${connection.lastName} - ${connection.email}`}</div>
 							  ))
 							: null}
-					</div>
+					</Box>
 					<Button
 						variant="contained"
 						color="secondary"
 						className="ui classic blue button"
 						onClick={() => this.onAddConnectionsClick()}
+						sx={{ mt: 2 }}
 					>
 						Find new connections
 					</Button>
-					{this.state.showModal ? (
-						<Modal
-							title={"Find new connections"}
-							content={this.renderModalContent()}
-							actions={this.renderModalActions()}
-							onDismiss={() => this.onDismissModal()}
-						/>
-					) : null}
+					<TransitionModal
+						showModal={this.state.showModal}
+						title={"Find new connections"}
+						content={this.renderModalContent()}
+						actions={this.renderModalActions()}
+						onDismiss={() => this.onDismissModal()}
+					/>
 				</Box>
 			</Box>
 		);

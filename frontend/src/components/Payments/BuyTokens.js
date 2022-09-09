@@ -33,7 +33,6 @@ class BuyTokens extends React.Component {
 		return (
 			<Grid item xs={1} sm={1} md={1} lg={1}>
 				<Card
-					variant="outlined"
 					elevation={3}
 					sx={{
 						m: 0.5,
@@ -162,7 +161,6 @@ class BuyTokens extends React.Component {
 						color="primary"
 						size="small"
 						aria-label="outlined button group"
-						Justify
 					>
 						<Button onClick={this.onSelectBriefPlans}>I need music</Button>
 						<Button onClick={this.onSelectPitchPlans}>I make music</Button>
