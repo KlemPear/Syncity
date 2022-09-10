@@ -23,16 +23,16 @@ class ShowTrack extends Component {
 						id="panel1a-header"
 					>
 						<Typography component={MuiLink} href={track.link}>
-							{track.title}
+							{track.title} - {track.artist}
 						</Typography>
 					</AccordionSummary>
 					<AccordionDetails>
 						<Stack direction="row" justifyContent="space-between">
-						<Typography>
-							Master: {track.masterContact} - Publisher:{" "}
-							{track.publisherContact}
-						</Typography>
-						{this.props.button}
+							<Typography>
+								Master: {track.masterContact} - Publisher:{" "}
+								{track.publisherContact}
+							</Typography>
+							{this.props.button}
 						</Stack>
 					</AccordionDetails>
 				</Accordion>

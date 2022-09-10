@@ -2,10 +2,12 @@ import React from "react";
 import history from "../../util/history";
 import { connect } from "react-redux";
 import { editTrack, deleteTrack, fetchTrack } from "../../actions";
-import { Link } from "react-router-dom";
 import Loader from "../Loader";
 
 import CreateTrackForm from "./CreateTrackForm";
+
+//mui
+import { Typography, Box } from "@mui/material";
 
 class EditTrack extends React.Component {
 	componentDidMount = () => {
@@ -29,22 +31,23 @@ class EditTrack extends React.Component {
 			);
 		} else {
 			return (
-				<div>
-					<h3>this is a page to edit a Track or to delete it.</h3>
+				<Box
+					sx={{
+						display: "flex",
+						justifyContent: "space-evenly",
+						alignItems: "center",
+						flexDirection: "column",
+					}}
+				>
+					<Typography sx={{ m: 2 }} variant="h3">
+						Edit Track
+					</Typography>
 					<CreateTrackForm
 						onSubmit={this.onSubmit}
 						editTrack={this.props.track}
+						onDelete={() => this.onPressDelete(this.props.track._id)}
 					/>
-					<div
-						className="ui basic red button"
-						onClick={() => this.onPressDelete(this.props.track._id)}
-					>
-						Delete
-					</div>
-					<Link className="ui basic button" to={`/catalog`}>
-						Cancel
-					</Link>
-				</div>
+				</Box>
 			);
 		}
 	}

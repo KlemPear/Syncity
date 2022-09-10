@@ -4,6 +4,9 @@ import { fetchTracks } from "../../actions";
 import ShowTrack from "./ShowTrack";
 import Modal from "../Modal";
 
+//mui
+import { Checkbox} from "@mui/material";
+
 class TrackSelector extends React.Component {
 	constructor(props) {
 		super(props);
@@ -43,14 +46,13 @@ class TrackSelector extends React.Component {
 
 	renderTrackButton = (track) => {
 		return (
-			<div className="ui checkbox">
-				<input
+			<>
+				<Checkbox
 					type="checkbox"
 					name={track._id}
 					onChange={() => this.handleCheckboxToggle(track)}
 				/>
-				<label></label>
-			</div>
+			</>
 		);
 	};
 
@@ -84,6 +86,7 @@ class TrackSelector extends React.Component {
 				))}
 				{this.state.tooManyTracksSelected ? (
 					<Modal
+						showModal={this.state.tooManyTracksSelected}
 						title={"You can only select 3 track maximum."}
 						content={this.renderModalContent()}
 						onDismiss={() => this.renderModalDismiss()}

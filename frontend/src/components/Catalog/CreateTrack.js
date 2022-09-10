@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import CreateTrackForm from "./CreateTrackForm";
 import { createTrack } from "../../actions";
 
+//mui
+import { Typography, Box } from "@mui/material";
+
+
 class CreateTrack extends React.Component {
 	onSubmit = (formValues) => {
 		if (this.props.pushToCatalog == null) {
@@ -20,10 +24,10 @@ class CreateTrack extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h3>Create Track</h3>
+			<Box sx={{display: "flex", justifyContent: "space-evenly", alignItems: "center", flexDirection: "column"}}>
+				<Typography sx={{m:2}} variant="h3">Create Track</Typography>
 				<CreateTrackForm onSubmit={this.onSubmit} />
-			</div>
+			</Box>
 		);
 	}
 }
