@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import {
 	addTokensToUser,
 	cleanSearchedUser,
@@ -65,7 +66,11 @@ class ShowUser extends React.Component {
 	renderModalActions() {
 		return (
 			<>
-				<Button variant="contained" color="primary" onClick={() => this.onDismissModal()}>
+				<Button
+					variant="contained"
+					color="primary"
+					onClick={() => this.onDismissModal()}
+				>
 					Cancel
 				</Button>
 			</>
@@ -143,7 +148,16 @@ class ShowUser extends React.Component {
 									Manage your billing information
 								</Button>
 							</form>
-						) : null}
+						) : (
+							<Button
+								variant="contained"
+								color="secondary"
+								component={Link}
+								to="/buy-tokens"
+							>
+								Subscribe to a plan
+							</Button>
+						)}
 					</Box>
 				</Box>
 				<Divider variant="middle" sx={{ margin: 1 }} />
