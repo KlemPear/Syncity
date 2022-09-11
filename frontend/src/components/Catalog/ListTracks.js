@@ -6,7 +6,7 @@ import { fetchTracks } from "../../actions";
 import ShowTrack from "./ShowTrack";
 
 //mui
-import { Stack, Button, Box, Fab} from "@mui/material";
+import { Stack, Button, Box, Fab } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 class ListTracks extends React.Component {
@@ -16,7 +16,12 @@ class ListTracks extends React.Component {
 
 	renderTrackEditButton = (track) => {
 		return (
-			<Button variant="contained" component={Link} to={`/catalog/${track._id}`} color="secondary">
+			<Button
+				variant="contained"
+				component={Link}
+				to={`/catalog/${track._id}`}
+				color="secondary"
+			>
 				Edit
 			</Button>
 		);
@@ -32,7 +37,7 @@ class ListTracks extends React.Component {
 		} else {
 			return (
 				<>
-				<Fab
+					<Fab
 						variant="extended"
 						component={Link}
 						to="/create-track"
@@ -43,7 +48,16 @@ class ListTracks extends React.Component {
 						<Add sx={{ mr: 1 }} />
 						Add a track to your catalog
 					</Fab>
-					<Stack spacing={2}>
+					<Stack
+						spacing={2}
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							height: 550,
+							overflow: "hidden",
+							overflowY: "scroll",
+						}}
+					>
 						{this.props.tracks.map((track) => (
 							<Box key={track._id}>
 								<ShowTrack

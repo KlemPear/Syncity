@@ -1,6 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 //mui
 import {
@@ -726,9 +727,35 @@ class CreateBriefForm extends React.Component {
 				<form onSubmit={this.onSubmit} className="ui form error">
 					<Stack spacing={2} sx={{ m: 2 }}>
 						{this.renderFormFields()}
-						<Button type="submit" variant="contained" color="secondary">
+						{/* <Button type="submit" variant="contained" color="secondary">
 							Submit
-						</Button>
+						</Button> */}
+						<Stack
+							direction="row"
+							sx={{ display: "flex", justifyContent: "flex-end" }}
+							spacing={2}
+						>
+							<Button type="submit" variant="contained" color="secondary">
+								Submit
+							</Button>
+							{this.props.editBrief ? (
+								<Button
+									variant="outlined"
+									color="error"
+									onClick={this.props.onDelete}
+								>
+									Delete Brief
+								</Button>
+							) : null}
+							<Button
+								variant="outlined"
+								color="primary"
+								component={Link}
+								to="/list-briefs"
+							>
+								Cancel
+							</Button>
+						</Stack>
 					</Stack>
 				</form>
 			</div>

@@ -22,7 +22,7 @@ class ShowTrack extends Component {
 						aria-controls="panel1a-content"
 						id="panel1a-header"
 					>
-						<Typography component={MuiLink} href={track.link}>
+						<Typography component={MuiLink} underline="hover" href={track.link}>
 							{track.title} - {track.artist}
 						</Typography>
 					</AccordionSummary>

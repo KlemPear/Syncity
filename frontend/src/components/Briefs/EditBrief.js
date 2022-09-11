@@ -2,10 +2,12 @@ import React from "react";
 import history from "../../util/history";
 import { connect } from "react-redux";
 import { editBrief, deleteBrief, fetchBrief } from "../../actions";
-import { Link } from "react-router-dom";
 import Loader from "../Loader";
 
 import CreateBriefForm from "./CreateBriefForm";
+
+//mui
+import { Typography, Stack } from "@mui/material";
 
 class EditBrief extends React.Component {
 	componentDidMount = () => {
@@ -29,25 +31,14 @@ class EditBrief extends React.Component {
 			);
 		} else {
 			return (
-				<div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<h3>this is a page to edit a brief or to delete it.</h3>
+				<Stack spacing={2} sx={{display: "flex", justifyContent: "space-evenly", alignItems: "center", flexDirection: "column"}}>
+					<Typography variant="h3">Edit Brief</Typography>
 					<CreateBriefForm
 						onSubmit={this.onSubmit}
 						editBrief={this.props.brief}
+						onDelete={() => this.onPressDelete(this.props.brief._id)}
 					/>
-					<div
-						className="ui basic red button"
-						onClick={() => this.onPressDelete(this.props.brief._id)}
-					>
-						Delete
-					</div>
-					<Link className="ui basic button" to={`/list-briefs`}>
-						Cancel
-					</Link>
-				</div>
+				</Stack>
 			);
 		}
 	}

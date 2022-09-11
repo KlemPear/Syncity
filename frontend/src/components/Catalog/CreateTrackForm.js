@@ -142,14 +142,24 @@ class CreateTrackForm extends React.Component {
 									Delete Track
 								</Button>
 							) : null}
-							<Button
-								variant="outlined"
-								color="primary"
-								component={Link}
-								to="/catalog"
-							>
-								Cancel
-							</Button>
+							{this.props.onCancel ? (
+								<Button
+									variant="outlined"
+									color="primary"
+									onClick={this.props.onCancel}
+								>
+									Cancel
+								</Button>
+							) : (
+								<Button
+									variant="outlined"
+									color="primary"
+									component={Link}
+									to="/catalog"
+								>
+									Cancel
+								</Button>
+							)}
 						</Stack>
 					</Stack>
 				</form>

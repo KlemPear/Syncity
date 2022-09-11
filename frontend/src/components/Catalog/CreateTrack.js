@@ -19,6 +19,7 @@ class CreateTrack extends React.Component {
 				{ ...formValues, author: `${this.props.userId}` },
 				this.props.pushToCatalog
 			);
+			this.props.onDismiss();
 		}
 	};
 
@@ -26,7 +27,7 @@ class CreateTrack extends React.Component {
 		return (
 			<Box sx={{display: "flex", justifyContent: "space-evenly", alignItems: "center", flexDirection: "column"}}>
 				<Typography sx={{m:2}} variant="h3">Create Track</Typography>
-				<CreateTrackForm onSubmit={this.onSubmit} />
+				<CreateTrackForm onSubmit={this.onSubmit} onCancel={this.props.onDismiss} />
 			</Box>
 		);
 	}

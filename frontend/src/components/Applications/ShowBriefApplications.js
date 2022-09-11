@@ -44,14 +44,24 @@ class ShowBriefApplications extends React.Component {
 							If you like an application you will be able to see its contact
 							information, and the applicant will be notified.
 						</Typography>
-						<List>
-							{this.props.applications.map((application) => (
-								<ApplicationCard
-									key={application._id}
-									application={application}
-								/>
-							))}
-						</List>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								height: 550,
+								overflow: "hidden",
+								overflowY: "scroll",
+							}}
+						>
+							<List>
+								{this.props.applications.map((application) => (
+									<ApplicationCard
+										key={application._id}
+										application={application}
+									/>
+								))}
+							</List>
+						</Box>
 					</Stack>
 				</>
 			);

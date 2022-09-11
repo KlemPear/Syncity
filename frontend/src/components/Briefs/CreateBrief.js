@@ -6,7 +6,7 @@ import Modal from "../Modal";
 import { Link } from "react-router-dom";
 
 //mui
-import { Button, Typography, Box, Stack } from "@mui/material";
+import { Button, Typography, Stack } from "@mui/material";
 
 class CreateBrief extends React.Component {
 	constructor(props) {
