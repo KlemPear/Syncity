@@ -11,7 +11,7 @@ import { Add } from "@mui/icons-material";
 
 class ListTracks extends React.Component {
 	componentDidMount() {
-		this.props.fetchTracks(this.props.userId);
+		this.props.fetchTracks({ author: this.props.userId });
 	}
 
 	renderTrackEditButton = (track) => {

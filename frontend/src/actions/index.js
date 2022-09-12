@@ -204,8 +204,8 @@ export const editApplication = (body) => async (dispatch, getState) => {
 
 //#region Tracks
 
-export const fetchTracks = (userId) => async (dispatch, getState) => {
-	const response = await tracks.get(`/`, { params: { userId } });
+export const fetchTracks = (query) => async (dispatch, getState) => {
+	const response = await tracks.get(`/`, { params: query });
 	dispatch({ type: tracksTypes.FETCH_TRACKS, payload: response.data });
 };
 

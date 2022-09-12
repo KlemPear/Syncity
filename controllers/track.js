@@ -3,6 +3,7 @@ const User = require("../models/User");
 
 module.exports.onGetAllTracks = async (req, res, next) => {
 	try {
+		console.log(req.query);
 		const tracks = await Track.find(req.query);
 		return res.status(200).json(tracks);
 	} catch (error) {

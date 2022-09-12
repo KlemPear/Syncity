@@ -37,7 +37,12 @@ class BriefApplication extends React.Component {
 	renderModalActions() {
 		return (
 			<React.Fragment>
-				<Button component={Link} variant="contained" color="primary" to="/buy-tokens">
+				<Button
+					component={Link}
+					variant="contained"
+					color="primary"
+					to="/buy-tokens"
+				>
 					Subscribe to a plan
 				</Button>
 			</React.Fragment>
@@ -67,7 +72,7 @@ class BriefApplication extends React.Component {
 
 	render() {
 		return (
-			<Stack spacing={2}>
+			<Stack spacing={2} sx={{ m: 2 }}>
 				<Typography variant="h3">Submit an application</Typography>
 				<Typography>You can submit up to 3 tracks.</Typography>
 				<Stack direction="row" spacing={1} sx={{ m: 1 }}>
@@ -82,7 +87,7 @@ class BriefApplication extends React.Component {
 					sx={{
 						display: "flex",
 						flexDirection: "column",
-						height: 400,
+						maxHeight: 400,
 						overflow: "hidden",
 						overflowY: "scroll",
 					}}

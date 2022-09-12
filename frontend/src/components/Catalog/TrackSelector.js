@@ -24,7 +24,7 @@ class TrackSelector extends React.Component {
 	}
 
 	componentDidMount = () => {
-		this.props.fetchTracks({ user: this.props.userId });
+		this.props.fetchTracks({ author: this.props.userId });
 	};
 
 	componentDidUpdate = () => {
