@@ -1,16 +1,18 @@
 import React from "react";
 
+//mui
+import { Stack, Box, Typography } from "@mui/material";
+
 const UserStatusPending = () => {
 	return (
-		<div className="container">
-			<div className="ui hidden divider"></div>
-			<div className="ui hidden divider"></div>
-			<div className="ui hidden divider"></div>
-			<h1>
-				<strong>Thank you for Registering!</strong>
-			</h1>
-			<h3>Please confirm your email address to access NOST.</h3>
-		</div>
+		<Box sx={{ display: "flex", justifyContent: "center" }}>
+			<Stack spacing={2}>
+				<Typography variant="h3">Thank you for Registering!</Typography>
+				<Typography>
+					Please confirm your email address to access NOST.
+				</Typography>
+			</Stack>
+		</Box>
 	);
 };
 

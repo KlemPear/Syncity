@@ -1,25 +1,30 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 
-class LoginForm extends React.Component {
-	renderError({ error, touched }) {
-		if (touched && error) {
-			return (
-				<div className="ui error message">
-					<div className="header">{error}</div>
-				</div>
-			);
-		}
-	}
+//mui
+import { Stack, Box, Button, TextField } from "@mui/material";
 
-	renderInput = ({ input, label, meta, type }) => {
-		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+class LoginForm extends React.Component {
+	renderInput = ({
+		input,
+		label,
+		type,
+		meta: { touched, error },
+		...custom
+	}) => {
 		return (
-			<div className={className}>
-				<label>{label}</label>
-				<input type={type} {...input} autoComplete="off" />
-				{this.renderError(meta)}
-			</div>
+			<>
+				<TextField
+					sx={{ minWidth: 300 }}
+					fullWidth
+					label={label}
+					error={Boolean(touched && error)}
+					helperText={Boolean(touched && error) ? error : null}
+					type={type}
+					{...input}
+					{...custom}
+				/>
+			</>
 		);
 	};
 
@@ -31,37 +36,52 @@ class LoginForm extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<Box>
 				<form
 					onSubmit={this.props.handleSubmit(this.onSubmit)}
 					className="ui form error"
 				>
-					<Field
-						name="username"
-						component={this.renderInput}
-						label="Email Address"
-						type="email"
-					/>
-					<Field
-						name="password"
-						component={this.renderInput}
-						label="Password"
-						type="password"
-					/>
-					<button className="ui button primary">Submit</button>
+					<Stack spacing={2}>
+						<Field
+							name="username"
+							component={this.renderInput}
+							label="Email Address"
+							type="email"
+						/>
+						<Field
+							name="password"
+							component={this.renderInput}
+							label="Password"
+							type="password"
+						/>
+						<Button
+							fullWidth
+							type="submit"
+							variant="contained"
+							color="secondary"
+						>
+							Submit
+						</Button>
+					</Stack>
 				</form>
-			</div>
+			</Box>
 		);
 	}
 }
 
-const validate = (formValues) => {
+const validate = (values) => {
 	const errors = {};
-	if (!formValues.username) {
-		errors.username = "You must enter an email address";
-	}
-	if (!formValues.password) {
-		errors.password = "You must enter a password";
+	const requiredFields = ["username", "password"];
+	requiredFields.forEach((field) => {
+		if (!values[field]) {
+			errors[field] = "Required";
+		}
+	});
+	if (
+		values.username &&
+		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
+	) {
+		errors.username = "Invalid email address";
 	}
 	return errors;
 };

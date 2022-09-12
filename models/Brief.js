@@ -195,6 +195,7 @@ const briefSchema = new mongoose.Schema({
 	references: [
 		{
 			link: String,
+			title: String,
 			comment: String,
 		},
 	],

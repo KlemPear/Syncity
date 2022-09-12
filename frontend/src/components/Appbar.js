@@ -28,7 +28,7 @@ class ResponsiveAppBar extends React.Component {
 
 	getPagesAndSettings = () => {
 		if (this.props.isSignedIn && !this.props.isUserPending) {
-			return({
+			return {
 				pages: {
 					Briefs: "/list-briefs",
 					"My Applications": "/list-applications",
@@ -39,24 +39,24 @@ class ResponsiveAppBar extends React.Component {
 					Profile: "/profile",
 					Logout: "/",
 				},
-			});
+			};
 		} else if (this.props.isUserPending) {
-			return({
+			return {
 				pages: {
 					Briefs: "/user-status-pending",
 					"My Applications": "/user-status-pending",
 					"Music Catalog": "/user-status-pending",
 				},
 				settings: null,
-			});
+			};
 		} else {
-			return({
+			return {
 				pages: {
 					"Sign Up": "/register",
 					"Sign In": "/login",
 				},
 				settings: null,
-			});
+			};
 		}
 	};
 
@@ -80,9 +80,9 @@ class ResponsiveAppBar extends React.Component {
 	};
 
 	render() {
-    const {pages, settings} = this.getPagesAndSettings();
+		const { pages, settings } = this.getPagesAndSettings();
 		return (
-			<AppBar position="static" sx={{mb: 2}}>
+			<AppBar position="static" sx={{ mb: 2 }}>
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
 						<LibraryMusicIcon
@@ -187,12 +187,20 @@ class ResponsiveAppBar extends React.Component {
 						{settings != null ? (
 							<Box sx={{ flexGrow: 0 }}>
 								<Tooltip title="Open settings">
-									<IconButton onClick={this.handleOpenUserMenu} sx={{ p: 0 }}>
-										<AccountCircleIcon sx={{ fontSize: 40, color: "white" }} />
-									</IconButton>
+									<Button
+										onClick={this.handleOpenUserMenu}
+										sx={{ p: 0, color: "white" }}
+										startIcon={
+											<AccountCircleIcon
+												sx={{ color: "white" }}
+											/>
+										}
+									>
+										{this.props.user.firstName} {this.props.user.lastName}
+									</Button>
 								</Tooltip>
 								<Menu
-									sx={{ mt: "45px" }}
+									sx={{ mt: "40px" }}
 									id="menu-appbar"
 									anchorEl={this.state.anchorElUser}
 									anchorOrigin={{

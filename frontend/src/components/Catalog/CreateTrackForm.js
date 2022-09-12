@@ -27,7 +27,7 @@ class CreateTrackForm extends React.Component {
 					fullWidth
 					label={label}
 					error={Boolean(touched && error)}
-					helperText={error}
+					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					{...input}
 					{...custom}

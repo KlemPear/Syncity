@@ -12,7 +12,7 @@ import UserSearch from "./UserSearch";
 import payments from "../../apis/payments";
 
 //mui
-import { Button, Typography, Box, Divider } from "@mui/material";
+import { Button, Typography, Box, Divider, List, ListItemText } from "@mui/material";
 
 class ShowUser extends React.Component {
 	constructor(props) {
@@ -170,14 +170,24 @@ class ShowUser extends React.Component {
 					<Typography sx={{ mb: 2 }} variant="h5">
 						Connections
 					</Typography>
-					<Box sx={{ maxHeight: 300 }}>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							maxHeight: 200,
+							overflow: "hidden",
+							overflowY: "scroll",
+						}}
+					>
+						<List dense>
 						{this.props.currentUser.connections
 							? this.props.currentUser.connections.map((connection) => (
-									<div
+									<ListItemText
 										key={connection._id}
-									>{`${connection.firstName} ${connection.lastName} - ${connection.email}`}</div>
+									>{`${connection.firstName} ${connection.lastName} - ${connection.email}`}</ListItemText>
 							  ))
 							: null}
+						</List>
 					</Box>
 					<Button
 						variant="contained"

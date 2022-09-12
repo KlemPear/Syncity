@@ -1,39 +1,56 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 
+//mui
+import { Stack, Box, Button, TextField } from "@mui/material";
+
 class RegisterForm extends React.Component {
-	renderError({ error, touched }) {
-		if (touched && error) {
-			return (
-				<div className="ui error message">
-					<div className="header">{error}</div>
-				</div>
-			);
-		}
-	}
-
-	renderInput = ({ input, label, meta, type }) => {
-		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+	renderInput = ({
+		input,
+		label,
+		type,
+		meta: { touched, error },
+		...custom
+	}) => {
 		return (
-			<div className={className}>
-				<label>{label}</label>
-				<input type={type} {...input} autoComplete="off" />
-				{this.renderError(meta)}
-			</div>
+			<>
+				<TextField
+					sx={{ minWidth: 300 }}
+					fullWidth
+					label={label}
+					error={Boolean(touched && error)}
+					helperText={Boolean(touched && error) ? error : null}
+					type={type}
+					{...input}
+					{...custom}
+				/>
+			</>
 		);
 	};
 
-	renderTextInput = ({ input, label, meta }) => {
-		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+	renderTextInput = ({
+		input,
+		label,
+		type,
+		meta: { touched, error },
+		...custom
+	}) => {
 		return (
-			<div className={className}>
-				<label>{label}</label>
-				<textarea {...input} autoComplete="off" />
-				{this.renderError(meta)}
-			</div>
+			<>
+				<TextField
+					fullWidth
+					label={label}
+					error={Boolean(touched && error)}
+					helperText={Boolean(touched && error) ? error : null}
+					type={type}
+					multiline
+					maxRows={4}
+					{...input}
+					{...custom}
+				/>
+			</>
 		);
 	};
-
 
 	onSubmit = (formValues) => {
 		//do whatever we need with the form values
@@ -43,47 +60,56 @@ class RegisterForm extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<Box>
 				<form
 					onSubmit={this.props.handleSubmit(this.onSubmit)}
 					className="ui form error"
 				>
-					<Field
-						name="firstName"
-						component={this.renderInput}
-						label="First Name"
-					/>
-					<Field
-						name="lastName"
-						component={this.renderInput}
-						label="Last Name"
-					/>
-					<Field
-						name="email"
-						component={this.renderInput}
-						label="Email Address"
-						type="email"
-					/>
-					<Field
-						name="bio"
-						component={this.renderTextInput}
-						label="Add a short bio to your profile, include your social media tags so that your profile can be verified"
-					/>
-					<Field
-						name="password"
-						component={this.renderInput}
-						label="Password"
-						type="password"
-					/>
-					<Field
-						name="passwordValidation"
-						component={this.renderInput}
-						label="Confirm Password"
-						type="password"
-					/>
-					<button className="ui button primary">Submit</button>
+					<Stack spacing={2}>
+						<Field
+							name="firstName"
+							component={this.renderInput}
+							label="First Name"
+						/>
+						<Field
+							name="lastName"
+							component={this.renderInput}
+							label="Last Name"
+						/>
+						<Field
+							name="email"
+							component={this.renderInput}
+							label="Email Address"
+							type="email"
+						/>
+						<Field
+							name="bio"
+							component={this.renderTextInput}
+							label="Add a short bio to your profile..."
+						/>
+						<Field
+							name="password"
+							component={this.renderInput}
+							label="Password"
+							type="password"
+						/>
+						<Field
+							name="passwordValidation"
+							component={this.renderInput}
+							label="Confirm Password"
+							type="password"
+						/>
+						<Button
+							fullWidth
+							type="submit"
+							variant="contained"
+							color="secondary"
+						>
+							Submit
+						</Button>
+					</Stack>
 				</form>
-			</div>
+			</Box>
 		);
 	}
 }
@@ -96,16 +122,16 @@ const validate = (formValues) => {
 	if (!formValues.lastName) {
 		errors.lastName = "You must enter a last name";
 	}
-  if (!formValues.bio) {
+	if (!formValues.bio) {
 		errors.bio = "You must enter a bio";
 	}
-  if (!formValues.email) {
+	if (!formValues.email) {
 		errors.email = "You must enter an email address";
 	}
-  if (!formValues.password) {
+	if (!formValues.password) {
 		errors.password = "You must enter a password";
 	}
-  if (formValues.password !== formValues.passwordValidation) {
+	if (formValues.password !== formValues.passwordValidation) {
 		errors.passwordValidation = "The passwords do not match";
 	}
 	return errors;

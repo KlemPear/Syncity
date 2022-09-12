@@ -207,11 +207,10 @@ class CreateBriefForm extends React.Component {
 		return (
 			<>
 				<TextField
-					// sx={{ minWidth: 400 }}
 					fullWidth
 					label={label}
 					error={Boolean(touched && error)}
-					helperText={error}
+					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					multiline
 					maxRows={4}
@@ -237,7 +236,7 @@ class CreateBriefForm extends React.Component {
 					fullWidth
 					label={label}
 					error={Boolean(touched && error)}
-					helperText={Boolean(touched && error) ? "Required" : null}
+					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					select={Boolean(selectList != null)}
 					{...input}
@@ -265,7 +264,8 @@ class CreateBriefForm extends React.Component {
 				<MultipleSelectInput
 					selectList={selectList}
 					label={label}
-					helperText={Boolean(touched && error) ? "Required" : null}
+					error={Boolean(touched && error)}
+					helperText={Boolean(touched && error) ? error : null}
 					input={input}
 					{...custom}
 				/>
@@ -457,6 +457,21 @@ class CreateBriefForm extends React.Component {
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
 					<Typography variant="h5">Reference(s)</Typography>
 					<Field
+						name="references[0].title"
+						component={this.renderInput}
+						label="Title #1"
+						value={
+							editBrief.references != null
+								? editBrief.references[0]?.title
+								: null
+						}
+						placeholder={
+							editBrief.references != null
+								? editBrief.references[0]?.title
+								: null
+						}
+					/>
+					<Field
 						name="references[0].link"
 						component={this.renderInput}
 						label="Link #1"
@@ -487,6 +502,21 @@ class CreateBriefForm extends React.Component {
 						}
 					/>
 					<Field
+						name="references[1].title"
+						component={this.renderInput}
+						label="Title #2"
+						value={
+							editBrief.references != null
+								? editBrief.references[1]?.title
+								: null
+						}
+						placeholder={
+							editBrief.references != null
+								? editBrief.references[1]?.title
+								: null
+						}
+					/>
+					<Field
 						name="references[1].link"
 						component={this.renderInput}
 						label="Link #2"
@@ -513,6 +543,21 @@ class CreateBriefForm extends React.Component {
 						placeholder={
 							editBrief.references != null
 								? editBrief.references[1]?.comment
+								: null
+						}
+					/>
+					<Field
+						name="references[2].title"
+						component={this.renderInput}
+						label="Title #3"
+						value={
+							editBrief.references != null
+								? editBrief.references[2]?.title
+								: null
+						}
+						placeholder={
+							editBrief.references != null
+								? editBrief.references[2]?.title
 								: null
 						}
 					/>
@@ -687,6 +732,11 @@ class CreateBriefForm extends React.Component {
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
 					<Typography variant="h5">Reference(s)</Typography>
 					<Field
+						name="references[0].title"
+						component={this.renderInput}
+						label="Title #1"
+					/>
+					<Field
 						name="references[0].link"
 						component={this.renderInput}
 						label="Link #1"
@@ -697,6 +747,11 @@ class CreateBriefForm extends React.Component {
 						label="Comment #1"
 					/>
 					<Field
+						name="references[1].title"
+						component={this.renderInput}
+						label="Title #2"
+					/>
+					<Field
 						name="references[1].link"
 						component={this.renderInput}
 						label="Link #2"
@@ -705,6 +760,11 @@ class CreateBriefForm extends React.Component {
 						name="references[1].comment"
 						component={this.renderTextInput}
 						label="Comment #2"
+					/>
+					<Field
+						name="references[2].title"
+						component={this.renderInput}
+						label="Title #3"
 					/>
 					<Field
 						name="references[2].link"
@@ -773,7 +833,6 @@ const validate = (values) => {
 		"licenseDuration",
 		"territory",
 		"genres",
-		"references",
 	];
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
