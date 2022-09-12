@@ -22,6 +22,7 @@ import {
 	pink,
 } from "@mui/material/colors";
 import { Box, Divider, Grid } from "@mui/material";
+import MuiLink from "@mui/material/Link";
 
 const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
 
@@ -35,9 +36,9 @@ class ShowBrief extends React.Component {
 			<div key={ref.link}>
 				<ul>
 					<li>
-						<a href={ref.link}>
+						<MuiLink underline="hover" href={ref.link}>
 							{ref.title ? ref.title : "Link to reference song"}
-						</a>
+						</MuiLink>
 						{ref.comment ? (
 							<ul>
 								<li>
@@ -96,22 +97,22 @@ class ShowBrief extends React.Component {
 						<Typography variant="h5">License Terms</Typography>
 						<ul>
 							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use}</li>
+							<li>Use: {brief.use.join(", ")}</li>
 							<li>License Duration: {brief.licenseDuration}</li>
 							<li>Extract Duration: {brief.licenseDuration}</li>
-							<li>Territory: {brief.territory}</li>
+							<li>Territory: {brief.territory.join(", ")}</li>
 						</ul>
 					</CardContent>
 					<CardContent>
 						<Divider variant="middle" sx={{ margin: 1 }} />
 						<Typography variant="h5">Type Of Music Needed</Typography>
 						<ul>
-							<li>Genre(s): {brief.genres}</li>
-							<li>Vocal(s): {brief.vocals}</li>
-							<li>Mood(s): {brief.moods}</li>
+							<li>Genre(s): {brief.genres.join(", ")}</li>
+							<li>Vocal(s): {brief.vocals.join(", ")}</li>
+							<li>Mood(s): {brief.moods.join(", ")}</li>
 							<li>Instrument(s): {brief.instruments}</li>
 							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity}</li>
+							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
 						</ul>
 					</CardContent>
 					{brief.references?.length !== 0 ? (

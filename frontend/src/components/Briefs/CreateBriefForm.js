@@ -177,7 +177,9 @@ const tempoOptions = [
 class CreateBriefForm extends React.Component {
 	componentDidMount = () => {
 		if (this.props.editBrief) {
-			this.props.initialize(this.props.editBrief);
+			const brief = this.props.editBrief;
+			brief.dueDate = this.props.editBrief.dueDate.split("T")[0];
+			this.props.initialize(brief);
 		}
 	};
 
@@ -314,8 +316,7 @@ class CreateBriefForm extends React.Component {
 						InputLabelProps={{
 							shrink: true,
 						}}
-						value={editBrief.budget}
-						placeholder={editBrief.dueDate}
+						value={editBrief.dueDate.split("T")[0]}
 					/>
 					<Field
 						name="numberOfApplicationsWanted"
@@ -323,14 +324,13 @@ class CreateBriefForm extends React.Component {
 						type="number"
 						label="Number of applications wanted:"
 						value={editBrief.numberOfApplicationsWanted}
-						placeholder={editBrief.numberOfApplicationsWanted}
+						placeholder={editBrief.numberOfApplicationsWanted.toString()}
 					/>
 					<Field
 						name="description"
 						component={this.renderTextInput}
 						label="description"
-						defaultValue={editBrief.budget}
-						value={editBrief.budget}
+						value={editBrief.description}
 						placeholder={editBrief.description}
 					/>
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
@@ -367,7 +367,7 @@ class CreateBriefForm extends React.Component {
 							),
 						}}
 						value={editBrief.budget}
-						placeholder={editBrief.budget}
+						placeholder={editBrief.budget.toString()}
 					/>
 					<Field
 						name="licenseDuration"
@@ -435,7 +435,7 @@ class CreateBriefForm extends React.Component {
 						name="instruments"
 						component={this.renderMultipleSelectInput}
 						label="Instrument(s)"
-						selectList={moodsOptions}
+						selectList={instrumentsOptions}
 						format={(value) => (Array.isArray(value) ? value : [])}
 						value={editBrief.instruments}
 						placeholder={editBrief.instruments}
@@ -450,7 +450,7 @@ class CreateBriefForm extends React.Component {
 					/>
 					<Field
 						name="exclusivity"
-						component={this.renderInput}
+						component={this.renderCheckBox}
 						label="Exclusivity"
 						defaultChecked={Boolean(editBrief.exclusivity)}
 					/>
@@ -787,9 +787,6 @@ class CreateBriefForm extends React.Component {
 				<form onSubmit={this.onSubmit} className="ui form error">
 					<Stack spacing={2} sx={{ m: 2 }}>
 						{this.renderFormFields()}
-						{/* <Button type="submit" variant="contained" color="secondary">
-							Submit
-						</Button> */}
 						<Stack
 							direction="row"
 							sx={{ display: "flex", justifyContent: "flex-end" }}

@@ -58,7 +58,7 @@ const briefSchema = new mongoose.Schema({
 			type: String,
 			enum: [
 				"Europe",
-				"US and Canada",
+				"USA and Canada",
 				"Africa",
 				"South America",
 				"Asia",

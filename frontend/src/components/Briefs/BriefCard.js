@@ -57,10 +57,16 @@ class BriefCard extends React.Component {
 			<Box key={ref.link}>
 				<ul key={ref.link}>
 					<li>
-						<a href={ref.link}>Link to reference song</a>
-					</li>
-					<li>
-						Comment: <p>{ref.comment}</p>
+						<MuiLink underline="hover" href={ref.link}>
+							{ref.title ? ref.title : "Link to reference song"}
+						</MuiLink>
+						{ref.comment ? (
+							<ul>
+								<li>
+									<p>{ref.comment}</p>
+								</li>
+							</ul>
+						) : null}
 					</li>
 				</ul>
 			</Box>
@@ -151,20 +157,20 @@ class BriefCard extends React.Component {
 						<Typography>License Terms:</Typography>
 						<ul>
 							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use}</li>
+							<li>Use: {brief.use.join(", ")}</li>
 							<li>License Duration: {brief.licenseDuration}</li>
-							<li>Extract Duration: {brief.licenseDuration}</li>
-							<li>Territory: {brief.territory}</li>
+							<li>Extract Duration: {brief.extractDuration} minutes</li>
+							<li>Territory: {brief.territory.join(", ")}</li>
 						</ul>
 						<br />
 						<Typography>Type Of Music Needed:</Typography>
 						<ul>
-							<li>Genre(s): {brief.genres}</li>
-							<li>Vocal(s): {brief.vocals}</li>
-							<li>Mood(s): {brief.moods}</li>
-							<li>Instrument(s): {brief.instruments}</li>
+							<li>Genre(s): {brief.genres.join(", ")}</li>
+							<li>Vocal(s): {brief.vocals.join(", ")}</li>
+							<li>Mood(s): {brief.moods.join(", ")}</li>
+							<li>Instrument(s): {brief.instruments.join(", ")}</li>
 							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity}</li>
+							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
 						</ul>
 						<br />
 						{brief.references?.length !== 0 ? (
@@ -252,20 +258,20 @@ class BriefCard extends React.Component {
 						<Typography>License Terms:</Typography>
 						<ul>
 							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use}</li>
+							<li>Use: {brief.use.join(", ")}</li>
 							<li>License Duration: {brief.licenseDuration}</li>
-							<li>Extract Duration: {brief.licenseDuration}</li>
-							<li>Territory: {brief.territory}</li>
+							<li>Extract Duration: {brief.extractDuration} minutes</li>
+							<li>Territory: {brief.territory.join(", ")}</li>
 						</ul>
 						<br />
 						<Typography>Type Of Music Needed:</Typography>
 						<ul>
-							<li>Genre(s): {brief.genres}</li>
-							<li>Vocal(s): {brief.vocals}</li>
-							<li>Mood(s): {brief.moods}</li>
-							<li>Instrument(s): {brief.instruments}</li>
+							<li>Genre(s): {brief.genres.join(", ")}</li>
+							<li>Vocal(s): {brief.vocals.join(", ")}</li>
+							<li>Mood(s): {brief.moods.join(", ")}</li>
+							<li>Instrument(s): {brief.instruments.join(", ")}</li>
 							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity}</li>
+							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
 						</ul>
 						<br />
 						{brief.references?.length !== 0 ? (
