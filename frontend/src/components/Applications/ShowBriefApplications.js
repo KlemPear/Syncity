@@ -50,7 +50,7 @@ class ShowBriefApplications extends React.Component {
 								flexDirection: "column",
 								height: 550,
 								overflow: "hidden",
-								overflowY: "scroll",
+								overflowY: "auto",
 							}}
 						>
 							<List>

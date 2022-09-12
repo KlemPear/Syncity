@@ -76,7 +76,8 @@ class BriefApplication extends React.Component {
 				<Typography variant="h3">Submit an application</Typography>
 				<Typography>You can submit up to 3 tracks.</Typography>
 				<Stack direction="row" spacing={1} sx={{ m: 1 }}>
-					<Typography>Select tracks from your catalog or </Typography>
+					<Typography>Select tracks from your catalog</Typography>
+					<Typography>or</Typography>
 					<Button sx={{ p: 0 }} onClick={() => this.onAddNewTrackToggle()}>
 						{!this.state.addNewTrackToCatalog
 							? "Add a new track to your catalog"
@@ -89,7 +90,7 @@ class BriefApplication extends React.Component {
 						flexDirection: "column",
 						maxHeight: 400,
 						overflow: "hidden",
-						overflowY: "scroll",
+						overflowY: "auto",
 					}}
 				>
 					<TrackSelector getSelectedTracks={this.selectedTracks} />

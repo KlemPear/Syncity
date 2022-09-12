@@ -82,7 +82,7 @@ class ShowBrief extends React.Component {
 						flexDirection: "column",
 						height: 400,
 						overflow: "hidden",
-						overflowY: "scroll",
+						overflowY: "auto",
 					}}
 				>
 					<CardContent>

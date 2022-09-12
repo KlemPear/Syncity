@@ -53,9 +53,9 @@ class ListTracks extends React.Component {
 						sx={{
 							display: "flex",
 							flexDirection: "column",
-							height: 550,
+							maxHeight: 550,
 							overflow: "hidden",
-							overflowY: "scroll",
+							overflowY: "auto",
 						}}
 					>
 						{this.props.tracks.map((track) => (
