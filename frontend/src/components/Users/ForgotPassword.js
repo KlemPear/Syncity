@@ -4,7 +4,7 @@ import ForgotPasswordForm from "./ForgotPasswordForm";
 import { userForgotPassword } from "../../actions";
 
 //mui
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 
 class ForgotPassword extends React.Component {
 	onSubmit = (formValues) => {

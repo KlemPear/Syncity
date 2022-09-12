@@ -4,7 +4,7 @@ import RegisterForm from "./RegisterForm";
 import { registerUser } from "../../actions";
 
 //mui
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Typography } from "@mui/material";
 
 class Register extends React.Component {
 	onSubmit = (formValues) => {
