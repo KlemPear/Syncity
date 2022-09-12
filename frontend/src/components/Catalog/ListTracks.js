@@ -5,55 +5,68 @@ import Loader from "../Loader";
 import { fetchTracks } from "../../actions";
 import ShowTrack from "./ShowTrack";
 
+//mui
+import { Stack, Button, Box, Fab } from "@mui/material";
+import { Add } from "@mui/icons-material";
+
 class ListTracks extends React.Component {
 	componentDidMount() {
-		this.props.fetchTracks(this.props.userId);
+		this.props.fetchTracks({ author: this.props.userId });
 	}
 
 	renderTrackEditButton = (track) => {
 		return (
-			<Link to={`/catalog/${track._id}`} className="ui right floated button">
+			<Button
+				variant="contained"
+				component={Link}
+				to={`/catalog/${track._id}`}
+				color="secondary"
+			>
 				Edit
-			</Link>
+			</Button>
 		);
 	};
 
 	render() {
 		if (!this.props.tracks) {
 			return (
-				<div>
+				<Box>
 					<Loader />
-				</div>
+				</Box>
 			);
 		} else {
 			return (
 				<>
-					<div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<Link className="ui blue button" to={`/create-track`}>
-							Add a track to your catalog
-						</Link>
-					</div>
-					<div className="ui divided items">
+					<Fab
+						variant="extended"
+						component={Link}
+						to="/create-track"
+						color="secondary"
+						aria-label="add"
+						sx={{ margin: 1 }}
+					>
+						<Add sx={{ mr: 1 }} />
+						Add a track to your catalog
+					</Fab>
+					<Stack
+						spacing={2}
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							maxHeight: 550,
+							overflow: "hidden",
+							overflowY: "auto",
+						}}
+					>
 						{this.props.tracks.map((track) => (
-							<div key={track._id} className="item">
+							<Box key={track._id}>
 								<ShowTrack
 									track={track}
 									button={this.renderTrackEditButton(track)}
 								/>
-							</div>
+							</Box>
 						))}
-					</div>
+					</Stack>
 				</>
 			);
 		}

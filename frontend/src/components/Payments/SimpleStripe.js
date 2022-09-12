@@ -1,6 +1,11 @@
 import React from "react";
 import payments from "../../apis/payments";
 
+//mui
+import {
+	Button,
+} from "@mui/material";
+
 const onCheckoutSubmit = async (event, itemId, userId, subscription) => {
 	event.preventDefault();
 	const response = await payments.post(`/create-checkout-session`, {
@@ -19,9 +24,9 @@ const ProductDisplay = ({ itemId, userId, subscription }) => (
 				onCheckoutSubmit(event, itemId, userId, subscription)
 			}
 		>
-			<button type="submit" className="ui button primary">
+			<Button type="submit" variant="contained" color="primary" size="large">
 				Subscribe
-			</button>
+			</Button>
 		</form>
 	</section>
 );

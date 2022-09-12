@@ -1,13 +1,13 @@
 import React from "react";
 
+//mui
+import { Box, Typography} from "@mui/material";
+
 const LandingPage = (props) => {
 	return (
-		<div>
-			<div className="ui hidden divider"></div>
-			<div className="ui hidden divider"></div>
-			<div className="ui hidden divider"></div>
-			<h1>Welcome to nost.audio</h1>
-		</div>
+		<Box sx={{display: "flex", justifyContent: "center"}}>
+			<Typography variant="h1">Welcome to nost.audio</Typography>
+		</Box>
 	);
 };
 export default LandingPage;

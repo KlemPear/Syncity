@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import ResetPasswordForm from "./ResetPasswordForm";
 import { getUserByConfirmationCode, updateUserPassword } from "../../actions";
 
+//mui
+import { Stack, Box, Typography } from "@mui/material";
+
 class ResetPassword extends React.Component {
 	componentDidMount = () => {
 		this.props.getUserByConfirmationCode(
@@ -11,35 +14,31 @@ class ResetPassword extends React.Component {
 	};
 
 	onSubmit = (formValues) => {
-		// http://localhost:3000/forgot-password/reset/RZulVpO6b8OPwxTdLjvtELGTD
 		this.props.updateUserPassword(this.props.user.confirmationCode, formValues);
 	};
 
 	render() {
 		if (!this.props.user) {
 			return (
-				<div className="container">
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<h1>
-						<strong>
-							Sorry, we cannot find an account linked to this email.
-						</strong>
-					</h1>
-				</div>
+				<Box sx={{ display: "flex", justifyContent: "center" }}>
+					<Typography variant="h3">
+						Sorry, we cannot find an account linked to this email.
+					</Typography>
+				</Box>
 			);
 		}
 		return (
-			<div className="container">
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<h1>
-					<strong>Reset your password.</strong>
-				</h1>
-				<ResetPasswordForm onSubmit={this.onSubmit} />
-			</div>
+			<Box sx={{ display: "flex", justifyContent: "center" }}>
+				<Stack spacing={2}>
+					<Typography
+						sx={{ display: "flex", justifyContent: "center" }}
+						variant="h3"
+					>
+						Reset your password
+					</Typography>
+					<ResetPasswordForm onSubmit={this.onSubmit} />
+				</Stack>
+			</Box>
 		);
 	}
 }

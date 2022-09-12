@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
+//mui
+import { TextField, Button, Stack } from "@mui/material";
+
 class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
 		if (this.props.editTrack) {
@@ -10,30 +13,26 @@ class CreateTrackForm extends React.Component {
 		}
 	};
 
-	renderError({ error, touched }) {
-		if (touched && error) {
-			return (
-				<div className="ui error message">
-					<div className="header">{error}</div>
-				</div>
-			);
-		}
-	}
-
-	renderInput = ({ input, label, meta, type, placeholder, value }) => {
-		const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+	renderInput = ({
+		input,
+		label,
+		type,
+		meta: { touched, error },
+		...custom
+	}) => {
 		return (
-			<div className={className}>
-				<label>{label}</label>
-				<input
+			<>
+				<TextField
+					sx={{ minWidth: 300 }}
+					fullWidth
+					label={label}
+					error={Boolean(touched && error)}
+					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					{...input}
-					autoComplete="off"
-					placeholder={placeholder}
-					value={value}
+					{...custom}
 				/>
-				{this.renderError(meta)}
-			</div>
+			</>
 		);
 	};
 
@@ -51,7 +50,6 @@ class CreateTrackForm extends React.Component {
 						name="title"
 						component={this.renderInput}
 						label="Track Title"
-						defaultValue={this.props.editTrack.title}
 						value={this.props.editTrack.title}
 						placeholder={this.props.editTrack.title}
 					/>
@@ -59,7 +57,6 @@ class CreateTrackForm extends React.Component {
 						name="artist"
 						component={this.renderInput}
 						label="Artist"
-						defaultValue={this.props.editTrack.artist}
 						value={this.props.editTrack.artist}
 						placeholder={this.props.editTrack.artist}
 					/>
@@ -67,7 +64,6 @@ class CreateTrackForm extends React.Component {
 						name="link"
 						component={this.renderInput}
 						label="Link to media"
-						defaultValue={this.props.editTrack.link}
 						value={this.props.editTrack.link}
 						placeholder={this.props.editTrack.link}
 					/>
@@ -76,7 +72,6 @@ class CreateTrackForm extends React.Component {
 						component={this.renderInput}
 						label="Master owner email"
 						type="email"
-						defaultValue={this.props.editTrack.masterContact}
 						value={this.props.editTrack.masterContact}
 						placeholder={this.props.editTrack.masterContact}
 					/>
@@ -85,7 +80,6 @@ class CreateTrackForm extends React.Component {
 						component={this.renderInput}
 						label="Publisher email"
 						type="email"
-						defaultValue={this.props.editTrack.publisherContact}
 						value={this.props.editTrack.publisherContact}
 						placeholder={this.props.editTrack.publisherContact}
 					/>
@@ -129,34 +123,76 @@ class CreateTrackForm extends React.Component {
 					onSubmit={this.props.handleSubmit(this.onSubmit)}
 					className="ui form error"
 				>
-					{this.renderFormFields()}
-					<button className="ui button primary">Submit</button>
-					<Link className="ui button" to="/catalog">
-						Cancel
-					</Link>
+					<Stack spacing={1}>
+						{this.renderFormFields()}
+						<Stack
+							direction="row"
+							sx={{ display: "flex", justifyContent: "flex-end" }}
+							spacing={2}
+						>
+							<Button type="submit" variant="contained" color="secondary">
+								Submit
+							</Button>
+							{this.props.editTrack ? (
+								<Button
+									variant="outlined"
+									color="error"
+									onClick={this.props.onDelete}
+								>
+									Delete Track
+								</Button>
+							) : null}
+							{this.props.onCancel ? (
+								<Button
+									variant="outlined"
+									color="primary"
+									onClick={this.props.onCancel}
+								>
+									Cancel
+								</Button>
+							) : (
+								<Button
+									variant="outlined"
+									color="primary"
+									component={Link}
+									to="/catalog"
+								>
+									Cancel
+								</Button>
+							)}
+						</Stack>
+					</Stack>
 				</form>
 			</div>
 		);
 	}
 }
 
-const validate = (formValues) => {
+const validate = (values) => {
 	const errors = {};
-	if (!formValues.title) {
-		errors.title = "You must enter a title";
+	const requiredFields = [
+		"title",
+		"artist",
+		"link",
+		"masterContact",
+		"publisherContact",
+	];
+	requiredFields.forEach((field) => {
+		if (!values[field]) {
+			errors[field] = "Required";
+		}
+	});
+	if (
+		values.masterContact &&
+		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.masterContact)
+	) {
+		errors.masterContact = "Invalid email address";
 	}
-	if (!formValues.artist) {
-		errors.artist = "You must enter an artist";
-	}
-	if (!formValues.link) {
-		errors.link = "You must enter a link to this track";
-	}
-	if (!formValues.masterContact) {
-		errors.masterContact =
-			"Please provide the email contact of the master owner";
-	}
-	if (!formValues.publisherContact) {
-		errors.masterContact = "Please provider the email contact of the publisher";
+	if (
+		values.publisherContact &&
+		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)
+	) {
+		errors.publisherContact = "Invalid email address";
 	}
 	return errors;
 };

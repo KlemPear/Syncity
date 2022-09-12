@@ -5,6 +5,8 @@ import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
 import CreateTrack from "../Catalog/CreateTrack";
+//mui
+import { Box, Button, Typography, Stack } from "@mui/material";
 
 class BriefApplication extends React.Component {
 	constructor(props) {
@@ -35,9 +37,14 @@ class BriefApplication extends React.Component {
 	renderModalActions() {
 		return (
 			<React.Fragment>
-				<Link to="/buy-tokens" className="ui button blue">
+				<Button
+					component={Link}
+					variant="contained"
+					color="primary"
+					to="/buy-tokens"
+				>
 					Subscribe to a plan
-				</Link>
+				</Button>
 			</React.Fragment>
 		);
 	}
@@ -65,41 +72,62 @@ class BriefApplication extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<h3>Submit an application</h3>
-				<p>You can submit up to 3 tracks.</p>
-				<p>Select tracks from your catalog: </p>
-				<TrackSelector getSelectedTracks={this.selectedTracks} />
-				<div>
-					<button
-						className="ui button"
-						onClick={() => this.onAddNewTrackToggle()}
-					>
+			<Stack spacing={2} sx={{ m: 2 }}>
+				<Typography variant="h3">Submit an application</Typography>
+				<Typography>You can submit up to 3 tracks.</Typography>
+				<Stack direction="row" spacing={1} sx={{ m: 1 }}>
+					<Typography>Select tracks from your catalog</Typography>
+					<Typography>or</Typography>
+					<Button sx={{ p: 0 }} onClick={() => this.onAddNewTrackToggle()}>
 						{!this.state.addNewTrackToCatalog
 							? "Add a new track to your catalog"
 							: "Hide new track form"}
-					</button>
+					</Button>
+				</Stack>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						maxHeight: 400,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<TrackSelector getSelectedTracks={this.selectedTracks} />
+				</Box>
+				<Typography>
 					{this.state.addNewTrackToCatalog ? (
-						<CreateTrack pushToCatalog={false} />
+						<Modal
+							showModal={this.state.addNewTrackToCatalog}
+							content={
+								<CreateTrack
+									pushToCatalog={false}
+									onDismiss={this.onAddNewTrackToggle}
+								/>
+							}
+							onDismiss={this.onAddNewTrackToggle}
+						/>
 					) : null}
-				</div>
+				</Typography>
 				{this.state.notEnoughTokens ? (
 					<Modal
+						showModal={this.state.notEnoughTokens}
 						title={"Not Enough Tokens"}
 						content={this.renderModalContent()}
 						actions={this.renderModalActions()}
 						onDismiss={() => this.setState({ notEnoughTokens: false })}
 					/>
 				) : null}
-				<div>
-					<button
-						className="ui button primary green"
+				<Box>
+					<Button
+						variant="contained"
+						color="secondary"
 						onClick={() => this.onSubmit()}
 					>
 						Submit
-					</button>
-				</div>
-			</div>
+					</Button>
+				</Box>
+			</Stack>
 		);
 	}
 }

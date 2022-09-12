@@ -1,8 +1,21 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchTracks } from "../../actions";
-import ShowTrack from "./ShowTrack";
 import Modal from "../Modal";
+
+//mui
+import {
+	Checkbox,
+	Box,
+	List,
+	ListItem,
+	ListItemText,
+	Avatar,
+	ListItemAvatar,
+	Typography,
+} from "@mui/material";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
+import MuiLink from "@mui/material/Link";
 
 class TrackSelector extends React.Component {
 	constructor(props) {
@@ -11,7 +24,7 @@ class TrackSelector extends React.Component {
 	}
 
 	componentDidMount = () => {
-		this.props.fetchTracks({ user: this.props.userId });
+		this.props.fetchTracks({ author: this.props.userId });
 	};
 
 	componentDidUpdate = () => {
@@ -43,14 +56,13 @@ class TrackSelector extends React.Component {
 
 	renderTrackButton = (track) => {
 		return (
-			<div className="ui checkbox">
-				<input
+			<>
+				<Checkbox
 					type="checkbox"
 					name={track._id}
 					onChange={() => this.handleCheckboxToggle(track)}
 				/>
-				<label></label>
-			</div>
+			</>
 		);
 	};
 
@@ -76,20 +88,47 @@ class TrackSelector extends React.Component {
 			);
 		}
 		return (
-			<div>
-				{this.props.tracks.map((track) => (
-					<div key={track._id} className="item">
-						<ShowTrack track={track} button={this.renderTrackButton(track)} />
-					</div>
-				))}
+			<Box>
+				<List dense={true}>
+					{this.props.tracks.map((track) => (
+						<ListItem
+							key={track._id}
+							secondaryAction={this.renderTrackButton(track)}
+						>
+							<ListItemAvatar>
+								<Avatar sx={{ bgcolor: "#F6CD45" }}>
+									<AudiotrackIcon color="primary" />
+								</Avatar>
+							</ListItemAvatar>
+							<ListItemText
+								primary={
+									<Typography
+										component={MuiLink}
+										underline="hover"
+										href={track.link}
+									>
+										{track.title} - {track.artist}
+									</Typography>
+								}
+								secondary={
+									<Typography variant="body2">
+										Master: {track.masterContact} - Publisher:{" "}
+										{track.publisherContact}
+									</Typography>
+								}
+							/>
+						</ListItem>
+					))}
+				</List>
 				{this.state.tooManyTracksSelected ? (
 					<Modal
-						title={"You can only select 3 track maximum."}
+						showModal={this.state.tooManyTracksSelected}
+						title={"You can only select 3 tracks maximum."}
 						content={this.renderModalContent()}
 						onDismiss={() => this.renderModalDismiss()}
 					/>
 				) : null}
-			</div>
+			</Box>
 		);
 	}
 }

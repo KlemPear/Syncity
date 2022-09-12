@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import ForgotPasswordForm from "./ForgotPasswordForm";
 import { userForgotPassword } from "../../actions";
 
+//mui
+import { Stack, Box, Typography, Button } from "@mui/material";
+
 class ForgotPassword extends React.Component {
 	onSubmit = (formValues) => {
 		this.props.userForgotPassword(formValues);
@@ -11,16 +14,20 @@ class ForgotPassword extends React.Component {
 	renderResults() {
 		if (this.props.userNotFound) {
 			return (
-				<div>
-					<p>Sorry, this email does not correspond to any account.</p>
-				</div>
+				<Box>
+					<Typography>
+						Sorry, this email does not correspond to any existing account.
+					</Typography>
+				</Box>
 			);
 		}
 		if (this.props.user) {
 			return (
-				<div>
-					<p>We sent an email to your address. Check your mailbox!</p>
-				</div>
+				<Box>
+					<Typography>
+						We sent an email to your address. Check your mailbox!
+					</Typography>
+				</Box>
 			);
 		}
 		return null;
@@ -28,17 +35,22 @@ class ForgotPassword extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<div className="ui hidden divider"></div>
-				<p>
-					Submit your email address, if it matches one of our accounts we will
-					send you an email to reset your password.
-				</p>
-				<ForgotPasswordForm onSubmit={this.onSubmit} />
-				{this.renderResults()}
-			</div>
+			<Box sx={{ display: "flex", justifyContent: "center" }}>
+				<Stack spacing={2}>
+					<Typography
+						sx={{ display: "flex", justifyContent: "center" }}
+						variant="h4"
+					>
+						Forgot Password
+					</Typography>
+					<Typography>
+						Submit your email address, if it matches one of our accounts we will
+						send you an email to reset your password.
+					</Typography>
+					<ForgotPasswordForm onSubmit={this.onSubmit} />
+					{this.renderResults()}
+				</Stack>
+			</Box>
 		);
 	}
 }

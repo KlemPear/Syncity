@@ -9,6 +9,7 @@ const db = {
 const CONNECTION_URL =
 	process.env.NODE_ENV === "production"
 		? process.env.MONGODB_CONNECTION_STRING
+		// : process.env.MONGODB_CONNECTION_STRING_TEST; 
 		: `mongodb://${db.url}/${db.name}`;
 
 mongoose.connect(CONNECTION_URL, {

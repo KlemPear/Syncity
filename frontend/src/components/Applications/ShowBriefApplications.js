@@ -4,6 +4,9 @@ import { fetchApplications, fetchBrief } from "../../actions";
 import history from "../../util/history";
 import ApplicationCard from "./ApplicationCard";
 
+//mui
+import { Stack, Box, Typography, List } from "@mui/material";
+
 class ShowBriefApplications extends React.Component {
 	constructor(props) {
 		super(props);
@@ -26,27 +29,40 @@ class ShowBriefApplications extends React.Component {
 	render() {
 		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
-				<div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<h4>No applications were submitted for this brief so far...</h4>
-				</div>
+				<Box>
+					<Typography variant="h3">
+						No applications were submitted for this brief so far...
+					</Typography>
+				</Box>
 			);
 		} else {
 			return (
 				<>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<div className="ui hidden divider"></div>
-					<div className="ui divided items">
-						{this.props.applications.map((application) => (
-							<ApplicationCard
-								key={application._id}
-								application={application}
-							/>
-						))}
-					</div>
+					<Stack spacing={2}>
+						<Typography variant="h3">{`${this.props.brief.title}`}</Typography>
+						<Typography variant="p">
+							If you like an application you will be able to see its contact
+							information, and the applicant will be notified.
+						</Typography>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								height: 550,
+								overflow: "hidden",
+								overflowY: "auto",
+							}}
+						>
+							<List>
+								{this.props.applications.map((application) => (
+									<ApplicationCard
+										key={application._id}
+										application={application}
+									/>
+								))}
+							</List>
+						</Box>
+					</Stack>
 				</>
 			);
 		}

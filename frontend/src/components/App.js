@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import Header from "./Header";
 import Register from "./Users/Register";
 import Login from "./Users/Login";
 import LandingPage from "./LandingPage";
@@ -22,12 +21,17 @@ import ResetPassword from "./Users/ResetPassword";
 import CreateTrack from "./Catalog/CreateTrack";
 import ListTracks from "./Catalog/ListTracks";
 import EditTrack from "./Catalog/EditTrack";
+import Appbar from "./Appbar";
+
+//mui
+import { Container } from "@mui/material";
 
 class App extends React.Component {
 	render() {
 		return (
-			<div className="ui container app">
-				<Header />
+			<>
+			<Appbar />
+			<Container fixed>
 				<Switch>
 					{this.props.isUserPending ? (
 						<>
@@ -135,7 +139,8 @@ class App extends React.Component {
 					/>
 					<Redirect to="/" />
 				</Switch>
-			</div>
+			</Container>
+			</>
 		);
 	}
 }

@@ -5,8 +5,15 @@ import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import BriefCard from "./BriefCard";
 
-class ListBriefs extends React.Component {
+//mui
+import { Grid, Tabs, Tab, Fab } from "@mui/material";
+import { Public, Lock, AccountBox, Add } from "@mui/icons-material";
 
+class ListBriefs extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = { value: 0 };
+	}
 	componentDidMount() {
 		this.props.fetchBriefs({ open: true, private: false });
 	}
@@ -23,6 +30,10 @@ class ListBriefs extends React.Component {
 		this.props.fetchPrivateBriefs(this.props.userId);
 	};
 
+	handleChange = (event, newValue) => {
+		this.setState({ value: newValue });
+	};
+
 	render() {
 		if (!this.props.briefs) {
 			return (
@@ -33,38 +44,54 @@ class ListBriefs extends React.Component {
 		} else {
 			return (
 				<>
-					<div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<div className="ui hidden divider"></div>
-						<Link className="ui blue button" to={`/create-brief`}>
-							Create Brief
-						</Link>
-						<button
-							className="ui classic button"
+					<Tabs
+						value={this.state.value}
+						onChange={this.handleChange}
+						aria-label="icon label tabs example"
+						textColor="secondary"
+						indicatorColor="secondary"
+						centered
+						sx={{ margin: 1 }}
+					>
+						<Tab
+							icon={<Public />}
 							onClick={() => this.onAllBriefsClick()}
-						>
-							All Public Briefs
-						</button>
-						<button
-							className="ui classic button"
+							label="ALL PUBLIC BRIEFS"
+						/>
+						<Tab
+							icon={<Lock />}
 							onClick={() => this.onPrivateBriefsClick()}
-						>
-							Private Briefs
-						</button>
-						<button
-							className="ui classic button"
+							label="PRIVATE BRIEFS"
+						/>
+						<Tab
+							icon={<AccountBox />}
 							onClick={() => this.onYourBriefsClick()}
-						>
-							Your Briefs
-						</button>
-					</div>
-					<div className="ui hidden divider"></div>
-					<div className="ui cards">
+							label="YOUR BRIEFS"
+						/>
+					</Tabs>
+					<Fab
+						variant="extended"
+						component={Link}
+						to="/create-brief"
+						color="secondary"
+						aria-label="add"
+						sx={{ margin: 1 }}
+					>
+						<Add sx={{ mr: 1 }} />
+						New Brief
+					</Fab>
+					<Grid
+						container
+						spacing={{ xs: 1, md: 2 }}
+						columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+						justifyContent="space-evenly"
+					>
 						{this.props.briefs.map((brief) => (
-							<BriefCard key={brief._id} brief={brief} />
+							<Grid item xs={1} sm={1} md={1} key={brief._id}>
+								<BriefCard key={brief._id} brief={brief} />
+							</Grid>
 						))}
-					</div>
+					</Grid>
 				</>
 			);
 		}
