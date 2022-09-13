@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
+import {
+	moneyFormatter,
+	dateFormatter,
+	getNumberOfDays,
+} from "../../util/textFormatHelper";
 
 //mui
 import { styled } from "@mui/material/styles";
@@ -28,6 +32,7 @@ import Button from "@mui/material/Button";
 import { Box, Stack, Divider, Badge, ButtonGroup } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import MuiLink from "@mui/material/Link";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
 
@@ -73,6 +78,26 @@ class BriefCard extends React.Component {
 		);
 	};
 
+	renderSubheader(brief) {
+		return (
+			<>
+				<Typography>
+					<HourglassBottomIcon sx={{ m: 0, p: 0 }} />
+					{getNumberOfDays(new Date(Date.now()), brief.dueDate)} days left
+				</Typography>
+				<Typography>Budget: {moneyFormatter.format(brief.budget)}</Typography>
+			</>
+		);
+	}
+
+	renderHeader(brief) {
+		return (
+			<>
+				<Typography variant="h6">{brief.title}</Typography>
+			</>
+		);
+	}
+
 	renderMuiBrief(brief) {
 		return (
 			<Card sx={{ maxWidth: 350 }} variant="outlined">
@@ -85,10 +110,12 @@ class BriefCard extends React.Component {
 							{brief.media}
 						</Avatar>
 					}
-					title={brief.title}
-					subheader={`Due Date: ${dateFormatter(
-						brief.dueDate
-					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
+					title={this.renderHeader(brief)}
+					subheader={this.renderSubheader(brief)}
+					//subheader={`${getNumberOfDays(
+					// 	new Date(Date.now()),
+					// 	brief.dueDate
+					// )} days left - Budget: ${moneyFormatter.format(brief.budget)}`}
 				/>
 				<CardContent>
 					<Divider variant="middle" sx={{ margin: 1 }} />
@@ -126,7 +153,8 @@ class BriefCard extends React.Component {
 					) : (
 						<>
 							{brief.numberOfApplicationsWanted ===
-							brief.numberOfApplicationsSubmitted ? (
+								brief.numberOfApplicationsSubmitted ||
+							getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0 ? (
 								<Button variant="contained" color="primary">
 									Closed
 								</Button>
