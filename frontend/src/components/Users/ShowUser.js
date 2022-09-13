@@ -151,7 +151,7 @@ class ShowUser extends React.Component {
 										? PlanFormatterDict[
 												this.props.currentUser.pitchSubscriptionPlan
 										  ]
-										: "no plan"}
+										: "No Plan."}
 								</Typography>
 								<ul>
 									<li>

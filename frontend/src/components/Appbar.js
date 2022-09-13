@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
+// import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { Link } from "react-router-dom";
@@ -85,9 +85,9 @@ class ResponsiveAppBar extends React.Component {
 			<AppBar position="static" sx={{ mb: 2 }}>
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
-						<LibraryMusicIcon
+						{/* <LibraryMusicIcon
 							sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-						/>
+						/> */}
 						<Typography
 							variant="h6"
 							noWrap
@@ -103,9 +103,9 @@ class ResponsiveAppBar extends React.Component {
 								textDecoration: "none",
 							}}
 						>
-							NOST
+							{/* NOST */}
+							<img style={{ width: 65, height: 65 }} src={process.env.PUBLIC_URL + '/NOST_logo_white.png'} alt="logo" />
 						</Typography>
-
 						<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 							<IconButton
 								size="large"
@@ -149,9 +149,9 @@ class ResponsiveAppBar extends React.Component {
 								))}
 							</Menu>
 						</Box>
-						<LibraryMusicIcon
+						{/* <LibraryMusicIcon
 							sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-						/>
+						/> */}
 						<Typography
 							variant="h5"
 							noWrap
@@ -168,7 +168,8 @@ class ResponsiveAppBar extends React.Component {
 								textDecoration: "none",
 							}}
 						>
-							NOST
+							{/* NOST */}
+							<img style={{ width: 65, height: 65 }} src={process.env.PUBLIC_URL + '/NOST_logo_white.png'} alt="logo" />
 						</Typography>
 						<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 							{Object.keys(pages).map((page) => (
@@ -190,11 +191,7 @@ class ResponsiveAppBar extends React.Component {
 									<Button
 										onClick={this.handleOpenUserMenu}
 										sx={{ p: 0, color: "white" }}
-										startIcon={
-											<AccountCircleIcon
-												sx={{ color: "white" }}
-											/>
-										}
+										startIcon={<AccountCircleIcon sx={{ color: "white" }} />}
 									>
 										{this.props.user.firstName} {this.props.user.lastName}
 									</Button>

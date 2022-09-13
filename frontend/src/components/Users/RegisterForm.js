@@ -82,11 +82,11 @@ class RegisterForm extends React.Component {
 							label="Email Address"
 							type="email"
 						/>
-						<Field
+						{/* <Field
 							name="bio"
 							component={this.renderTextInput}
 							label="Add a short bio to your profile..."
-						/>
+						/> */}
 						<Field
 							name="password"
 							component={this.renderInput}
@@ -122,9 +122,9 @@ const validate = (formValues) => {
 	if (!formValues.lastName) {
 		errors.lastName = "You must enter a last name";
 	}
-	if (!formValues.bio) {
-		errors.bio = "You must enter a bio";
-	}
+	// if (!formValues.bio) {
+	// 	errors.bio = "You must enter a bio";
+	// }
 	if (!formValues.email) {
 		errors.email = "You must enter an email address";
 	}

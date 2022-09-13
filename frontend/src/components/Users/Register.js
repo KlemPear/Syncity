@@ -11,7 +11,7 @@ class Register extends React.Component {
 		const user = {
 			firstName: formValues.firstName,
 			lastName: formValues.lastName,
-			bio: formValues.bio,
+			// bio: formValues.bio,
 			email: formValues.email,
 			username: formValues.email,
 		};
@@ -19,8 +19,9 @@ class Register extends React.Component {
 			user: user,
 			password: formValues.password,
 		};
+		console.log(body);
 		//send data to server
-		this.props.registerUser(body);
+		// this.props.registerUser(body);
 	};
 
 	render() {

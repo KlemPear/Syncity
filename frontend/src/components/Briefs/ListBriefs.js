@@ -75,7 +75,7 @@ class ListBriefs extends React.Component {
 						to="/create-brief"
 						color="secondary"
 						aria-label="add"
-						sx={{ margin: 1 }}
+						sx={{ m: 1, mb: 5 }}
 					>
 						<Add sx={{ mr: 1 }} />
 						New Brief

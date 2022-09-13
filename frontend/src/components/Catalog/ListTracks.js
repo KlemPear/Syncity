@@ -43,7 +43,7 @@ class ListTracks extends React.Component {
 						to="/create-track"
 						color="secondary"
 						aria-label="add"
-						sx={{ margin: 1 }}
+						sx={{ m: 1, mb:5 }}
 					>
 						<Add sx={{ mr: 1 }} />
 						Add a track to your catalog
@@ -56,6 +56,9 @@ class ListTracks extends React.Component {
 							maxHeight: 550,
 							overflow: "hidden",
 							overflowY: "auto",
+							border: 1, 
+							borderRadius: "16px",
+							p: 3
 						}}
 					>
 						{this.props.tracks.map((track) => (
