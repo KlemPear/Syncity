@@ -23,6 +23,7 @@ import CreateTrack from "./Catalog/CreateTrack";
 import ListTracks from "./Catalog/ListTracks";
 import EditTrack from "./Catalog/EditTrack";
 import Appbar from "./Appbar";
+import Footer from "./Footer";
 
 //mui
 import { Container } from "@mui/material";
@@ -32,7 +33,7 @@ class App extends React.Component {
 		return (
 			<>
 				<Appbar />
-				<Container fixed>
+				<Container fixed sx={{ pb: 10 }}>
 					<Switch>
 						{this.props.isUserPending ? (
 							<>
@@ -84,7 +85,11 @@ class App extends React.Component {
 							exact
 							component={ResetPassword}
 						/>
-						<Route path="/" exact component={LandingPage} />
+						<Route
+							path="/"
+							exact
+							component={this.props.isSignedIn ? ListBriefs : Login}
+						/>
 						<Route path="/forgot-password" exact component={ForgotPassword} />
 						<Route
 							path="/profile"
@@ -114,9 +119,7 @@ class App extends React.Component {
 						<Route
 							path="/show-brief/:id/applications"
 							exact
-							component={
-								this.props.isSignedIn ? ShowBriefApplications : Login
-							}
+							component={this.props.isSignedIn ? ShowBriefApplications : Login}
 						/>
 						<Route
 							path="/list-applications"
@@ -143,9 +146,10 @@ class App extends React.Component {
 							exact
 							component={this.props.isSignedIn ? CreateTrack : Login}
 						/>
-						<Redirect to="/" />
+						<Redirect to="/list-briefs" />
 					</Switch>
 				</Container>
+				<Footer />
 			</>
 		);
 	}

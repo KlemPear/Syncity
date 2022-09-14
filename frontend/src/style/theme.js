@@ -15,6 +15,9 @@ export const theme = createTheme({
 		third: {
 			main: "#F8F8F8",
 		},
+		white: {
+			main: "#FFFFFF",
+		},
 	},
 	// '@global': {
 	//   '*::-webkit-scrollbar': {
