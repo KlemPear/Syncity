@@ -29,7 +29,15 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
-import { Box, Stack, Divider, Badge, ButtonGroup, List } from "@mui/material";
+import {
+	Box,
+	Stack,
+	Divider,
+	Badge,
+	ButtonGroup,
+	List,
+	Tooltip,
+} from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import MuiLink from "@mui/material/Link";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -161,12 +169,14 @@ class BriefCard extends React.Component {
 
 	renderAvatar(media) {
 		return (
-			<Avatar
-				sx={{ bgcolor: mediaMapping[media].color[500] }}
-				aria-label="media"
-			>
-				{mediaMapping[media].icon}
-			</Avatar>
+			<Tooltip title={media}>
+				<Avatar
+					sx={{ bgcolor: mediaMapping[media].color[500] }}
+					aria-label="media"
+				>
+					{mediaMapping[media].icon}
+				</Avatar>
+			</Tooltip>
 		);
 	}
 
