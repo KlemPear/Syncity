@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-	moneyFormatter,
-	dateFormatter,
-	getNumberOfDays,
-} from "../../util/textFormatHelper";
+import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
 
 //mui
 import { styled } from "@mui/material/styles";
@@ -25,6 +21,9 @@ import {
 	deepOrange,
 	yellow,
 	pink,
+	teal,
+	amber,
+	indigo,
 } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -33,6 +32,61 @@ import { Box, Stack, Divider, Badge, ButtonGroup } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import MuiLink from "@mui/material/Link";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+
+// Media Icons
+import FilmIcon from "@mui/icons-material/Theaters";
+import WebIcon from "@mui/icons-material/RssFeed";
+import TvIcon from "@mui/icons-material/Tv";
+import AdvertisingIcon from "@mui/icons-material/Sell";
+import VideoGameIcon from "@mui/icons-material/SportsEsports";
+import TrailerIcon from "@mui/icons-material/Movie";
+import RadioIcon from "@mui/icons-material/Radio";
+import PodcastIcon from "@mui/icons-material/Podcasts";
+import CorporateIcon from "@mui/icons-material/CorporateFare";
+import OtherIcon from "@mui/icons-material/AudioFile";
+
+const mediaMapping = {
+	Film: {
+		icon: <FilmIcon />,
+		color: red,
+	},
+	Web: {
+		icon: <WebIcon />,
+		color: deepPurple,
+	},
+	TV: {
+		icon: <TvIcon />,
+		color: blue,
+	},
+	Advertising: {
+		icon: <AdvertisingIcon />,
+		color: green,
+	},
+	"Video Game": {
+		icon: <VideoGameIcon />,
+		color: deepOrange,
+	},
+	Trailer: {
+		icon: <TrailerIcon />,
+		color: yellow,
+	},
+	Radio: {
+		icon: <RadioIcon />,
+		color: pink,
+	},
+	Podcast: {
+		icon: <PodcastIcon />,
+		color: teal,
+	},
+	Corporate: {
+		icon: <CorporateIcon />,
+		color: amber,
+	},
+	Other: {
+		icon: <OtherIcon />,
+		color: indigo,
+	},
+};
 
 const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
 
@@ -79,11 +133,17 @@ class BriefCard extends React.Component {
 	};
 
 	renderSubheader(brief) {
+		const numberOfDaysLeft = getNumberOfDays(
+			new Date(Date.now()),
+			brief.dueDate
+		);
 		return (
 			<>
 				<Typography>
 					<HourglassBottomIcon sx={{ m: 0, p: 0 }} />
-					{getNumberOfDays(new Date(Date.now()), brief.dueDate)} days left
+					{numberOfDaysLeft > 0
+						? `${numberOfDaysLeft} days left`
+						: `${(numberOfDaysLeft * -1).toString()} days past due date`}
 				</Typography>
 				<Typography>Budget: {moneyFormatter.format(brief.budget)}</Typography>
 			</>
@@ -98,25 +158,26 @@ class BriefCard extends React.Component {
 		);
 	}
 
+	renderAvatar(media) {
+		return (
+			<Avatar
+				sx={{ bgcolor: mediaMapping[media].color[500] }}
+				aria-label="media"
+			>
+				{mediaMapping[media].icon}
+			</Avatar>
+		);
+	}
+
 	renderMuiBrief(brief) {
 		return (
 			<Card sx={{ maxWidth: 350 }} variant="outlined">
 				<CardHeader
-					avatar={
-						<Avatar
-							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
-							aria-label="media"
-						>
-							{brief.media}
-						</Avatar>
-					}
+					avatar={this.renderAvatar(brief.media)}
 					title={this.renderHeader(brief)}
 					subheader={this.renderSubheader(brief)}
-					//subheader={`${getNumberOfDays(
-					// 	new Date(Date.now()),
-					// 	brief.dueDate
-					// )} days left - Budget: ${moneyFormatter.format(brief.budget)}`}
 				/>
+				<CardContent></CardContent>
 				<CardContent>
 					<Divider variant="middle" sx={{ margin: 1 }} />
 					<Typography variant="body2" color="text.secondary">
@@ -232,23 +293,11 @@ class BriefCard extends React.Component {
 						</SmallAvatar>
 					}
 				>
-					<Avatar
-						sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
-						aria-label="media"
-					>
-						{brief.media}
-					</Avatar>
+					{this.renderAvatar(brief.media)}
 				</Badge>
 			);
 		} else {
-			return (
-				<Avatar
-					sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
-					aria-label="media"
-				>
-					{brief.media}
-				</Avatar>
-			);
+			return <>{this.renderAvatar(brief.media)}</>;
 		}
 	}
 
@@ -258,10 +307,8 @@ class BriefCard extends React.Component {
 			<Card sx={{ maxWidth: 350 }} variant="outlined">
 				<CardHeader
 					avatar={this.renderApplicationAvatar(application)}
-					title={brief.title}
-					subheader={`Due Date: ${dateFormatter(
-						brief.dueDate
-					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
+					title={this.renderHeader(brief)}
+					subheader={this.renderSubheader(brief)}
 				/>
 				<CardContent>
 					<Divider variant="middle" sx={{ margin: 1 }} />
