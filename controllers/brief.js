@@ -1,14 +1,45 @@
 const Brief = require("../models/Brief");
 const User = require("../models/User");
 
+const getNumberOfDays = (start, end) => {
+	const date1 = new Date(start);
+	const date2 = new Date(end);
+
+	// One day in milliseconds
+	const oneDay = 1000 * 60 * 60 * 24;
+
+	// Calculating the time difference between two dates
+	const diffInTime = date2.getTime() - date1.getTime();
+
+	// Calculating the no. of days between two dates
+	const diffInDays = Math.round(diffInTime / oneDay);
+
+	return diffInDays;
+};
+
+const updateClosedBrief = async (briefs) => {
+	briefs.forEach(async (brief) => {
+		if (getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0) {
+			brief.open = false;
+			const updatedBrief = await Brief.findByIdAndUpdate(brief._id, brief, {
+				returnDocument: "after",
+			});
+			brief = updatedBrief;
+		}
+	});
+	return briefs;
+};
+
 module.exports.onGetAllBriefs = async (req, res, next) => {
 	try {
 		if (req.query) {
 			const briefs = await Brief.find(req.query);
-			return res.status(200).json(briefs);
+			const updatedBriefs = await updateClosedBrief(briefs);
+			return res.status(200).json(updatedBriefs);
 		} else {
 			const briefs = await Brief.find();
-			return res.status(200).json(briefs);
+			const updatedBriefs = await updateClosedBrief(briefs);
+			return res.status(200).json(updatedBriefs);
 		}
 	} catch (error) {
 		return res.status(500).json(error);
@@ -23,10 +54,12 @@ module.exports.onGetPrivateBriefs = async (req, res, next) => {
 		}
 		const privateBriefs = await Brief.find({
 			private: true,
+			open: true,
 			author: { $in: connections },
 		});
 		const ownPrivateBriefs = await Brief.find({
 			private: true,
+			open: true,
 			author: req.params.id,
 		});
 		const briefs = privateBriefs.concat(ownPrivateBriefs);

@@ -6,10 +6,10 @@ export const theme = createTheme({
 			main: "#232323",
 		},
 		secondary: {
-			main: "#3D52D5" //"#F6CD45",
+			main: "#458FF7" //"#F6CD45", //#3D52D5
 		},
-		dark: {
-			main: "#232323",
+		third: {
+			main: "#F7F7F7",
 		},
 	},
 	// '@global': {
