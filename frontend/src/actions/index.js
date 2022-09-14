@@ -31,7 +31,7 @@ export const loginUser = (formValues) => async (dispatch, getState) => {
 		dispatch({ type: usersTypes.LOGIN_USER, payload: response.data });
 		// do some programmatic navigation to get the user
 		// back to the main page
-		history.push("/");
+		history.push("/list-briefs");
 	} catch (error) {
 		dispatch({ type: usersTypes.UNAUTHORIZED });
 	}

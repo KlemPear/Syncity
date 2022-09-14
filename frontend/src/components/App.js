@@ -52,12 +52,12 @@ class App extends React.Component {
 						<Route
 							path="/register"
 							exact
-							component={this.props.isSignedIn ? LandingPage : Register}
+							component={this.props.isSignedIn ? ListBriefs : Register}
 						/>
 						<Route
 							path="/login"
 							exact
-							component={this.props.isSignedIn ? LandingPage : Login}
+							component={this.props.isSignedIn ? ListBriefs : Login}
 						/>
 						<Route
 							path="/payment-success"
@@ -89,59 +89,59 @@ class App extends React.Component {
 						<Route
 							path="/profile"
 							exact
-							component={this.props.isSignedIn ? ShowUser : LandingPage}
+							component={this.props.isSignedIn ? ShowUser : Login}
 						/>
 						<Route
 							path="/list-briefs"
 							exact
-							component={this.props.isSignedIn ? ListBriefs : LandingPage}
+							component={this.props.isSignedIn ? ListBriefs : Login}
 						/>
 						<Route
 							path="/create-brief"
 							exact
-							component={this.props.isSignedIn ? CreateBrief : LandingPage}
+							component={this.props.isSignedIn ? CreateBrief : Login}
 						/>
 						<Route
 							path="/show-brief/edit/:id"
 							exact
-							component={this.props.isSignedIn ? EditBrief : LandingPage}
+							component={this.props.isSignedIn ? EditBrief : Login}
 						/>
 						<Route
 							path="/show-brief/:id"
 							exact
-							component={this.props.isSignedIn ? ShowBrief : LandingPage}
+							component={this.props.isSignedIn ? ShowBrief : Login}
 						/>
 						<Route
 							path="/show-brief/:id/applications"
 							exact
 							component={
-								this.props.isSignedIn ? ShowBriefApplications : LandingPage
+								this.props.isSignedIn ? ShowBriefApplications : Login
 							}
 						/>
 						<Route
 							path="/list-applications"
 							exact
-							component={this.props.isSignedIn ? ListApplications : LandingPage}
+							component={this.props.isSignedIn ? ListApplications : Login}
 						/>
 						<Route
 							path="/buy-tokens"
 							exact
-							component={this.props.isSignedIn ? BuyTokens : LandingPage}
+							component={this.props.isSignedIn ? BuyTokens : Login}
 						/>
 						<Route
 							path="/catalog"
 							exact
-							component={this.props.isSignedIn ? ListTracks : LandingPage}
+							component={this.props.isSignedIn ? ListTracks : Login}
 						/>
 						<Route
 							path="/catalog/:trackId"
 							exact
-							component={this.props.isSignedIn ? EditTrack : LandingPage}
+							component={this.props.isSignedIn ? EditTrack : Login}
 						/>
 						<Route
 							path="/create-track"
 							exact
-							component={this.props.isSignedIn ? CreateTrack : LandingPage}
+							component={this.props.isSignedIn ? CreateTrack : Login}
 						/>
 						<Redirect to="/" />
 					</Switch>
