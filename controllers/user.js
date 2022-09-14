@@ -61,6 +61,9 @@ module.exports.onGetUserByConfirmationCode = async (req, res, next) => {
 
 module.exports.onCreateUser = async (req, res, next) => {
 	try {
+		if(await User.findOne({email: req.body.user.email})){
+			return res.status(202).json({username: req.body.user.email});
+		}
 		// Do validation here with Joi
 		const { password } = req.body;
 		const user = new User(req.body.user);

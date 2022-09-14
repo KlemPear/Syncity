@@ -13,10 +13,16 @@ import tracks from "../apis/tracks";
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
 	const response = await users.post(`/register`, body);
-	dispatch({ type: usersTypes.REGISTER_USER, payload: response.data });
+	
 	// do some programmatic navigation to get the user
 	// back to the main page
-	history.push("/user-status-pending");
+	if(response.status === 200){
+		dispatch({ type: usersTypes.REGISTER_USER, payload: response.data });
+		history.push("/user-status-pending");
+	}
+	if(response.status === 202){
+		history.push("/user-already-created");
+	}
 };
 
 export const loginUser = (formValues) => async (dispatch, getState) => {

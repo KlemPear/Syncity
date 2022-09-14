@@ -16,6 +16,7 @@ import PaymentSucceded from "./Payments/PaymentSucceded";
 import PaymentCanceled from "./Payments/PaymentCanceled";
 import UserStatusPending from "./Users/UserStatusPending";
 import UserStatusVerified from "./Users/UserStatusVerified";
+import UserAlreadyCreated from "./Users/UserAlreadyCreated";
 import ForgotPassword from "./Users/ForgotPassword";
 import ResetPassword from "./Users/ResetPassword";
 import CreateTrack from "./Catalog/CreateTrack";
@@ -67,6 +68,11 @@ class App extends React.Component {
 						path="/payment-canceled"
 						exact
 						component={this.props.isSignedIn ? PaymentCanceled : Login}
+					/>
+					<Route
+						path="/user-already-created"
+						exact
+						component={UserAlreadyCreated}
 					/>
 					<Route
 						path="/register/confirm/:confirmationCode"
