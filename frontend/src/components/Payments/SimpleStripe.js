@@ -24,7 +24,7 @@ const ProductDisplay = ({ itemId, userId, subscription }) => (
 				onCheckoutSubmit(event, itemId, userId, subscription)
 			}
 		>
-			<Button type="submit" variant="contained" color="primary" size="large">
+			<Button type="submit" variant="contained" color="secondary" size="large">
 				Subscribe
 			</Button>
 		</form>
