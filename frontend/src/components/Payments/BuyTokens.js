@@ -162,8 +162,8 @@ class BuyTokens extends React.Component {
 						size="small"
 						aria-label="outlined button group"
 					>
-						<Button onClick={this.onSelectBriefPlans}>I need music</Button>
-						<Button onClick={this.onSelectPitchPlans}>I make music</Button>
+						<Button variant={this.state.briefPlans ? "contained" : "outlined"} onClick={this.onSelectBriefPlans}>I need music</Button>
+						<Button variant={!this.state.briefPlans ? "contained" : "outlined"} onClick={this.onSelectPitchPlans}>I make music</Button>
 					</ButtonGroup>
 					{this.state.briefPlans
 						? this.renderBriefPlans()
