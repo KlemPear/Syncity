@@ -82,12 +82,9 @@ class ResponsiveAppBar extends React.Component {
 	render() {
 		const { pages, settings } = this.getPagesAndSettings();
 		return (
-			<AppBar position="static" sx={{ mb: 2 }}>
+			<AppBar position="static" sx={{ mb: 2 }} color="third">
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
-						{/* <LibraryMusicIcon
-							sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-						/> */}
 						<Typography
 							variant="h6"
 							noWrap
@@ -103,8 +100,11 @@ class ResponsiveAppBar extends React.Component {
 								textDecoration: "none",
 							}}
 						>
-							{/* NOST */}
-							<img style={{ width: 65, height: 65 }} src={process.env.PUBLIC_URL + '/NOST_logo_white.png'} alt="logo" />
+							<img
+								style={{ width: 65, height: 65 }}
+								src={process.env.PUBLIC_URL + "/NOST_logo_black.png"}
+								alt="logo"
+							/>
 						</Typography>
 						<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
 							<IconButton
@@ -149,9 +149,6 @@ class ResponsiveAppBar extends React.Component {
 								))}
 							</Menu>
 						</Box>
-						{/* <LibraryMusicIcon
-							sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-						/> */}
 						<Typography
 							variant="h5"
 							noWrap
@@ -168,8 +165,11 @@ class ResponsiveAppBar extends React.Component {
 								textDecoration: "none",
 							}}
 						>
-							{/* NOST */}
-							<img style={{ width: 65, height: 65 }} src={process.env.PUBLIC_URL + '/NOST_logo_white.png'} alt="logo" />
+							<img
+								style={{ width: 65, height: 65 }}
+								src={process.env.PUBLIC_URL + "/NOST_logo_black.png"}
+								alt="logo"
+							/>
 						</Typography>
 						<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 							{Object.keys(pages).map((page) => (
@@ -178,7 +178,7 @@ class ResponsiveAppBar extends React.Component {
 									component={Link}
 									to={pages[page]}
 									onClick={this.handleCloseNavMenu}
-									sx={{ my: 2, color: "white", display: "block" }}
+									sx={{ my: 2, color: "black", display: "block" }}
 								>
 									{page}
 								</Button>
@@ -190,8 +190,8 @@ class ResponsiveAppBar extends React.Component {
 								<Tooltip title="Open settings">
 									<Button
 										onClick={this.handleOpenUserMenu}
-										sx={{ p: 0, color: "white" }}
-										startIcon={<AccountCircleIcon sx={{ color: "white" }} />}
+										sx={{ p: 0, color: "black" }}
+										startIcon={<AccountCircleIcon sx={{ color: "black" }} />}
 									>
 										{this.props.user.firstName} {this.props.user.lastName}
 									</Button>

@@ -80,19 +80,9 @@ module.exports.onGetBriefById = async (req, res, next) => {
 
 module.exports.onCreateBrief = async (req, res, next) => {
 	try {
-		if (req.body.logo == null) {
-			req.body.logo =
-				"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpd8grPAcmeeZPO_pho-bOhFivjEq8MCTFPw&usqp=CAU";
-		}
-		const updatedUser = await User.updateTokensOfUser(req.body.author, -10);
-		if (!updatedUser) {
-			console.log("not enough tokens to do this.");
-			return res.status(500).json("Not enough tokens to do this.");
-		} else {
-			const newBrief = new Brief(req.body);
-			newBrief.save();
-			return res.status(200).json(newBrief);
-		}
+		const newBrief = new Brief(req.body);
+		newBrief.save();
+		return res.status(200).json(newBrief);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

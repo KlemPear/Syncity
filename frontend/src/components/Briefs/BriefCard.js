@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
+import ShowTrack from "../Catalog/ShowTrack";
 
 //mui
 import { styled } from "@mui/material/styles";
@@ -28,7 +29,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
-import { Box, Stack, Divider, Badge, ButtonGroup } from "@mui/material";
+import { Box, Stack, Divider, Badge, ButtonGroup, List } from "@mui/material";
 import ListItem from "@mui/material/ListItem";
 import MuiLink from "@mui/material/Link";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
@@ -88,8 +89,6 @@ const mediaMapping = {
 	},
 };
 
-const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
-
 const ExpandMore = styled((props) => {
 	const { expand, ...other } = props;
 	return <IconButton {...other} />;
@@ -114,20 +113,22 @@ class BriefCard extends React.Component {
 	renderReference = (ref) => {
 		return (
 			<Box key={ref.link}>
-				<ul key={ref.link}>
-					<li>
-						<MuiLink underline="hover" href={ref.link}>
-							{ref.title ? ref.title : "Link to reference song"}
-						</MuiLink>
-						{ref.comment ? (
-							<ul>
-								<li>
-									<p>{ref.comment}</p>
-								</li>
-							</ul>
-						) : null}
-					</li>
-				</ul>
+				<List key={ref.link}>
+					<ListItem>
+						<Stack>
+							<MuiLink underline="hover" href={ref.link}>
+								{ref.title ? ref.title : "Link to reference song"}
+							</MuiLink>
+							{ref.comment ? (
+								<List>
+									<ListItem>
+										<Typography>Comment: {ref.comment}</Typography>
+									</ListItem>
+								</List>
+							) : null}
+						</Stack>
+					</ListItem>
+				</List>
 			</Box>
 		);
 	};
@@ -139,7 +140,7 @@ class BriefCard extends React.Component {
 		);
 		return (
 			<>
-				<Typography>
+				<Typography sx={{ display: "flex", justifyContent: "flex-start" }}>
 					<HourglassBottomIcon sx={{ m: 0, p: 0 }} />
 					{numberOfDaysLeft > 0
 						? `${numberOfDaysLeft} days left`
@@ -169,29 +170,79 @@ class BriefCard extends React.Component {
 		);
 	}
 
+	renderCollaspableInfo(brief) {
+		return (
+			<>
+				<Typography>License Terms:</Typography>
+				<List>
+					<ListItem>Media: {brief.media}</ListItem>
+					<ListItem>Use: {brief.use.join(", ")}</ListItem>
+					<ListItem>License Duration: {brief.licenseDuration}</ListItem>
+					<ListItem>Extract Duration: {brief.extractDuration} minutes</ListItem>
+					<ListItem>Territory: {brief.territory.join(", ")}</ListItem>
+				</List>
+				<br />
+				<Typography>Type Of Music Needed:</Typography>
+				<List>
+					<ListItem>Genre(s): {brief.genres.join(", ")}</ListItem>
+					<ListItem>Vocal(s): {brief.vocals.join(", ")}</ListItem>
+					<ListItem>Mood(s): {brief.moods.join(", ")}</ListItem>
+					<ListItem>Instrument(s): {brief.instruments.join(", ")}</ListItem>
+					<ListItem>Tempo: {brief.tempo}</ListItem>
+					<ListItem>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</ListItem>
+				</List>
+				<br />
+				{brief.references?.length !== 0 ? (
+					<>
+						<Typography>Reference(s):</Typography>
+						{brief.references?.map((ref) => this.renderReference(ref))}
+					</>
+				) : null}
+			</>
+		);
+	}
+
 	renderMuiBrief(brief) {
 		return (
-			<Card sx={{ maxWidth: 350 }} variant="outlined">
+			<Card
+				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500 }}
+				variant="outlined"
+			>
 				<CardHeader
 					avatar={this.renderAvatar(brief.media)}
 					title={this.renderHeader(brief)}
 					subheader={this.renderSubheader(brief)}
+					sx={{
+						height: 150,
+						overflow: "hidden",
+						overflowY: "auto",
+						py: 0.5,
+					}}
 				/>
-				<CardContent></CardContent>
-				<CardContent>
-					<Divider variant="middle" sx={{ margin: 1 }} />
+				<Divider variant="middle" sx={{ margin: 1 }} />
+				<CardContent sx={{ py: 0.5 }}>
 					<Typography variant="body2" color="text.secondary">
 						{brief.numberOfApplicationsWanted > 0
-							? `Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`
+							? `${brief.numberOfApplicationsSubmitted} / ${brief.numberOfApplicationsWanted} applications already submitted`
 							: null}
 					</Typography>
 				</CardContent>
-				<CardContent>
-					<Typography>Description:</Typography>
-					<Typography variant="body1" color="text.primary">
-						{brief.description}
-					</Typography>
-				</CardContent>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						height: 100,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<CardContent sx={{ py: 0.5 }}>
+						<Typography sx={{ mt: 0.5 }}>Description:</Typography>
+						<Typography variant="body1" color="text.primary">
+							{brief.description}
+						</Typography>
+					</CardContent>
+				</Box>
 				<CardActions disableSpacing>
 					<Divider variant="middle" sx={{ margin: 1 }} />
 					{brief.author === this.props.userId ? (
@@ -222,7 +273,7 @@ class BriefCard extends React.Component {
 							) : (
 								<Button
 									variant="contained"
-									color="secondary"
+									color="primary"
 									component={Link}
 									to={`show-brief/${brief._id}`}
 								>
@@ -240,36 +291,20 @@ class BriefCard extends React.Component {
 						<ExpandMoreIcon />
 					</ExpandMore>
 				</CardActions>
-				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-					<CardContent>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						maxHeight: 150,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
 						<Divider variant="middle" sx={{ margin: 1 }} />
-						<Typography>License Terms:</Typography>
-						<ul>
-							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use.join(", ")}</li>
-							<li>License Duration: {brief.licenseDuration}</li>
-							<li>Extract Duration: {brief.extractDuration} minutes</li>
-							<li>Territory: {brief.territory.join(", ")}</li>
-						</ul>
-						<br />
-						<Typography>Type Of Music Needed:</Typography>
-						<ul>
-							<li>Genre(s): {brief.genres.join(", ")}</li>
-							<li>Vocal(s): {brief.vocals.join(", ")}</li>
-							<li>Mood(s): {brief.moods.join(", ")}</li>
-							<li>Instrument(s): {brief.instruments.join(", ")}</li>
-							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
-						</ul>
-						<br />
-						{brief.references?.length !== 0 ? (
-							<>
-								<Typography>Reference(s):</Typography>
-								{brief.references?.map((ref) => this.renderReference(ref))}
-							</>
-						) : null}
-					</CardContent>
-				</Collapse>
+						<CardContent>{this.renderCollaspableInfo(brief)}</CardContent>
+					</Collapse>
+				</Box>
 			</Card>
 		);
 	}
@@ -304,74 +339,87 @@ class BriefCard extends React.Component {
 	renderMuiApplication(application) {
 		const brief = application.brief;
 		return (
-			<Card sx={{ maxWidth: 350 }} variant="outlined">
+			<Card
+				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 600 }}
+				variant="outlined"
+			>
 				<CardHeader
 					avatar={this.renderApplicationAvatar(application)}
 					title={this.renderHeader(brief)}
 					subheader={this.renderSubheader(brief)}
+					sx={{
+						height: 150,
+						overflow: "hidden",
+						overflowY: "auto",
+						py: 0.5,
+					}}
 				/>
-				<CardContent>
-					<Divider variant="middle" sx={{ margin: 1 }} />
-					<Stack direction="row" justifyContent="space-between">
-						<Typography>Description:</Typography>
-						<ExpandMore
-							expand={this.state.expanded}
-							onClick={this.handleExpandClick}
-							aria-expanded={this.state.expanded}
-							aria-label="show more"
-							align="right"
-						>
-							<ExpandMoreIcon align="right" />
-						</ExpandMore>
-					</Stack>
-					<Typography variant="body1" color="text.primary">
-						{brief.description}
-					</Typography>
-				</CardContent>
-				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-					<CardContent>
-						<Typography>License Terms:</Typography>
-						<ul>
-							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use.join(", ")}</li>
-							<li>License Duration: {brief.licenseDuration}</li>
-							<li>Extract Duration: {brief.extractDuration} minutes</li>
-							<li>Territory: {brief.territory.join(", ")}</li>
-						</ul>
-						<br />
-						<Typography>Type Of Music Needed:</Typography>
-						<ul>
-							<li>Genre(s): {brief.genres.join(", ")}</li>
-							<li>Vocal(s): {brief.vocals.join(", ")}</li>
-							<li>Mood(s): {brief.moods.join(", ")}</li>
-							<li>Instrument(s): {brief.instruments.join(", ")}</li>
-							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
-						</ul>
-						<br />
-						{brief.references?.length !== 0 ? (
-							<>
-								<Typography>Reference(s):</Typography>
-								{brief.references?.map((ref) => this.renderReference(ref))}
-							</>
-						) : null}
+				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						maxHeight: 100,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<CardContent sx={{ py: 0.5 }}>
+						<Stack direction="row" justifyContent="space-between">
+							<Typography>Description:</Typography>
+							<ExpandMore
+								expand={this.state.expanded}
+								onClick={this.handleExpandClick}
+								aria-expanded={this.state.expanded}
+								aria-label="show more"
+								align="right"
+							>
+								<ExpandMoreIcon align="right" />
+							</ExpandMore>
+						</Stack>
+
+						<Typography variant="body1" color="text.primary">
+							{brief.description}
+						</Typography>
 					</CardContent>
-				</Collapse>
-				<CardContent>
-					<Divider variant="middle" sx={{ margin: 1 }} />
-					<h4>Tracks that you submitted for this brief:</h4>
-					<ul>
-						{application.tracks.length !== 0
-							? application.tracks.map((track) => (
-									<li key={track._id}>
-										<ListItem button component={MuiLink} href={track.link}>
-											{track.title} - {track.artist}
+				</Box>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						maxHeight: 150,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+						<Divider variant="middle" sx={{ margin: 1 }} />
+						<CardContent>{this.renderCollaspableInfo(brief)}</CardContent>
+					</Collapse>
+				</Box>
+				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "column",
+						maxHeight: 150,
+						overflow: "hidden",
+						overflowY: "auto",
+					}}
+				>
+					<CardContent sx={{ py: 0.5 }}>
+						<Typography variant="h6">Tracks you submitted:</Typography>
+						<List>
+							{application.tracks.length !== 0
+								? application.tracks.map((track) => (
+										<ListItem key={track._id}>
+											<ShowTrack track={track} />
 										</ListItem>
-									</li>
-							  ))
-							: null}
-					</ul>
-				</CardContent>
+								  ))
+								: null}
+						</List>
+					</CardContent>
+				</Box>
 			</Card>
 		);
 	}

@@ -237,7 +237,7 @@ class CreateBriefForm extends React.Component {
 					// sx={{ minWidth: 400 }}
 					fullWidth
 					label={label}
-					error={Boolean(touched && error)}
+					error={Boolean(error)}
 					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					select={Boolean(selectList != null)}
@@ -266,7 +266,7 @@ class CreateBriefForm extends React.Component {
 				<MultipleSelectInput
 					selectList={selectList}
 					label={label}
-					error={Boolean(touched && error)}
+					error={Boolean(error)}
 					helperText={Boolean(touched && error) ? error : null}
 					input={input}
 					{...custom}
@@ -837,10 +837,16 @@ const validate = (values) => {
 		}
 	});
 	if (
+		values.title &&
+		values.title.length > 35
+	) {
+		errors.title = "This title is too long.";
+	}
+	if (
 		values.email &&
 		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
 	) {
-		errors.email = "Invalid email address";
+		errors.email = "Invalid email address.";
 	}
 	return errors;
 };

@@ -83,8 +83,9 @@ class ListBriefs extends React.Component {
 					<Grid
 						container
 						spacing={{ xs: 1, md: 2 }}
-						columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
 						justifyContent="space-evenly"
+						sx={{ mb: 2 }}
 					>
 						{this.props.briefs.map((brief) => (
 							<Grid item xs={1} sm={1} md={1} key={brief._id}>

@@ -61,8 +61,8 @@ module.exports.onGetUserByConfirmationCode = async (req, res, next) => {
 
 module.exports.onCreateUser = async (req, res, next) => {
 	try {
-		if(await User.findOne({email: req.body.user.email})){
-			return res.status(202).json({username: req.body.user.email});
+		if (await User.findOne({ email: req.body.user.email })) {
+			return res.status(202).json({ username: req.body.user.email });
 		}
 		// Do validation here with Joi
 		const { password } = req.body;
@@ -136,6 +136,9 @@ module.exports.onBurnBriefToken = async (req, res, next) => {
 	try {
 		const userId = req.params.id;
 		const updatedUser = await User.burnOneBriefTokenOfUser(userId);
+		if (!updatedUser) {
+			return res.status(500).json(error);
+		}
 		return res.status(200).json(updatedUser);
 	} catch (error) {
 		return res.status(500).json(error);
@@ -146,6 +149,9 @@ module.exports.onBurnPitchToken = async (req, res, next) => {
 	try {
 		const userId = req.params.id;
 		const updatedUser = await User.burnOnePitchTokenOfUser(userId);
+		if (!updatedUser) {
+			return res.status(500).json(error);
+		}
 		return res.status(200).json(updatedUser);
 	} catch (error) {
 		return res.status(500).json(error);

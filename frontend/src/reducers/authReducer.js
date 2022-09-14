@@ -28,9 +28,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
 		case usersTypes.ADD_TOKENS:
 			return {
 				...state,
-				isSignedIn: true,
 				user: action.payload,
-				unauthorized: false,
 			};
 		case usersTypes.LOGOUT_USER:
 			return { ...state, isSignedIn: false, user: action.payload };

@@ -11,6 +11,7 @@ import history from "./util/history";
 import { Router } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./style/theme";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const renderApp = (preloadedState) => {
 	const composeEnhancers =
@@ -24,6 +25,7 @@ const renderApp = (preloadedState) => {
 		<Provider store={store}>
 			<Router history={history}>
 				<ThemeProvider theme={theme}>
+					<CssBaseline/>
 					<App />
 				</ThemeProvider>
 			</Router>

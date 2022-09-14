@@ -79,8 +79,8 @@ userSchema.statics.updateTokensOfUser = async function (userId, nbrOfTokens) {
 userSchema.statics.burnOneBriefTokenOfUser = async function (userId) {
 	try {
 		const user = await this.findById(userId);
-		if(user.briefTokens === -1){
-			return;
+		if (user.briefTokens === -1) {
+			return user;
 		}
 		if (user.briefTokens === 0) {
 			return false;
@@ -99,8 +99,8 @@ userSchema.statics.burnOneBriefTokenOfUser = async function (userId) {
 userSchema.statics.burnOnePitchTokenOfUser = async function (userId) {
 	try {
 		const user = await this.findById(userId);
-		if(user.pitchTokens === -1){
-			return;
+		if (user.pitchTokens === -1) {
+			return user;
 		}
 		if (user.pitchTokens === 0) {
 			return false;
