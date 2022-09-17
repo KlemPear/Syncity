@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const path = require("path");
+const helmet = require("helmet");
 
 // SSL Cert
 // const fs = require("fs");
@@ -33,6 +34,7 @@ const briefRouter = require("./routes/brief");
 const applicationRouter = require("./routes/application");
 const paymentsRouter = require("./routes/payments");
 const trackRouter = require("./routes/track");
+const { isLoggedIn } = require("./utils/middlewares");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
 const mongoDbSetUp = require("./config/mongo");
@@ -94,7 +96,8 @@ const sessionConfig = {
 	store: store,
 	secret: secret,
 	name: "SessionId",
-	domain: process.env.NODE_ENV === "production" ? "https://app.nost.audio/" : null,
+	domain:
+		process.env.NODE_ENV === "production" ? "https://app.nost.audio/" : null,
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
@@ -106,10 +109,30 @@ const sessionConfig = {
 };
 
 if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy", 1); // trust first proxy
+	app.set("trust proxy", 1); // trust first proxy
 }
 
 app.use(session(sessionConfig));
+
+//Helmet Set up
+const scriptSrcUrls = [];
+const styleSrcUrls = ["https://fonts.googleapis.com/"];
+const connectSrcUrls = ["https://dashboard.stripe.com/"];
+const fontSrcUrls = [];
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			defaultSrc: [],
+			connectSrc: ["'self'", ...connectSrcUrls],
+			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+			workerSrc: ["'self'", "blob:"],
+			objectSrc: [],
+			imgSrc: ["'self'", "blob:", "data:"],
+			fontSrc: ["'self'", ...fontSrcUrls],
+		},
+	})
+);
 
 //Passport set up
 app.use(passport.initialize());
@@ -132,10 +155,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", userRouter);
-app.use("/briefs", briefRouter);
-app.use("/applications", applicationRouter);
-app.use("/payments", paymentsRouter);
-app.use("/tracks", trackRouter);
+app.use("/briefs", isLoggedIn, briefRouter);
+app.use("/applications", isLoggedIn, applicationRouter);
+app.use("/payments", isLoggedIn, paymentsRouter);
+app.use("/tracks", isLoggedIn, trackRouter);
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production
