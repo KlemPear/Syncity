@@ -1,5 +1,5 @@
 const express = require("express");
-const { isLoggedIn } = require("../utils/middlewares");
+const { isLoggedIn, validateUser } = require("../utils/middlewares");
 // controllers
 const user = require("../controllers/user");
 const passport = require("passport");
@@ -9,7 +9,7 @@ const router = express.Router();
 router
 	// .get("/", user.onGetAllUsers)
 	.get("/session", user.getSession)
-	.post("/register", user.onCreateUser)
+	.post("/register", validateUser, user.onCreateUser)
 	.post("/login", passport.authenticate("local"), user.login)
 	.post("/:id/tokens", isLoggedIn, user.onAddTokens)
 	.post("/:id/burn-brief-token", isLoggedIn, user.onBurnBriefToken)

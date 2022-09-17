@@ -66,6 +66,7 @@ const TrackValidationSchema = Joi.object({
 		author: Joi.string().guid().required().escapeHTML(),
 	}).required(),
 });
+module.exports.TrackValidationSchema;
 
 module.exports.ApplicationValidationSchema = Joi.object({
 	application: Joi.object({
@@ -75,4 +76,10 @@ module.exports.ApplicationValidationSchema = Joi.object({
 	}).required(),
 });
 
-module.exports.TrackValidationSchema;
+module.exports.UserValidationSchema = Joi.object({
+	user: Joi.object({
+		firstName: Joi.string().required().escapeHTML(),
+		lastName: Joi.string().required().escapeHTML(),
+		email: Joi.string().email().required().escapeHTML(),
+	}).required(),
+});
