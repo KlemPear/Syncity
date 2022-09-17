@@ -115,24 +115,30 @@ if (process.env.NODE_ENV === "production") {
 app.use(session(sessionConfig));
 
 //Helmet Set up
-const scriptSrcUrls = [];
-const styleSrcUrls = ["https://fonts.googleapis.com/"];
-const connectSrcUrls = ["https://dashboard.stripe.com/"];
-const fontSrcUrls = [];
-app.use(
-	helmet.contentSecurityPolicy({
-		directives: {
-			defaultSrc: [],
-			connectSrc: ["'self'", ...connectSrcUrls],
-			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-			workerSrc: ["'self'", "blob:"],
-			objectSrc: [],
-			imgSrc: ["'self'", "blob:", "data:"],
-			fontSrc: ["'self'", ...fontSrcUrls],
-		},
-	})
-);
+// const scriptSrcUrls = [];
+// const styleSrcUrls = [
+// 	"https://fonts.googleapis.com/",
+// 	"https://fonts.googleapis.com/icon?family=Material+Icons",
+// ];
+// const connectSrcUrls = ["https://dashboard.stripe.com/"];
+// const fontSrcUrls = [
+// 	"https://fonts.googleapis.com/css?family=Inter:300,400,500,700&display=swap",
+// 	"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
+// ];
+// app.use(
+// 	helmet.contentSecurityPolicy({
+// 		directives: {
+// 			defaultSrc: [],
+// 			connectSrc: ["'self'", ...connectSrcUrls],
+// 			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+// 			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+// 			workerSrc: ["'self'", "blob:"],
+// 			objectSrc: [],
+// 			imgSrc: ["'self'", "blob:", "data:"],
+// 			fontSrc: ["'self'", ...fontSrcUrls],
+// 		},
+// 	})
+// );
 
 //Passport set up
 app.use(passport.initialize());
