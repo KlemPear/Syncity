@@ -1,5 +1,5 @@
 const express = require("express");
-const { isBriefAuthor } = require("../utils/middlewares");
+const { isBriefAuthor, validateBrief } = require("../utils/middlewares");
 // controllers
 const brief = require("../controllers/brief");
 
@@ -9,8 +9,8 @@ router
 	.get("/", brief.onGetAllBriefs)
 	.get("/private/:id", brief.onGetPrivateBriefs)
 	.get("/:id", brief.onGetBriefById)
-	.post("/", brief.onCreateBrief)
-	.put("/:id", isBriefAuthor, brief.onEditBriefById)
+	.post("/", validateBrief, brief.onCreateBrief)
+	.put("/:id", isBriefAuthor, validateBrief, brief.onEditBriefById)
 	.delete("/:id", isBriefAuthor, brief.onDeleteBriefById);
 
 module.exports = router;

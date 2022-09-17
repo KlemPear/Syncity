@@ -3,7 +3,7 @@ const Track = require("../models/Track");
 const Application = require("../models/Application");
 const User = require("../models/User");
 
-const { BriefValidationSchema } = require("./validationSchemas");
+const { BriefValidationSchema, ApplicationValidationSchema, TrackValidationSchema } = require("./validationSchemas");
 
 module.exports.isLoggedIn = (req, res, next) => {
 	if (!req.isAuthenticated()) {
@@ -50,10 +50,30 @@ module.exports.isApplicationAuthor = async (req, res, next) => {
 };
 
 module.exports.validateBrief = (req, res, next) => {
-	const { error } = BriefValidationSchema.validate(req.body);
+	const { error } = BriefValidationSchema.validate({ brief: req.body });
 	if (error) {
 		const msg = error.details.map((el) => el.message).join(",");
-		throw new res.status(400).json(msg);
+		return res.status(400).send(msg);
+	} else {
+		next();
+	}
+};
+
+module.exports.validateApplication = (req, res, next) => {
+	const { error } = ApplicationValidationSchema.validate({ application: req.body });
+	if (error) {
+		const msg = error.details.map((el) => el.message).join(",");
+		return res.status(400).send(msg);
+	} else {
+		next();
+	}
+};
+
+module.exports.validateTrack = (req, res, next) => {
+	const { error } = TrackValidationSchema.validate({ track: req.body });
+	if (error) {
+		const msg = error.details.map((el) => el.message).join(",");
+		return res.status(400).send(msg);
 	} else {
 		next();
 	}
