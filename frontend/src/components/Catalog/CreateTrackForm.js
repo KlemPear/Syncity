@@ -74,6 +74,7 @@ class CreateTrackForm extends React.Component {
 						type="email"
 						value={this.props.editTrack.masterContact}
 						placeholder={this.props.editTrack.masterContact}
+						multiline
 					/>
 					<Field
 						name="publisherContact"
@@ -82,6 +83,7 @@ class CreateTrackForm extends React.Component {
 						type="email"
 						value={this.props.editTrack.publisherContact}
 						placeholder={this.props.editTrack.publisherContact}
+						multiline
 					/>
 				</>
 			);

@@ -15,8 +15,13 @@ class ListApplications extends React.Component {
 	render() {
 		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
-				<Box justifyContent="center" alignItems="center">
-					<Typography sx={{display: "flex", justifyContent: "center"}} variant="h3">You have not submitted any applications yet.</Typography>
+				<Box justifyContent="center" alignItems="center" sx={{ mt: 20 }}>
+					<Typography
+						sx={{ display: "flex", justifyContent: "center" }}
+						variant="h3"
+					>
+						You have not submitted any applications yet.
+					</Typography>
 				</Box>
 			);
 		} else {

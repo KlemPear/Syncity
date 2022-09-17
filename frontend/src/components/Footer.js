@@ -41,7 +41,7 @@ class Footer extends Component {
 								variant="caption"
 							>
 								Made with <FavoriteIcon sx={{ color: red[500], pb: 0.5 }} /> in
-								Montreal, QC and Denver, CO.
+								Quebec and Colorado.
 							</Typography>
 						</Grid>
 						<Grid item xs={2} sm={2}>

@@ -43,33 +43,35 @@ class ListTracks extends React.Component {
 						to="/create-track"
 						color="secondary"
 						aria-label="add"
-						sx={{ m: 1, mb:5 }}
+						sx={{ m: 1, mb: 5 }}
 					>
 						<Add sx={{ mr: 1 }} />
 						Add a track to your catalog
 					</Fab>
-					<Stack
-						spacing={2}
-						sx={{
-							display: "flex",
-							flexDirection: "column",
-							maxHeight: 550,
-							overflow: "hidden",
-							overflowY: "auto",
-							border: 1, 
-							borderRadius: "16px",
-							p: 3
-						}}
-					>
-						{this.props.tracks.map((track) => (
-							<Box key={track._id}>
-								<ShowTrack
-									track={track}
-									button={this.renderTrackEditButton(track)}
-								/>
-							</Box>
-						))}
-					</Stack>
+					{this.props.tracks.length !== 0 ? (
+						<Stack
+							spacing={2}
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								maxHeight: 550,
+								overflow: "hidden",
+								overflowY: "auto",
+								border: 1,
+								borderRadius: "16px",
+								p: 3,
+							}}
+						>
+							{this.props.tracks.map((track) => (
+								<Box key={track._id}>
+									<ShowTrack
+										track={track}
+										button={this.renderTrackEditButton(track)}
+									/>
+								</Box>
+							))}
+						</Stack>
+					) : null}
 				</>
 			);
 		}

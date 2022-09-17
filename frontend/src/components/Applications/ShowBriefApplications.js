@@ -29,8 +29,11 @@ class ShowBriefApplications extends React.Component {
 	render() {
 		if (!this.props.applications || this.props.applications.length === 0) {
 			return (
-				<Box>
-					<Typography variant="h3">
+				<Box justifyContent="center" alignItems="center" sx={{ mt: 20 }}>
+					<Typography
+						variant="h3"
+						sx={{ display: "flex", justifyContent: "center" }}
+					>
 						No applications were submitted for this brief so far...
 					</Typography>
 				</Box>
@@ -53,7 +56,7 @@ class ShowBriefApplications extends React.Component {
 								overflowY: "auto",
 							}}
 						>
-							<List>
+							<List sx={{ m: 3 }}>
 								{this.props.applications.map((application) => (
 									<ApplicationCard
 										key={application._id}

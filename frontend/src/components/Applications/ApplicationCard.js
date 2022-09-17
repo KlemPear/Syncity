@@ -13,7 +13,7 @@ import {
 	Avatar,
 	ListItemText,
 	Link,
-	Box
+	Box,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -41,7 +41,12 @@ class ApplicationCard extends React.Component {
 						? tracks.map((track) => (
 								<Box key={track._id}>
 									<ListItem>
-										<Link underline="hover" href={track.link}>
+										<Link
+											underline="hover"
+											href={track.link}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
 											{track.title} - {track.artist}
 										</Link>
 									</ListItem>

@@ -211,7 +211,7 @@ class CreateBriefForm extends React.Component {
 				<TextField
 					fullWidth
 					label={label}
-					error={Boolean(touched && error)}
+					error={Boolean(error)}
 					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					multiline
@@ -234,7 +234,6 @@ class CreateBriefForm extends React.Component {
 		return (
 			<>
 				<TextField
-					// sx={{ minWidth: 400 }}
 					fullWidth
 					label={label}
 					error={Boolean(error)}
@@ -285,7 +284,9 @@ class CreateBriefForm extends React.Component {
 		} else {
 			//do whatever we need with the form values
 			//send to a server, call an api etc...
-			this.props.onSubmit(this.props.formValues);
+			if(!this.props.formErrors){
+				this.props.onSubmit(this.props.formValues);
+			}
 		}
 	};
 
@@ -828,18 +829,13 @@ const validate = (values) => {
 		"media",
 		"budget",
 		"licenseDuration",
-		"territory",
-		"genres",
 	];
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
 			errors[field] = "Required";
 		}
 	});
-	if (
-		values.title &&
-		values.title.length > 35
-	) {
+	if (values.title && values.title.length > 35) {
 		errors.title = "This title is too long.";
 	}
 	if (
@@ -855,6 +851,7 @@ const mapStateToProps = (state) => {
 	return {
 		formValues: state.form?.CreateBriefForm?.values,
 		user: state.auth?.user,
+		formErrors: state.form?.CreateBriefForm?.syncErrors,
 	};
 };
 
