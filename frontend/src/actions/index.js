@@ -156,7 +156,7 @@ export const createBrief = (body) => async (dispatch, getState) => {
 	dispatch({ type: briefsTypes.CREATE_BRIEF, payload: response.data });
 	// do some programmatic navigation to get the user
 	// back to the main page
-	history.push("/list-briefs");
+	history.push("/brief-creation-success");
 };
 
 export const editBrief = (body) => async (dispatch, getState) => {
@@ -195,7 +195,7 @@ export const createApplication = (body) => async (dispatch, getState) => {
 	});
 	// do some programmatic navigation to get the user
 	// back to the main page
-	history.push("/list-briefs");
+	history.push("/application-creation-success");
 };
 
 export const editApplication = (body) => async (dispatch, getState) => {

@@ -27,6 +27,8 @@ import Footer from "./Footer";
 
 //mui
 import { Container } from "@mui/material";
+import BriefSubmitted from "./Briefs/BriefSubmitted";
+import ApplicationSubmitted from "./Applications/ApplicationSubmitted";
 
 class App extends React.Component {
 	render() {
@@ -117,6 +119,11 @@ class App extends React.Component {
 							component={this.props.isSignedIn ? ShowBrief : Login}
 						/>
 						<Route
+							path="/brief-creation-success"
+							exact
+							component={this.props.isSignedIn ? BriefSubmitted : Login}
+						/>
+						<Route
 							path="/show-brief/:id/applications"
 							exact
 							component={this.props.isSignedIn ? ShowBriefApplications : Login}
@@ -125,6 +132,11 @@ class App extends React.Component {
 							path="/list-applications"
 							exact
 							component={this.props.isSignedIn ? ListApplications : Login}
+						/>
+						<Route
+							path="/application-creation-success"
+							exact
+							component={this.props.isSignedIn ? ApplicationSubmitted : Login}
 						/>
 						<Route
 							path="/buy-tokens"
