@@ -8,8 +8,8 @@ const router = express.Router();
 router
 	.get("/", application.onGetAllTracks)
 	.get("/:id", application.onGetTrackById)
-	.post("/", validateTrack, application.onCreateTrack)
-	.put("/:id", isTrackAuthor, validateTrack, application.onEditTrackById)
+	.post("/", application.onCreateTrack)
+	.put("/:id", isTrackAuthor, application.onEditTrackById)
 	.delete("/:id", isTrackAuthor, application.onDeleteTrackById);
 
 module.exports = router;

@@ -31,6 +31,7 @@ const mediaOptions = [
 	"Podcast",
 	"Corporate",
 	"Other",
+	"All Media"
 ].sort();
 
 const useOptions = ["Soundtrack", "Background Music", "Credits"].sort();
@@ -339,7 +340,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="media"
 						component={this.renderInput}
-						label="Media"
+						label="Primary Media"
 						selectList={mediaOptions}
 						value={editBrief.media}
 						placeholder={editBrief.media}
@@ -355,6 +356,7 @@ class CreateBriefForm extends React.Component {
 					/>
 					<Field
 						name="budget"
+						disabled
 						component={this.renderInput}
 						type="number"
 						label="Budget"
@@ -637,7 +639,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="media"
 						component={this.renderInput}
-						label="Media"
+						label="Primary Media"
 						selectList={mediaOptions}
 					/>
 					<Field

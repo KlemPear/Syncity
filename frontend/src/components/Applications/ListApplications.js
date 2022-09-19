@@ -26,11 +26,11 @@ class ListApplications extends React.Component {
 			);
 		} else {
 			return (
-				<>
+				<Box sx={{ m: 5 }}>
 					<Grid
 						container
 						spacing={{ xs: 1, md: 2 }}
-						columns={{ xs: 1, sm: 2, md: 3, lg: 4 }}
+						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
 						justifyContent="space-evenly"
 					>
 						{this.props.applications.map((application) => (
@@ -39,7 +39,7 @@ class ListApplications extends React.Component {
 							</Grid>
 						))}
 					</Grid>
-				</>
+				</Box>
 			);
 		}
 	}

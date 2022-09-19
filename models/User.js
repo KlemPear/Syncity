@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema(
 		pitchSubscriptionPlan: String,
 		briefTokens: { type: Number, default: 0 },
 		pitchTokens: { type: Number, default: 0 },
+		prefersDarkMode: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

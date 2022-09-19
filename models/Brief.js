@@ -26,6 +26,7 @@ const briefSchema = new mongoose.Schema({
 			"Podcast",
 			"Corporate",
 			"Other",
+			"All Media"
 		],
 	},
 	use: [

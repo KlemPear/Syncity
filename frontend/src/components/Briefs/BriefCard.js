@@ -14,18 +14,6 @@ import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import {
-	red,
-	deepPurple,
-	blue,
-	green,
-	deepOrange,
-	yellow,
-	pink,
-	teal,
-	amber,
-	indigo,
-} from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Button from "@mui/material/Button";
@@ -42,6 +30,19 @@ import ListItem from "@mui/material/ListItem";
 import MuiLink from "@mui/material/Link";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
+//colors
+import {
+	red,
+	deepPurple,
+	blue,
+	green,
+	deepOrange,
+	yellow,
+	pink,
+	teal,
+	amber,
+	indigo,
+} from "@mui/material/colors";
 // Media Icons
 import FilmIcon from "@mui/icons-material/Theaters";
 import WebIcon from "@mui/icons-material/RssFeed";
@@ -92,6 +93,10 @@ const mediaMapping = {
 		color: amber,
 	},
 	Other: {
+		icon: <OtherIcon />,
+		color: indigo,
+	},
+	"All Media": {
 		icon: <OtherIcon />,
 		color: indigo,
 	},
@@ -154,7 +159,9 @@ class BriefCard extends React.Component {
 						? `${numberOfDaysLeft} days left`
 						: `${(numberOfDaysLeft * -1).toString()} days past due date`}
 				</Typography>
-				<Typography>Budget: {moneyFormatter.format(brief.budget)}</Typography>
+				<Typography>
+					Budget: {moneyFormatter.format(brief.budget)} all in
+				</Typography>
 			</>
 		);
 	}
@@ -216,7 +223,7 @@ class BriefCard extends React.Component {
 		return (
 			<Card
 				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500 }}
-				variant="outlined"
+				elevation={8}
 			>
 				<CardHeader
 					avatar={this.renderAvatar(brief.media)}
@@ -351,7 +358,7 @@ class BriefCard extends React.Component {
 		return (
 			<Card
 				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 600 }}
-				variant="outlined"
+				elevation={8}
 			>
 				<CardHeader
 					avatar={this.renderApplicationAvatar(application)}

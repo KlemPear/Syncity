@@ -102,7 +102,11 @@ class ResponsiveAppBar extends React.Component {
 						>
 							<img
 								style={{ width: 65, height: 65 }}
-								src={process.env.PUBLIC_URL + "/NOST_logo_black.png"}
+								src={
+									this.props.user.prefersDarkMode
+										? process.env.PUBLIC_URL + "/NOST_logo_white.png"
+										: process.env.PUBLIC_URL + "/NOST_logo_black.png"
+								}
 								alt="logo"
 							/>
 						</Typography>
@@ -167,7 +171,11 @@ class ResponsiveAppBar extends React.Component {
 						>
 							<img
 								style={{ width: 65, height: 65 }}
-								src={process.env.PUBLIC_URL + "/NOST_logo_black.png"}
+								src={
+									this.props.user.prefersDarkMode
+										? process.env.PUBLIC_URL + "/NOST_logo_white.png"
+										: process.env.PUBLIC_URL + "/NOST_logo_black.png"
+								}
 								alt="logo"
 							/>
 						</Typography>
@@ -178,7 +186,8 @@ class ResponsiveAppBar extends React.Component {
 									component={Link}
 									to={pages[page]}
 									onClick={this.handleCloseNavMenu}
-									sx={{ my: 2, color: "black", display: "block" }}
+									sx={{ my: 2, display: "block" }}
+									color="appBarButton"
 								>
 									{page}
 								</Button>
@@ -190,8 +199,9 @@ class ResponsiveAppBar extends React.Component {
 								<Tooltip title="Open settings">
 									<Button
 										onClick={this.handleOpenUserMenu}
-										sx={{ p: 0, color: "black" }}
-										startIcon={<AccountCircleIcon sx={{ color: "black" }} />}
+										sx={{ p: 0 }}
+										startIcon={<AccountCircleIcon color="appBarButton" />}
+										color="appBarButton"
 									>
 										{this.props.user.firstName} {this.props.user.lastName}
 									</Button>

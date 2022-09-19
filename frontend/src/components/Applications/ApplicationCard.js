@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { editApplication } from "../../actions/index";
+import Loader from "../Loader";
 
 //mui
 import {
@@ -94,7 +95,7 @@ class ApplicationCard extends React.Component {
 					}
 				>
 					<ListItemAvatar>
-						<Avatar sx={{ bgcolor: "#F6CD45" }}>
+						<Avatar sx={{ bgcolor: "#458FF7" }}>
 							<AudiotrackIcon color="primary" />
 						</Avatar>
 					</ListItemAvatar>
@@ -109,7 +110,11 @@ class ApplicationCard extends React.Component {
 
 	render() {
 		if (!this.props.application) {
-			return <div></div>;
+			return (
+				<div>
+					<Loader />
+				</div>
+			);
 		} else {
 			return this.renderApplication(
 				this.props.application.author.firstName,

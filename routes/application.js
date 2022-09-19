@@ -8,8 +8,8 @@ const router = express.Router();
 router
 	.get("/", application.onGetAllApplications)
 	.get("/:id", application.onGetApplicationById)
-	.post("/", validateApplication, application.onCreateApplication)
-	.put("/:id", isApplicationAuthor, validateApplication, application.onEditApplicationById)
+	.post("/", application.onCreateApplication)
+	.put("/:id", isApplicationAuthor, application.onEditApplicationById)
 	.delete("/:id", isApplicationAuthor, application.onDeleteApplicationById);
 
 module.exports = router;

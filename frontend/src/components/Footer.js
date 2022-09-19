@@ -29,7 +29,11 @@ class Footer extends Component {
 								<Typography component="a" href="https://www.nost.audio/">
 									<img
 										style={{ width: 50, height: 50 }}
-										src={process.env.PUBLIC_URL + "/NOST_logo_black.png"}
+										src={
+											this.props.user.prefersDarkMode
+												? process.env.PUBLIC_URL + "/NOST_logo_white.png"
+												: process.env.PUBLIC_URL + "/NOST_logo_black.png"
+										}
 										alt="logo"
 									/>
 								</Typography>
@@ -41,7 +45,7 @@ class Footer extends Component {
 								variant="caption"
 							>
 								Made with <FavoriteIcon sx={{ color: red[500], pb: 0.5 }} /> in
-								Quebec and Colorado.
+								Quebec & Colorado.
 							</Typography>
 						</Grid>
 						<Grid item xs={2} sm={2}>
@@ -55,7 +59,9 @@ class Footer extends Component {
 }
 
 function mapStateToProps(state) {
-	return {};
+	return {
+		user: state.auth.user,
+	};
 }
 
 export default connect(mapStateToProps)(Footer);

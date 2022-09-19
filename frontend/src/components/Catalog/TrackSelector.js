@@ -96,7 +96,7 @@ class TrackSelector extends React.Component {
 							secondaryAction={this.renderTrackButton(track)}
 						>
 							<ListItemAvatar>
-								<Avatar sx={{ bgcolor: "#F6CD45" }}>
+								<Avatar sx={{ bgcolor: "#458FF7" }}>
 									<AudiotrackIcon color="primary" />
 								</Avatar>
 							</ListItemAvatar>

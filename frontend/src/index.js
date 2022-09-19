@@ -14,6 +14,7 @@ import { theme } from "./style/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const renderApp = (preloadedState) => {
+	const prefersDarkMode = preloadedState.auth.user.prefersDarkMode;
 	const composeEnhancers =
 		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 	const store = createStore(
@@ -24,8 +25,8 @@ const renderApp = (preloadedState) => {
 	ReactDOM.render(
 		<Provider store={store}>
 			<Router history={history}>
-				<ThemeProvider theme={theme}>
-					<CssBaseline/>
+				<ThemeProvider theme={theme(prefersDarkMode)}>
+					<CssBaseline />
 					<App />
 				</ThemeProvider>
 			</Router>

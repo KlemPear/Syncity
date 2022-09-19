@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { fetchBrief } from "../../actions";
 import history from "../../util/history";
 import Loader from "../Loader";
-import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
+import {
+	moneyFormatter,
+	getNumberOfDays,
+} from "../../util/textFormatHelper";
 import BriefApplication from "./BriefApplication";
 
 //mui
@@ -13,6 +16,19 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import {
+	Box,
+	Divider,
+	Grid,
+	Stack,
+	List,
+	ListItem,
+	Tooltip,
+} from "@mui/material";
+import MuiLink from "@mui/material/Link";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+
+//colors
+import {
 	red,
 	deepPurple,
 	blue,
@@ -20,11 +36,68 @@ import {
 	deepOrange,
 	yellow,
 	pink,
+	teal,
+	amber,
+	indigo,
 } from "@mui/material/colors";
-import { Box, Divider, Grid } from "@mui/material";
-import MuiLink from "@mui/material/Link";
+// Media Icons
+import FilmIcon from "@mui/icons-material/Theaters";
+import WebIcon from "@mui/icons-material/RssFeed";
+import TvIcon from "@mui/icons-material/Tv";
+import AdvertisingIcon from "@mui/icons-material/Sell";
+import VideoGameIcon from "@mui/icons-material/SportsEsports";
+import TrailerIcon from "@mui/icons-material/Movie";
+import RadioIcon from "@mui/icons-material/Radio";
+import PodcastIcon from "@mui/icons-material/Podcasts";
+import CorporateIcon from "@mui/icons-material/CorporateFare";
+import OtherIcon from "@mui/icons-material/AudioFile";
 
-const colors = [red, deepPurple, blue, green, deepOrange, yellow, pink];
+const mediaMapping = {
+	Film: {
+		icon: <FilmIcon />,
+		color: red,
+	},
+	Web: {
+		icon: <WebIcon />,
+		color: deepPurple,
+	},
+	TV: {
+		icon: <TvIcon />,
+		color: blue,
+	},
+	Advertising: {
+		icon: <AdvertisingIcon />,
+		color: green,
+	},
+	"Video Game": {
+		icon: <VideoGameIcon />,
+		color: deepOrange,
+	},
+	Trailer: {
+		icon: <TrailerIcon />,
+		color: yellow,
+	},
+	Radio: {
+		icon: <RadioIcon />,
+		color: pink,
+	},
+	Podcast: {
+		icon: <PodcastIcon />,
+		color: teal,
+	},
+	Corporate: {
+		icon: <CorporateIcon />,
+		color: amber,
+	},
+	Other: {
+		icon: <OtherIcon />,
+		color: indigo,
+	},
+	"All Media": {
+		icon: <OtherIcon />,
+		color: indigo,
+	},
+};
 
 class ShowBrief extends React.Component {
 	componentDidMount = () => {
@@ -33,41 +106,75 @@ class ShowBrief extends React.Component {
 
 	renderReference = (ref) => {
 		return (
-			<div key={ref.link}>
-				<ul>
-					<li>
-						<MuiLink underline="hover" href={ref.link}>
-							{ref.title ? ref.title : "Link to reference song"}
-						</MuiLink>
-						{ref.comment ? (
-							<ul>
-								<li>
-									<p>{ref.comment}</p>
-								</li>
-							</ul>
-						) : null}
-					</li>
-				</ul>
-			</div>
+			<Box key={ref.link}>
+				<List key={ref.link}>
+					<ListItem>
+						<Stack>
+							<MuiLink underline="hover" href={ref.link}>
+								{ref.title ? ref.title : "Link to reference song"}
+							</MuiLink>
+							{ref.comment ? (
+								<List>
+									<ListItem>
+										<Typography>Comment: {ref.comment}</Typography>
+									</ListItem>
+								</List>
+							) : null}
+						</Stack>
+					</ListItem>
+				</List>
+			</Box>
 		);
 	};
+
+	renderSubheader(brief) {
+		const numberOfDaysLeft = getNumberOfDays(
+			new Date(Date.now()),
+			brief.dueDate
+		);
+		return (
+			<>
+				<Typography sx={{ display: "flex", justifyContent: "flex-start" }}>
+					<HourglassBottomIcon sx={{ m: 0, p: 0 }} />
+					{numberOfDaysLeft > 0
+						? `${numberOfDaysLeft} days left`
+						: `${(numberOfDaysLeft * -1).toString()} days past due date`}
+				</Typography>
+				<Typography>
+					Budget: {moneyFormatter.format(brief.budget)} all in
+				</Typography>
+			</>
+		);
+	}
+
+	renderHeader(brief) {
+		return (
+			<>
+				<Typography variant="h6">{brief.title}</Typography>
+			</>
+		);
+	}
+
+	renderAvatar(media) {
+		return (
+			<Tooltip title={media}>
+				<Avatar
+					sx={{ bgcolor: mediaMapping[media].color[500] }}
+					aria-label="media"
+				>
+					{mediaMapping[media].icon}
+				</Avatar>
+			</Tooltip>
+		);
+	}
 
 	renderBrief(brief) {
 		return (
 			<Card sx={{ width: 0.9 }}>
 				<CardHeader
-					avatar={
-						<Avatar
-							sx={{ bgcolor: colors[Math.floor(Math.random() * 7)][500] }}
-							aria-label="media"
-						>
-							{brief.media}
-						</Avatar>
-					}
-					title={<Typography variant="h4">{brief.title}</Typography>}
-					subheader={`Due Date: ${dateFormatter(
-						brief.dueDate
-					)} - Budget: ${moneyFormatter.format(brief.budget)}`}
+					avatar={this.renderAvatar(brief.media)}
+					title={this.renderHeader(brief)}
+					subheader={this.renderSubheader(brief)}
 				/>
 				<CardContent>
 					<Divider variant="middle" sx={{ margin: 1 }} />
@@ -95,25 +202,29 @@ class ShowBrief extends React.Component {
 					<CardContent>
 						<Divider variant="middle" sx={{ margin: 1 }} />
 						<Typography variant="h5">License Terms</Typography>
-						<ul>
-							<li>Media: {brief.media}</li>
-							<li>Use: {brief.use.join(", ")}</li>
-							<li>License Duration: {brief.licenseDuration}</li>
-							<li>Extract Duration: {brief.licenseDuration}</li>
-							<li>Territory: {brief.territory.join(", ")}</li>
-						</ul>
+						<List>
+							<ListItem>Media: {brief.media}</ListItem>
+							<ListItem>Use: {brief.use.join(", ")}</ListItem>
+							<ListItem>License Duration: {brief.licenseDuration}</ListItem>
+							<ListItem>
+								Extract Duration: {brief.extractDuration} minutes
+							</ListItem>
+							<ListItem>Territory: {brief.territory.join(", ")}</ListItem>
+						</List>
 					</CardContent>
 					<CardContent>
 						<Divider variant="middle" sx={{ margin: 1 }} />
 						<Typography variant="h5">Type Of Music Needed</Typography>
-						<ul>
-							<li>Genre(s): {brief.genres.join(", ")}</li>
-							<li>Vocal(s): {brief.vocals.join(", ")}</li>
-							<li>Mood(s): {brief.moods.join(", ")}</li>
-							<li>Instrument(s): {brief.instruments}</li>
-							<li>Tempo: {brief.tempo}</li>
-							<li>Exclusivity: {brief.exclusivity ? "Yes" : "No"}</li>
-						</ul>
+						<List>
+							<ListItem>Genre(s): {brief.genres.join(", ")}</ListItem>
+							<ListItem>Vocal(s): {brief.vocals.join(", ")}</ListItem>
+							<ListItem>Mood(s): {brief.moods.join(", ")}</ListItem>
+							<ListItem>Instrument(s): {brief.instruments.join(", ")}</ListItem>
+							<ListItem>Tempo: {brief.tempo}</ListItem>
+							<ListItem>
+								Exclusivity: {brief.exclusivity ? "Yes" : "No"}
+							</ListItem>
+						</List>
 					</CardContent>
 					{brief.references?.length !== 0 ? (
 						<CardContent>
