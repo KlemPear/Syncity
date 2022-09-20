@@ -9,7 +9,7 @@ const router = express.Router();
 router
 	// .get("/", user.onGetAllUsers)
 	.get("/session", user.getSession)
-	.post("/register", validateUser, user.onCreateUser)
+	.post("/register", user.onCreateUser)
 	.post("/login", passport.authenticate("local"), user.login)
 	.post("/:id/tokens", isLoggedIn, user.onAddTokens)
 	.post("/:id/burn-brief-token", isLoggedIn, user.onBurnBriefToken)
