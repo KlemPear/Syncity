@@ -1,4 +1,6 @@
 const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //Google GMAIL
 // const { google } = require("googleapis");
@@ -31,22 +33,22 @@ const nodemailer = require("nodemailer");
 // 	},
 // });
 
-const transporter = nodemailer.createTransport({
-	host: "smtp.sendgrid.net",
-	port: 587,
-	auth: {
-		user: "apikey",
-		pass: process.env.SENDGRID_API_KEY,
-	},
-});
+// const transporter = nodemailer.createTransport({
+// 	host: "smtp.sendgrid.net",
+// 	port: 587,
+// 	auth: {
+// 		user: "apikey",
+// 		pass: process.env.SENDGRID_API_KEY,
+// 	},
+// });
 
-transporter.verify(function (error, success) {
-	if (error) {
-		console.log(error);
-	} else {
-		console.log("Email Server is ready to send our messages");
-	}
-});
+// transporter.verify(function (error, success) {
+// 	if (error) {
+// 		console.log(error);
+// 	} else {
+// 		console.log("Email Server is ready to send our messages");
+// 	}
+// });
 
 const sendEmail = (options) => {
 	const mailOptions = {
@@ -55,15 +57,25 @@ const sendEmail = (options) => {
 		subject: options.subject ?? "",
 		text: options.text ?? "",
 		html: options.html ?? "",
+		templateId: options.templateId ?? "",
+		dynamicTemplateData: options.dynamicTemplateData ?? {},
 	};
 
-	transporter.sendMail(mailOptions, function (err, data) {
-		if (err) {
-			console.log("Error " + err);
-		} else {
-			console.log("Email sent successfully: " + data.response);
-		}
-	});
+	// transporter.sendMail(mailOptions, function (err, data) {
+	// 	if (err) {
+	// 		console.log("Error " + err);
+	// 	} else {
+	// 		console.log("Email sent successfully: " + data.response);
+	// 	}
+	// });
+	sgMail
+		.send(mailOptions)
+		.then(() => {
+			console.log("Email sent");
+		})
+		.catch((error) => {
+			console.error(error.response.body);
+		});
 };
 
 module.exports = sendEmail;

@@ -30,7 +30,7 @@ class Footer extends Component {
 									<img
 										style={{ width: 50, height: 50 }}
 										src={
-											this.props.user.prefersDarkMode
+											this.props.user?.prefersDarkMode
 												? process.env.PUBLIC_URL + "/NOST_logo_white.png"
 												: process.env.PUBLIC_URL + "/NOST_logo_black.png"
 										}

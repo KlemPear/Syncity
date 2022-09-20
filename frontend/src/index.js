@@ -14,7 +14,7 @@ import { theme } from "./style/theme";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const renderApp = (preloadedState) => {
-	const prefersDarkMode = preloadedState.auth.user.prefersDarkMode;
+	const prefersDarkMode = preloadedState?.auth?.user?.prefersDarkMode ?? false;
 	const composeEnhancers =
 		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 	const store = createStore(
