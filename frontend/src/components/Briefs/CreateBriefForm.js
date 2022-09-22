@@ -840,12 +840,12 @@ const validate = (values) => {
 	if (values.title && values.title.length > 35) {
 		errors.title = "This title is too long.";
 	}
-	if (
-		values.email &&
-		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-	) {
-		errors.email = "Invalid email address.";
-	}
+	// if (
+	// 	values.email &&
+	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+	// ) {
+	// 	errors.email = "Invalid email address.";
+	// }
 	return errors;
 };
 

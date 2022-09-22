@@ -184,18 +184,18 @@ const validate = (values) => {
 			errors[field] = "Required";
 		}
 	});
-	if (
-		values.masterContact &&
-		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.masterContact)
-	) {
-		errors.masterContact = "Invalid email address";
-	}
-	if (
-		values.publisherContact &&
-		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)
-	) {
-		errors.publisherContact = "Invalid email address";
-	}
+	// if (
+	// 	values.masterContact &&
+	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]$/i.test(values.masterContact)
+	// ) {
+	// 	errors.masterContact = "Invalid email address";
+	// }
+	// if (
+	// 	values.publisherContact &&
+	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)
+	// ) {
+	// 	errors.publisherContact = "Invalid email address";
+	// }
 	return errors;
 };
 
