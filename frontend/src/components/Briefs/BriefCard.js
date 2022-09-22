@@ -178,10 +178,10 @@ class BriefCard extends React.Component {
 		return (
 			<Tooltip title={media}>
 				<Avatar
-					sx={{ bgcolor: mediaMapping[media].color[500] }}
+					sx={{ bgcolor: mediaMapping[media]?.color[500] }}
 					aria-label="media"
 				>
-					{mediaMapping[media].icon}
+					{mediaMapping[media]?.icon}
 				</Avatar>
 			</Tooltip>
 		);
