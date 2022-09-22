@@ -77,12 +77,12 @@ const validate = (values) => {
 			errors[field] = "Required";
 		}
 	});
-	if (
-		values.username &&
-		!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
-	) {
-		errors.username = "Invalid email address";
-	}
+	// if (
+	// 	values.username &&
+	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i.test(values.username)
+	// ) {
+	// 	errors.username = "Invalid email address";
+	// }
 	return errors;
 };
 
