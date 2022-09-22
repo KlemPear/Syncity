@@ -163,7 +163,7 @@ app.use((req, res, next) => {
 app.use("/users", userRouter);
 app.use("/briefs", isLoggedIn, briefRouter);
 app.use("/applications", isLoggedIn, applicationRouter);
-app.use("/payments", isLoggedIn, paymentsRouter);
+app.use("/payments", paymentsRouter);
 app.use("/tracks", isLoggedIn, trackRouter);
 
 if (process.env.NODE_ENV === "production") {
