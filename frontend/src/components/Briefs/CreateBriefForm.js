@@ -31,7 +31,7 @@ const mediaOptions = [
 	"Podcast",
 	"Corporate",
 	"Other",
-	"All Media"
+	"All Media",
 ].sort();
 
 const useOptions = ["Soundtrack", "Background Music", "Credits"].sort();
@@ -279,13 +279,14 @@ class CreateBriefForm extends React.Component {
 		event.preventDefault();
 		if (
 			this.props.user.briefTokens !== -1 &&
-			this.props.user.briefTokens - 1 < 0
+			this.props.user.briefTokens - 1 < 0 &&
+			this.props.onNotEnoughTokens !== null
 		) {
 			this.props.onNotEnoughTokens();
 		} else {
 			//do whatever we need with the form values
 			//send to a server, call an api etc...
-			if(!this.props.formErrors){
+			if (!this.props.formErrors) {
 				this.props.onSubmit(this.props.formValues);
 			}
 		}
