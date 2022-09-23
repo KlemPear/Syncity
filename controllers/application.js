@@ -33,24 +33,18 @@ module.exports.onCreateApplication = async (req, res, next) => {
 		if (!brief.open) {
 			return res.status(500).json("too many applications");
 		} else {
-			updatedUser = await User.updateTokensOfUser(req.body.author, -1);
-			if (!updatedUser) {
-				return res.status(500).json("Not enough tokens to do this.");
-			} else {
-				brief.numberOfApplicationsSubmitted += 1;
-				if (
-					brief.numberOfApplicationsSubmitted ===
-					brief.numberOfApplicationsWanted
-				) {
-					brief.open = false;
-				}
-				const updatedBrief = await Brief.findByIdAndUpdate(brief._id, brief, {
-					returnDocument: "after",
-				});
-				const newApplication = new Application(req.body);
-				newApplication.save();
-				return res.status(200).json(newApplication);
+			brief.numberOfApplicationsSubmitted += 1;
+			if (
+				brief.numberOfApplicationsSubmitted === brief.numberOfApplicationsWanted
+			) {
+				brief.open = false;
 			}
+			const updatedBrief = await Brief.findByIdAndUpdate(brief._id, brief, {
+				returnDocument: "after",
+			});
+			const newApplication = new Application(req.body);
+			newApplication.save();
+			return res.status(200).json(newApplication);
 		}
 	} catch (error) {
 		console.log(error);

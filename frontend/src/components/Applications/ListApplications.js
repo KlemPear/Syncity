@@ -13,7 +13,11 @@ class ListApplications extends React.Component {
 	};
 
 	render() {
-		if (!this.props.applications || this.props.applications.length === 0) {
+		if (
+			!this.props.applications ||
+			this.props.applications.length === 0 ||
+			this.props.applications?.find(o => true)?.brief?.title === undefined
+		) {
 			return (
 				<Box justifyContent="center" alignItems="center" sx={{ mt: 20 }}>
 					<Typography
