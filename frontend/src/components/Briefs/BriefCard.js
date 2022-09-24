@@ -430,7 +430,8 @@ class BriefCard extends React.Component {
 							{application.tracks.length !== 0
 								? application.tracks.map((track) => (
 										<ListItem key={track._id}>
-											<ShowTrack track={track} />
+											{/* <ShowTrack track={track} /> */}
+											{track.title} - {track.artist}
 										</ListItem>
 								  ))
 								: null}

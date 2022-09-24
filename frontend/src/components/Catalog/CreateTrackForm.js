@@ -63,7 +63,7 @@ class CreateTrackForm extends React.Component {
 					<Field
 						name="link"
 						component={this.renderInput}
-						label="Link to media"
+						label="Link to media (Soundcloud, Youtube, Spotify)"
 						value={this.props.editTrack.link}
 						placeholder={this.props.editTrack.link}
 					/>
@@ -99,7 +99,7 @@ class CreateTrackForm extends React.Component {
 					<Field
 						name="link"
 						component={this.renderInput}
-						label="Link to media"
+						label="Link to media (Soundcloud, Youtube, Spotify)"
 					/>
 					<Field
 						name="masterContact"
@@ -184,12 +184,15 @@ const validate = (values) => {
 			errors[field] = "Required";
 		}
 	});
-	// if (
-	// 	values.masterContact &&
-	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]$/i.test(values.masterContact)
-	// ) {
-	// 	errors.masterContact = "Invalid email address";
-	// }
+	if (
+		values.link &&
+		!(values.link.includes("spotify") ||
+			values.link.includes("soundcloud") ||
+			values.link.includes("youtube"))
+	) {
+		errors.link =
+			"Your track link must be from Souncloud, Youtube or Spotify.";
+	}
 	// if (
 	// 	values.publisherContact &&
 	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)

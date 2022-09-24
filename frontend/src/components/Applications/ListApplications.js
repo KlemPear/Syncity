@@ -16,7 +16,7 @@ class ListApplications extends React.Component {
 		if (
 			!this.props.applications ||
 			this.props.applications.length === 0 ||
-			this.props.applications?.find(o => true)?.brief?.title === undefined
+			this.props.applications?.find((o) => true)?.brief?.title === undefined
 		) {
 			return (
 				<Box justifyContent="center" alignItems="center" sx={{ mt: 20 }}>
@@ -37,11 +37,15 @@ class ListApplications extends React.Component {
 						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
 						justifyContent="space-evenly"
 					>
-						{this.props.applications.map((application) => (
-							<Grid item xs={1} sm={1} md={1} key={application._id}>
-								<BriefCard key={application._id} application={application} />
-							</Grid>
-						))}
+						{this.props.applications.map((application) =>
+							application.brief?.title !== undefined ? (
+								<Grid item xs={1} sm={1} md={1} key={application._id}>
+									<BriefCard key={application._id} application={application} />
+								</Grid>
+							) : (
+								<></>
+							)
+						)}
 					</Grid>
 				</Box>
 			);

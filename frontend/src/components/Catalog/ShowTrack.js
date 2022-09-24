@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import ReactPlayer from "react-player/lazy";
+import Spotify from "react-spotify-embed";
 
 //mui
 import {
@@ -22,17 +24,35 @@ class ShowTrack extends Component {
 						aria-controls="panel1a-content"
 						id="panel1a-header"
 					>
-						<Typography component={MuiLink} underline="hover" href={track.link}  target="_blank" rel="noopener noreferrer">
+						<Typography
+							component={MuiLink}
+							underline="hover"
+							href={track.link}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							{track.title} - {track.artist}
 						</Typography>
 					</AccordionSummary>
 					<AccordionDetails>
-						<Stack direction="row" justifyContent="space-between">
-							<Typography>
-								Master: {track.masterContact} - Publisher:{" "}
-								{track.publisherContact}
-							</Typography>
-							{this.props.button}
+						<Stack spacing={2}>
+							<Stack direction="row" justifyContent="space-between">
+								<Typography>
+									Master: {track.masterContact} - Publisher:{" "}
+									{track.publisherContact}
+								</Typography>
+								{this.props.button}
+							</Stack>
+							{track.link.includes("spotify") ? (
+								<Spotify link={track.link} height={100} width={400} />
+							) : (
+								<ReactPlayer
+									url={track.link}
+									controls={true}
+									height={100}
+									width={400}
+								/>
+							)}
 						</Stack>
 					</AccordionDetails>
 				</Accordion>

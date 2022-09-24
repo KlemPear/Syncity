@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { editApplication } from "../../actions/index";
 import Loader from "../Loader";
+import ReactPlayer from "react-player/lazy";
+import Spotify from "react-spotify-embed";
 
 //mui
 import {
@@ -15,6 +17,7 @@ import {
 	ListItemText,
 	Link,
 	Box,
+	Stack,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -42,14 +45,26 @@ class ApplicationCard extends React.Component {
 						? tracks.map((track) => (
 								<Box key={track._id}>
 									<ListItem>
-										<Link
-											underline="hover"
-											href={track.link}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											{track.title} - {track.artist}
-										</Link>
+										<Stack spacing={2}>
+											<Link
+												underline="hover"
+												href={track.link}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												{track.title} - {track.artist}
+											</Link>
+											{track.link.includes("spotify") ? (
+												<Spotify link={track.link} height={100} width={300} />
+											) : (
+												<ReactPlayer
+													url={track.link}
+													controls={true}
+													height={100}
+													width={300}
+												/>
+											)}
+										</Stack>
 									</ListItem>
 									<Collapse in={this.state.liked} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
