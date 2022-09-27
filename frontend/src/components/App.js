@@ -22,6 +22,7 @@ import ResetPassword from "./Users/ResetPassword";
 import CreateTrack from "./Catalog/CreateTrack";
 import ListTracks from "./Catalog/ListTracks";
 import EditTrack from "./Catalog/EditTrack";
+import TrackPlayer from "./Catalog/TrackPlayer";
 import Appbar from "./Appbar";
 import Footer from "./Footer";
 
@@ -35,7 +36,7 @@ class App extends React.Component {
 		return (
 			<>
 				<Appbar />
-				<Container fixed sx={{ pb: 10 }}>
+				<Container fixed sx={{ pb: 12 }}>
 					<Switch>
 						{this.props.isUserPending ? (
 							<>
@@ -161,7 +162,11 @@ class App extends React.Component {
 						<Redirect to="/list-briefs" />
 					</Switch>
 				</Container>
-				<Footer />
+				{Object.keys(this.props.trackPlayer).length !== 0 ? (
+					<TrackPlayer />
+				) : (
+					<Footer />
+				)}
 			</>
 		);
 	}
@@ -170,6 +175,7 @@ const mapStateToProps = (state) => {
 	return {
 		isSignedIn: state.auth.isSignedIn,
 		isUserPending: state.auth.user?.status === "Pending",
+		trackPlayer: state.trackPlayer,
 	};
 };
 

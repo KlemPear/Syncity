@@ -4,7 +4,7 @@ import { editApplication } from "../../actions/index";
 import Loader from "../Loader";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
-
+import { playTrack } from "../../actions";
 //mui
 import {
 	List,
@@ -18,6 +18,7 @@ import {
 	Link,
 	Box,
 	Stack,
+	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -37,6 +38,11 @@ class ApplicationCard extends React.Component {
 		this.props.editApplication(updatedApp);
 	};
 
+	onPlayTrack = (track) => {
+		console.log("Play Track!")
+		this.props.playTrack(track);
+	};
+
 	renderTracks(tracks) {
 		return (
 			<>
@@ -45,7 +51,7 @@ class ApplicationCard extends React.Component {
 						? tracks.map((track) => (
 								<Box key={track._id}>
 									<ListItem>
-										<Stack spacing={2}>
+										{/* <Stack spacing={2}>
 											<Link
 												underline="hover"
 												href={track.link}
@@ -64,7 +70,13 @@ class ApplicationCard extends React.Component {
 													width={300}
 												/>
 											)}
-										</Stack>
+										</Stack> */}
+										<Typography
+											variant="h6"
+											onClick={() => this.onPlayTrack(track)}
+										>
+											{track.title} - {track.artist}
+										</Typography>
 									</ListItem>
 									<Collapse in={this.state.liked} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>
@@ -147,4 +159,6 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { editApplication })(ApplicationCard);
+export default connect(mapStateToProps, { editApplication, playTrack })(
+	ApplicationCard
+);

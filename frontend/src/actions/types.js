@@ -40,3 +40,8 @@ export const tracksTypes = {
 	EDIT_TRACK: "EDIT_TRACK",
 	DELETE_TRACK: "DELETE_TRACK",
 };
+
+export const trackPlayerTypes = {
+	PLAY_TRACK: "PLAY_TRACK",
+	CLOSE_TRACK: "CLOSE_TRACK",
+};

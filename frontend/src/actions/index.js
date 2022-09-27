@@ -3,6 +3,7 @@ import {
 	briefsTypes,
 	applicationsTypes,
 	tracksTypes,
+	trackPlayerTypes,
 } from "./types";
 import history from "../util/history";
 import users from "../apis/users";
@@ -13,14 +14,14 @@ import tracks from "../apis/tracks";
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
 	const response = await users.post(`/register`, body);
-	
+
 	// do some programmatic navigation to get the user
 	// back to the main page
-	if(response.status === 200){
+	if (response.status === 200) {
 		dispatch({ type: usersTypes.REGISTER_USER, payload: response.data });
 		history.push("/user-status-pending");
 	}
-	if(response.status === 202){
+	if (response.status === 202) {
 		history.push("/user-already-created");
 	}
 };
@@ -246,4 +247,16 @@ export const deleteTrack = (id) => async (dispatch, getState) => {
 	// back to the main page
 	history.push("/catalog");
 };
+//#endregion
+
+//#region TrackPlayer
+
+export const playTrack = (track) => async (dispatch, getState) => {
+	dispatch({ type: trackPlayerTypes.PLAY_TRACK, payload: track });
+};
+
+export const closeTrack = () => async (dispatch, getState) => {
+	dispatch({ type: trackPlayerTypes.CLOSE_TRACK});
+};
+
 //#endregion

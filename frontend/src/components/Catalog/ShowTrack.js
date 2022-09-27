@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
-
+import { connect } from "react-redux";
+import { playTrack } from "../../actions";
 //mui
 import {
 	Typography,
@@ -14,6 +15,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MuiLink from "@mui/material/Link";
 
 class ShowTrack extends Component {
+	onPlayTrack = () => {
+		this.props.playTrack(this.props.track);
+	};
+
 	render() {
 		const track = this.props.track;
 		return (
@@ -25,9 +30,10 @@ class ShowTrack extends Component {
 						id="panel1a-header"
 					>
 						<Typography
-							component={MuiLink}
+							// component="a"
+							// href={track.link}
+							onClick={this.onPlayTrack}
 							underline="hover"
-							href={track.link}
 							target="_blank"
 							rel="noopener noreferrer"
 						>
@@ -43,7 +49,7 @@ class ShowTrack extends Component {
 								</Typography>
 								{this.props.button}
 							</Stack>
-							{track.link.includes("spotify") ? (
+							{/* {track.link.includes("spotify") ? (
 								<Spotify link={track.link} height={100} width={400} />
 							) : (
 								<ReactPlayer
@@ -52,7 +58,7 @@ class ShowTrack extends Component {
 									height={100}
 									width={400}
 								/>
-							)}
+							)} */}
 						</Stack>
 					</AccordionDetails>
 				</Accordion>
@@ -61,4 +67,4 @@ class ShowTrack extends Component {
 	}
 }
 
-export default ShowTrack;
+export default connect(null, { playTrack })(ShowTrack);
