@@ -31,6 +31,12 @@ class ListApplications extends React.Component {
 		} else {
 			return (
 				<Box sx={{ m: 5 }}>
+					<Typography
+						sx={{ display: "flex", justifyContent: "center", m: 3 }}
+						variant="h3"
+					>
+						Applications you have submitted:
+					</Typography>
 					<Grid
 						container
 						spacing={{ xs: 1, md: 2 }}

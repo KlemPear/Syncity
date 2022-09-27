@@ -261,49 +261,59 @@ class BriefCard extends React.Component {
 					</CardContent>
 				</Box>
 				<CardActions disableSpacing>
-					<Divider variant="middle" sx={{ margin: 1 }} />
-					{brief.author === this.props.userId ? (
-						<ButtonGroup
-							variant="outlined"
-							color="primary"
-							size="small"
-							aria-label="outlined button group"
-						>
-							<Button component={Link} to={`show-brief/edit/${brief._id}`}>
-								Edit
-							</Button>
-							<Button
-								component={Link}
-								to={`show-brief/${brief._id}/applications`}
+					<Box
+						sx={{
+							alignSelf: "center",
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "center",
+							flexGrow: 5
+						}}
+					>
+						{brief.author === this.props.userId ? (
+							<ButtonGroup
+								variant="outlined"
+								color="primary"
+								size="small"
+								aria-label="outlined button group"
 							>
-								View Applications
-							</Button>
-						</ButtonGroup>
-					) : (
-						<>
-							{brief.numberOfApplicationsWanted ===
-								brief.numberOfApplicationsSubmitted ||
-							getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0 ? (
-								<Button variant="contained" color="primary">
-									Closed
+								<Button component={Link} to={`show-brief/edit/${brief._id}`}>
+									Edit
 								</Button>
-							) : (
 								<Button
-									variant="contained"
-									color="primary"
 									component={Link}
-									to={`show-brief/${brief._id}`}
+									to={`show-brief/${brief._id}/applications`}
 								>
-									Apply
+									View Applications
 								</Button>
-							)}
-						</>
-					)}
+							</ButtonGroup>
+						) : (
+							<Box>
+								{brief.numberOfApplicationsWanted ===
+									brief.numberOfApplicationsSubmitted ||
+								getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0 ? (
+									<Button variant="contained" color="primary">
+										Closed
+									</Button>
+								) : (
+									<Button
+										variant="contained"
+										color="primary"
+										component={Link}
+										to={`show-brief/${brief._id}`}
+									>
+										Apply
+									</Button>
+								)}
+							</Box>
+						)}
+					</Box>
 					<ExpandMore
 						expand={this.state.expanded}
 						onClick={this.handleExpandClick}
 						aria-expanded={this.state.expanded}
 						aria-label="show more"
+						sx={{ alignSelf: "flex-end" }}
 					>
 						<ExpandMoreIcon />
 					</ExpandMore>
