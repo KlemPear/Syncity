@@ -1,5 +1,4 @@
 import { trackPlayerTypes } from "../actions/types";
-import _ from "lodash";
 
 const trackPlayerReducer = (state = {}, action) => {
 	switch (action.type) {

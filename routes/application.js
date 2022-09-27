@@ -10,6 +10,7 @@ router
 	.get("/:id", application.onGetApplicationById)
 	.post("/", application.onCreateApplication)
 	.put("/:id", isApplicationAuthor, application.onEditApplicationById)
+	.put("/:id/like", application.onEditApplicationById)
 	.delete("/:id", isApplicationAuthor, application.onDeleteApplicationById);
 
 module.exports = router;

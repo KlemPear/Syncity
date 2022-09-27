@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editApplication } from "../../actions/index";
+import { likeApplication } from "../../actions/index";
 import Loader from "../Loader";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
@@ -35,11 +35,10 @@ class ApplicationCard extends React.Component {
 		this.setState({ liked: !this.state.liked });
 		const updatedApp = this.props.application;
 		updatedApp.liked = !this.props.application.liked;
-		this.props.editApplication(updatedApp);
+		this.props.likeApplication(updatedApp);
 	};
 
 	onPlayTrack = (track) => {
-		console.log("Play Track!")
 		this.props.playTrack(track);
 	};
 
@@ -159,6 +158,6 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { editApplication, playTrack })(
+export default connect(mapStateToProps, { likeApplication, playTrack })(
 	ApplicationCard
 );

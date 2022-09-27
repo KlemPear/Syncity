@@ -207,6 +207,14 @@ export const editApplication = (body) => async (dispatch, getState) => {
 	});
 };
 
+export const likeApplication = (body) => async (dispatch, getState) => {
+	const response = await applications.put(`/${body._id}/like`, body);
+	dispatch({
+		type: applicationsTypes.EDIT_APPLICATION,
+		payload: response.data,
+	});
+};
+
 //#endregion
 
 //#region Tracks

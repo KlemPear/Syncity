@@ -67,6 +67,21 @@ module.exports.onEditApplicationById = async (req, res, next) => {
 	}
 };
 
+module.exports.onLikeApplicationById = async (req, res, next) => {
+	try {
+		const { id } = req.params;
+		const application = await Application.findByIdAndUpdate(id, req.body, {
+			returnDocument: "after",
+		})
+			.populate("author")
+			.populate("brief")
+			.populate("tracks");
+		return res.status(200).json(application);
+	} catch (error) {
+		return res.status(500).json(error);
+	}
+};
+
 module.exports.onDeleteApplicationById = async (req, res, next) => {
 	try {
 		const { id } = req.params;
