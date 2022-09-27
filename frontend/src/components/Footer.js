@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
 //mui
 import { Container, Grid, Box, Typography, AppBar } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -26,7 +26,7 @@ class Footer extends Component {
 					>
 						<Grid item xs={2} sm={2}>
 							<Box>
-								<Typography component="a" href="https://www.nost.audio/">
+								<Typography component={Link} to="list-briefs">
 									<img
 										style={{ width: 50, height: 50 }}
 										src={

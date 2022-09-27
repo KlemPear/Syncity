@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
-import ShowTrack from "../Catalog/ShowTrack";
 
 //mui
 import { styled } from "@mui/material/styles";
@@ -267,7 +266,7 @@ class BriefCard extends React.Component {
 							display: "flex",
 							flexDirection: "row",
 							justifyContent: "center",
-							flexGrow: 5
+							flexGrow: 5,
 						}}
 					>
 						{brief.author === this.props.userId ? (

@@ -88,8 +88,8 @@ class ResponsiveAppBar extends React.Component {
 						<Typography
 							variant="h6"
 							noWrap
-							component="a"
-							href="https://www.nost.audio/"
+							component={Link}
+							to="list-briefs"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
@@ -156,8 +156,8 @@ class ResponsiveAppBar extends React.Component {
 						<Typography
 							variant="h5"
 							noWrap
-							component="a"
-							href="https://www.nost.audio/"
+							component={Link}
+							to="list-briefs"
 							sx={{
 								mr: 2,
 								display: { xs: "flex", md: "none" },
