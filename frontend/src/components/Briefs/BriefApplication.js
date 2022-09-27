@@ -95,7 +95,7 @@ class BriefApplication extends React.Component {
 				>
 					<TrackSelector getSelectedTracks={this.selectedTracks} />
 				</Box>
-				<Typography>
+				<Box>
 					{this.state.addNewTrackToCatalog ? (
 						<Modal
 							showModal={this.state.addNewTrackToCatalog}
@@ -108,7 +108,7 @@ class BriefApplication extends React.Component {
 							onDismiss={this.onAddNewTrackToggle}
 						/>
 					) : null}
-				</Typography>
+				</Box>
 				{this.state.notEnoughTokens ? (
 					<Modal
 						showModal={this.state.notEnoughTokens}

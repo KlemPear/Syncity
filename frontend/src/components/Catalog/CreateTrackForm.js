@@ -4,7 +4,7 @@ import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 
 //mui
-import { TextField, Button, Stack } from "@mui/material";
+import { TextField, Button, Stack, Box} from "@mui/material";
 
 class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
@@ -120,7 +120,7 @@ class CreateTrackForm extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<Box>
 				<form
 					onSubmit={this.props.handleSubmit(this.onSubmit)}
 					className="ui form error"
@@ -165,7 +165,7 @@ class CreateTrackForm extends React.Component {
 						</Stack>
 					</Stack>
 				</form>
-			</div>
+			</Box>
 		);
 	}
 }

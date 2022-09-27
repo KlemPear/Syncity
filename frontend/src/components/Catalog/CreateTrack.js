@@ -26,7 +26,7 @@ class CreateTrack extends React.Component {
 	render() {
 		return (
 			<Box sx={{display: "flex", justifyContent: "space-evenly", alignItems: "center", flexDirection: "column"}}>
-				<Typography sx={{m:2}} variant="h3">Create Track</Typography>
+				<Typography sx={{m:2}} variant="h3">Add Track</Typography>
 				<CreateTrackForm onSubmit={this.onSubmit} onCancel={this.props.onDismiss} />
 			</Box>
 		);
