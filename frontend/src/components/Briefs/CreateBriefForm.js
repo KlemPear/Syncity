@@ -212,7 +212,7 @@ class CreateBriefForm extends React.Component {
 				<TextField
 					fullWidth
 					label={label}
-					error={Boolean(error)}
+					error={Boolean(touched && error)}
 					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					multiline
@@ -237,7 +237,7 @@ class CreateBriefForm extends React.Component {
 				<TextField
 					fullWidth
 					label={label}
-					error={Boolean(error)}
+					error={Boolean(touched && error)}
 					helperText={Boolean(touched && error) ? error : null}
 					type={type}
 					select={Boolean(selectList != null)}
@@ -478,7 +478,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[0].link"
 						component={this.renderInput}
-						label="Link #1"
+						label="Link #1 (Soundcloud, Youtube, Spotify)"
 						value={
 							editBrief.references != null
 								? editBrief.references[0]?.link
@@ -523,7 +523,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[1].link"
 						component={this.renderInput}
-						label="Link #2"
+						label="Link #2 (Soundcloud, Youtube, Spotify)"
 						value={
 							editBrief.references != null
 								? editBrief.references[1]?.link
@@ -568,7 +568,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[2].link"
 						component={this.renderInput}
-						label="Link #3"
+						label="Link #3 (Soundcloud, Youtube, Spotify)"
 						value={
 							editBrief.references != null
 								? editBrief.references[2]?.link
@@ -743,7 +743,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[0].link"
 						component={this.renderInput}
-						label="Link #1"
+						label="Link #1 (Soundcloud, Youtube, Spotify)"
 					/>
 					<Field
 						name="references[0].comment"
@@ -758,7 +758,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[1].link"
 						component={this.renderInput}
-						label="Link #2"
+						label="Link #2 (Soundcloud, Youtube, Spotify)"
 					/>
 					<Field
 						name="references[1].comment"
@@ -773,7 +773,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="references[2].link"
 						component={this.renderInput}
-						label="Link #3"
+						label="Link #3 (Soundcloud, Youtube, Spotify)"
 					/>
 					<Field
 						name="references[2].comment"
@@ -842,34 +842,46 @@ const validate = (values) => {
 		errors.title = "This title is too long.";
 	}
 	if (
-		values.references[0].link &&
+		values.references &&
+		values.references[0]?.link &&
 		!(
-			values.references[0].link.includes("spotify") ||
-			values.references[0].link.includes("soundcloud") ||
-			values.references[0].link.includes("youtube")
+			values.references[0]?.link.includes("spotify") ||
+			values.references[0]?.link.includes("soundcloud") ||
+			values.references[0]?.link.includes("youtube")
 		)
 	) {
-		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+		errors.references = [
+			{ link: "Your track link must be from Souncloud, Youtube or Spotify." },
+		];
 	}
 	if (
-		values.references[1].link &&
+		values.references &&
+		values.references[1]?.link &&
 		!(
-			values.references[1].link.includes("spotify") ||
-			values.references[1].link.includes("soundcloud") ||
-			values.references[1].link.includes("youtube")
+			values.references[1]?.link.includes("spotify") ||
+			values.references[1]?.link.includes("soundcloud") ||
+			values.references[1]?.link.includes("youtube")
 		)
 	) {
-		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+		errors.references = [
+			{},
+			{ link: "Your track link must be from Souncloud, Youtube or Spotify." },
+		];
 	}
 	if (
-		values.references[2].link &&
+		values.references &&
+		values.references[2]?.link &&
 		!(
-			values.references[2].link.includes("spotify") ||
-			values.references[2].link.includes("soundcloud") ||
-			values.references[2].link.includes("youtube")
+			values.references[2]?.link.includes("spotify") ||
+			values.references[2]?.link.includes("soundcloud") ||
+			values.references[2]?.link.includes("youtube")
 		)
 	) {
-		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+		errors.references = [
+			{},
+			{},
+			{ link: "Your track link must be from Souncloud, Youtube or Spotify." },
+		];
 	}
 	return errors;
 };
