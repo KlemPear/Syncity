@@ -42,8 +42,8 @@ const productIdTofrontendItem =
 const updatePlans = async (user, plan) => {
 	switch (plan) {
 		case "freePlan":
-			user.briefTokens = 1;
-			user.pitchTokens = 5;
+			user.briefTokens = -1;
+			user.pitchTokens = 10;
 			user.briefSubscriptionPlan = plan;
 			user.pitchSubscriptionPlan = plan;
 			break;

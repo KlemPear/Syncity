@@ -14,7 +14,7 @@ class CreateBrief extends React.Component {
 		this.state = { notEnoughTokens: false };
 	}
 	onSubmit = (formValues) => {
-		this.props.burnBriefToken(this.props.userId);
+		//this.props.burnBriefToken(this.props.userId);
 		this.props.createBrief({ ...formValues, author: `${this.props.userId}` });
 	};
 

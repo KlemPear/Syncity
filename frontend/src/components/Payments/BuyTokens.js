@@ -18,7 +18,7 @@ import {
 class BuyTokens extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { briefPlans: true };
+		this.state = { briefPlans: false };
 	}
 
 	onSelectBriefPlans = () => {
@@ -77,9 +77,9 @@ class BuyTokens extends React.Component {
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"1 brief per month."
+					"Unlimited briefs."
 				)}
-				{this.renderPlanOption(
+				{/* {this.renderPlanOption(
 					"basicBriefPlan",
 					"19.00/month",
 					"Basic Brief Plan",
@@ -99,7 +99,7 @@ class BuyTokens extends React.Component {
 					"Business Brief Plan",
 					this.props.user,
 					"Unlimited briefs."
-				)}
+				)} */}
 			</Grid>
 		);
 	};
@@ -117,7 +117,7 @@ class BuyTokens extends React.Component {
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"5 applications per month."
+					"10 applications per month."
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
