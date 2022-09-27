@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
-
+import { playTrack } from "../../actions";
 //mui
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -122,14 +122,24 @@ class BriefCard extends React.Component {
 		this.setState({ expanded: !this.state.expanded });
 	};
 
+	onPlayTrack = (track) => {
+		this.props.playTrack(track);
+	};
+
 	renderReference = (ref) => {
 		return (
 			<Box key={ref.link}>
 				<List key={ref.link}>
 					<ListItem>
 						<Stack>
-							<MuiLink underline="hover" href={ref.link}>
+							{/* <MuiLink underline="hover" href={ref.link}>
 								{ref.title ? ref.title : "Link to reference song"}
+							</MuiLink> */}
+							<MuiLink
+								underline="hover"
+								onClick={() => this.onPlayTrack({ link: ref.link })}
+							>
+								{ref.title}
 							</MuiLink>
 							{ref.comment ? (
 								<List>
@@ -466,4 +476,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, {})(BriefCard);
+export default connect(mapStateToProps, { playTrack })(BriefCard);

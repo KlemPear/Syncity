@@ -841,12 +841,36 @@ const validate = (values) => {
 	if (values.title && values.title.length > 35) {
 		errors.title = "This title is too long.";
 	}
-	// if (
-	// 	values.email &&
-	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-	// ) {
-	// 	errors.email = "Invalid email address.";
-	// }
+	if (
+		values.references[0].link &&
+		!(
+			values.references[0].link.includes("spotify") ||
+			values.references[0].link.includes("soundcloud") ||
+			values.references[0].link.includes("youtube")
+		)
+	) {
+		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+	}
+	if (
+		values.references[1].link &&
+		!(
+			values.references[1].link.includes("spotify") ||
+			values.references[1].link.includes("soundcloud") ||
+			values.references[1].link.includes("youtube")
+		)
+	) {
+		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+	}
+	if (
+		values.references[2].link &&
+		!(
+			values.references[2].link.includes("spotify") ||
+			values.references[2].link.includes("soundcloud") ||
+			values.references[2].link.includes("youtube")
+		)
+	) {
+		errors.link = "Your track link must be from Souncloud, Youtube or Spotify.";
+	}
 	return errors;
 };
 

@@ -70,12 +70,13 @@ class ApplicationCard extends React.Component {
 												/>
 											)}
 										</Stack> */}
-										<Typography
+										<Link
 											variant="h6"
+											underline="hover"
 											onClick={() => this.onPlayTrack(track)}
 										>
 											{track.title} - {track.artist}
-										</Typography>
+										</Link>
 									</ListItem>
 									<Collapse in={this.state.liked} timeout="auto" unmountOnExit>
 										<List component="div" disablePadding>

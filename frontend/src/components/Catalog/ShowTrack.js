@@ -29,7 +29,7 @@ class ShowTrack extends Component {
 						aria-controls="panel1a-content"
 						id="panel1a-header"
 					>
-						<Typography
+						<MuiLink
 							// component="a"
 							// href={track.link}
 							onClick={this.onPlayTrack}
@@ -38,7 +38,7 @@ class ShowTrack extends Component {
 							rel="noopener noreferrer"
 						>
 							{track.title} - {track.artist}
-						</Typography>
+						</MuiLink>
 					</AccordionSummary>
 					<AccordionDetails>
 						<Stack spacing={2}>
