@@ -44,7 +44,7 @@ export default function MultipleSelectInput(props) {
 
 	return (
 		<div>
-			<FormControl fullWidth>
+			<FormControl fullWidth={props.fullWidth} sx={{ width: props.width }}>
 				<InputLabel>{props.label}</InputLabel>
 				<Select
 					multiple

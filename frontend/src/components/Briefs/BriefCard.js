@@ -231,7 +231,7 @@ class BriefCard extends React.Component {
 	renderMuiBrief(brief) {
 		return (
 			<Card
-				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500 }}
+				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500}}
 				elevation={8}
 			>
 				<CardHeader

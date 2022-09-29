@@ -44,7 +44,7 @@ class ResponsiveAppBar extends React.Component {
 				},
 				settings: {
 					"Subscription Plans": "/buy-tokens",
-					Profile: "/profile",
+					"Profile & Connections": "/profile",
 					Logout: "/",
 				},
 			};

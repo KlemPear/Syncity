@@ -4,9 +4,10 @@ import { fetchBriefs, fetchPrivateBriefs } from "../../actions";
 import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import BriefCard from "./BriefCard";
+import FilterBriefForm from "./FilterBriefForm";
 
 //mui
-import { Grid, Tabs, Tab, Fab } from "@mui/material";
+import { Grid, Tabs, Tab, Fab, Stack, Box } from "@mui/material";
 import { Public, Lock, AccountBox, Add } from "@mui/icons-material";
 
 class ListBriefs extends React.Component {
@@ -32,6 +33,12 @@ class ListBriefs extends React.Component {
 
 	handleChange = (event, newValue) => {
 		this.setState({ value: newValue });
+	};
+
+	onBriefFilterSubmit = (formValues) => {
+		formValues.open = true;
+		formValues.private = false;
+		this.props.fetchBriefs(formValues);
 	};
 
 	render() {
@@ -80,15 +87,53 @@ class ListBriefs extends React.Component {
 						<Add sx={{ mr: 1 }} />
 						New Brief
 					</Fab>
+					{/* <Stack
+						direction={{ xs: "column", lg: "row" }}
+						spacing={2}
+						sx={{
+							display: "flex",
+							justifyContent: "center",
+							my: 5,
+							alignItems: "center",
+						}}
+					>
+						<Fab
+							variant="extended"
+							component={Link}
+							to="/create-brief"
+							color="secondary"
+							aria-label="add"
+						>
+							<Add sx={{ mr: 1 }} />
+							New Brief
+						</Fab>
+						{this.state.value === 0 ? (
+							<FilterBriefForm onSubmit={this.onBriefFilterSubmit} />
+						) : (
+							<Box sx={{ display: "flex", flexGrow: 1 }}></Box>
+						)}
+					</Stack> */}
 					<Grid
 						container
 						spacing={{ xs: 1, md: 2 }}
 						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
-						justifyContent="space-evenly"
+						justifyContent="space-around"
+						alignItems="center"
 						sx={{ mb: 2 }}
 					>
 						{this.props.briefs.map((brief) => (
-							<Grid item xs={1} sm={1} md={1} key={brief._id}>
+							<Grid
+								item
+								xs={1}
+								sm={1}
+								md={1}
+								key={brief._id}
+								sx={{
+									display: "flex",
+									justifyContent: "center",
+									alignItems: "center",
+								}}
+							>
 								<BriefCard key={brief._id} brief={brief} />
 							</Grid>
 						))}
