@@ -20,7 +20,6 @@ import {
 	List,
 	ListItemText,
 	Stack,
-	Switch,
 } from "@mui/material";
 
 const PlanFormatterDict = {
@@ -92,13 +91,6 @@ class ShowUser extends React.Component {
 		);
 	}
 
-	handleDarkModeCheckChange = (event) => {
-		const updatedUser = this.props.currentUser;
-		updatedUser.prefersDarkMode = event.target.checked;
-		this.props.editUser(updatedUser);
-		window.location.reload();
-	};
-
 	renderUserProfile() {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -122,18 +114,6 @@ class ShowUser extends React.Component {
 					<Typography sx={{ display: "flex", justifyContent: "center" }}>
 						{this.props.currentUser.bio}
 					</Typography>
-					<Divider variant="middle" sx={{ margin: 1, bgcolor: "black" }} />
-					<Stack
-						direction="row"
-						sx={{ display: "flex", justifyContent: "center" }}
-					>
-						<Typography sx={{ mt: 1 }}>Dark Mode:</Typography>
-						<Switch
-							checked={this.props.currentUser.prefersDarkMode ?? false}
-							onChange={this.handleDarkModeCheckChange}
-							inputProps={{ "aria-label": "controlled" }}
-						/>
-					</Stack>
 					<Divider variant="middle" sx={{ margin: 1, bgcolor: "black" }} />
 					<Box
 						sx={{

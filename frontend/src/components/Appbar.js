@@ -12,9 +12,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 // import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { Stack, Switch } from "@mui/material";
 
 import { Link } from "react-router-dom";
-import { logOutUser } from "../actions";
+import { logOutUser, editUser } from "../actions";
 import { connect } from "react-redux";
 
 class ResponsiveAppBar extends React.Component {
@@ -25,6 +26,13 @@ class ResponsiveAppBar extends React.Component {
 			anchorElUser: null,
 		};
 	}
+
+	handleDarkModeCheckChange = (event) => {
+		const updatedUser = this.props.user;
+		updatedUser.prefersDarkMode = event.target.checked;
+		this.props.editUser(updatedUser);
+		window.location.reload();
+	};
 
 	getPagesAndSettings = () => {
 		if (this.props.isSignedIn && !this.props.isUserPending) {
@@ -103,7 +111,7 @@ class ResponsiveAppBar extends React.Component {
 							<img
 								style={{ width: 65, height: 65 }}
 								src={
-									this.props.user?.prefersDarkMode 
+									this.props.user?.prefersDarkMode
 										? process.env.PUBLIC_URL + "/NOST_logo_white.png"
 										: process.env.PUBLIC_URL + "/NOST_logo_black.png"
 								}
@@ -222,6 +230,19 @@ class ResponsiveAppBar extends React.Component {
 									open={Boolean(this.state.anchorElUser)}
 									onClose={this.handleCloseUserMenu}
 								>
+									<MenuItem onClick={this.handleCloseUserMenu}>
+										<Stack
+											direction="row"
+											sx={{ display: "flex", justifyContent: "center" }}
+										>
+											<Typography sx={{ mt: 1 }}>Dark Mode:</Typography>
+											<Switch
+												checked={this.props.user.prefersDarkMode ?? false}
+												onChange={this.handleDarkModeCheckChange}
+												inputProps={{ "aria-label": "controlled" }}
+											/>
+										</Stack>
+									</MenuItem>
 									{Object.keys(settings).map((setting) => (
 										<MenuItem key={setting} onClick={this.handleCloseUserMenu}>
 											{setting === "Logout" ? (
@@ -264,4 +285,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { logOutUser })(ResponsiveAppBar);
+export default connect(mapStateToProps, { logOutUser, editUser })(
+	ResponsiveAppBar
+);
