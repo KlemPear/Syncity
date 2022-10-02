@@ -4,7 +4,7 @@ const User = require("../models/User");
 module.exports.onGetAllNotifications = async (req, res, next) => {
 	try {
 		const notifications = await Notification.find(req.query);
-		return res.status(200).json(notifications);
+		return res.status(200).json(notifications.sort((a,b)=>-(a.date-b.date)));
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

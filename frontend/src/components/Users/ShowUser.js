@@ -6,6 +6,7 @@ import {
 	cleanSearchedUser,
 	editUser,
 	editUserNoPayload,
+	createNotification,
 } from "../../actions";
 import TransitionModal from "../Modal";
 import UserSearch from "./UserSearch";
@@ -57,6 +58,15 @@ class ShowUser extends React.Component {
 		const updatedSearchedUser = this.props.searchedUser;
 		updatedSearchedUser.connections.push(updatedUser._id);
 		this.props.editUserNoPayload(updatedSearchedUser);
+		// then we need to notify the other user that they have a new connection
+		const notif = {
+			title: "New Connection!",
+			description: `${updatedUser.firstName} ${updatedUser.lastName} added you as a connection!`,
+			link: "/profile",
+			date: Date.now(),
+			user: updatedSearchedUser._id,
+		};
+		this.props.createNotification(notif);
 		this.onDismissModal();
 	};
 
@@ -266,4 +276,5 @@ export default connect(mapStateToProps, {
 	cleanSearchedUser,
 	editUser,
 	editUserNoPayload,
+	createNotification,
 })(ShowUser);

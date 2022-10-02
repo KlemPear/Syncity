@@ -32,6 +32,12 @@ export const loginUser = (formValues) => async (dispatch, getState) => {
 	try {
 		const response = await users.post(`/login`, formValues);
 		dispatch({ type: usersTypes.LOGIN_USER, payload: response.data });
+
+		const response2 = await notifications.get(`/`, { params: { user: response.data._id }});
+		dispatch({
+			type: notificationsTypes.FETCH_NOTIFICATIONS,
+			payload: response2.data,
+		});
 		// do some programmatic navigation to get the user
 		// back to the main page
 		history.push("/list-briefs");

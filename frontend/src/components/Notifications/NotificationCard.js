@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 import { dateFormatter } from "../../util/textFormatHelper";
-import { Link } from "react-router-dom";
 //mui
 import {
-	Stack,
-	Switch,
-	Badge,
 	Card,
-	CardActions,
 	CardContent,
 	CardHeader,
 	Typography,
-	Button,
 	Avatar,
 } from "@mui/material";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
+import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
 class NotificationCard extends Component {
 	renderHeader(title) {
 		return <Typography variant="subtitle2">{title}</Typography>;
@@ -22,13 +17,17 @@ class NotificationCard extends Component {
 	renderSubHeader(subheader) {
 		return <Typography variant="caption">{subheader}</Typography>;
 	}
-	renderAvatar() {
+	renderAvatar(read) {
 		return (
 			<Avatar
 				variant="rounded"
 				sx={{ bgcolor: "#FFFFFF", width: 36, height: 36 }}
 			>
-				<AnnouncementIcon color="secondary" />
+				{read ? (
+					<MarkChatReadIcon color="primary" />
+				) : (
+					<AnnouncementIcon color="secondary" />
+				)}
 			</Avatar>
 		);
 	}
@@ -36,23 +35,18 @@ class NotificationCard extends Component {
 		const notif = this.props.notification;
 		return (
 			<>
-				<Card sx={{ width: 300, height: 85 }} elevation={0}>
+				<Card sx={{ width: 300, height: 100 }} elevation={1}>
 					<CardHeader
-						avatar={this.renderAvatar()}
+						avatar={this.renderAvatar(notif.read)}
 						title={this.renderHeader(notif.title)}
 						subheader={this.renderSubHeader(dateFormatter(notif.date))}
 						sx={{ py: 0.5 }}
 					/>
-					{/* <CardContent sx={{ py: 0.5 }}>
-						<Typography variant="body2">{notif.description}</Typography>
-					</CardContent> */}
-					<CardActions
-						sx={{ py: 0, display: "flex", justifyContent: "flex-end" }}
-					>
-						<Button size="small" component={Link} to={notif.link}>
-							Check it out
-						</Button>
-					</CardActions>
+					<CardContent sx={{ py: 0.5 }}>
+						<Typography variant="body2" sx={{ fontSize: 12 }}>
+							{notif.description}
+						</Typography>
+					</CardContent>
 				</Card>
 			</>
 		);

@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { likeApplication } from "../../actions/index";
 import Loader from "../Loader";
-import ReactPlayer from "react-player/lazy";
-import Spotify from "react-spotify-embed";
-import { playTrack } from "../../actions";
+import { playTrack, createNotification } from "../../actions";
 //mui
 import {
 	List,
@@ -17,8 +15,6 @@ import {
 	ListItemText,
 	Link,
 	Box,
-	Stack,
-	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -36,6 +32,15 @@ class ApplicationCard extends React.Component {
 		const updatedApp = this.props.application;
 		updatedApp.liked = !this.props.application.liked;
 		this.props.likeApplication(updatedApp);
+		// Notify application author that his application was liked
+		const notif = {
+			title: "Your application was liked!",
+			description: `You've been pre-selected for ${this.props.brief.title}`,
+			link: "/list-applications",
+			date: Date.now(),
+			user: updatedApp.author._id,
+		};
+		this.props.createNotification(notif);
 	};
 
 	onPlayTrack = (track) => {
@@ -50,26 +55,6 @@ class ApplicationCard extends React.Component {
 						? tracks.map((track) => (
 								<Box key={track._id}>
 									<ListItem>
-										{/* <Stack spacing={2}>
-											<Link
-												underline="hover"
-												href={track.link}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												{track.title} - {track.artist}
-											</Link>
-											{track.link.includes("spotify") ? (
-												<Spotify link={track.link} height={100} width={300} />
-											) : (
-												<ReactPlayer
-													url={track.link}
-													controls={true}
-													height={100}
-													width={300}
-												/>
-											)}
-										</Stack> */}
 										<Link
 											variant="h6"
 											underline="hover"
@@ -159,6 +144,8 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { likeApplication, playTrack })(
-	ApplicationCard
-);
+export default connect(mapStateToProps, {
+	likeApplication,
+	playTrack,
+	createNotification,
+})(ApplicationCard);

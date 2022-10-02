@@ -1,6 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createApplication, burnPitchToken } from "../../actions";
+import {
+	createApplication,
+	burnPitchToken,
+	createNotification,
+} from "../../actions";
 import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
@@ -60,9 +64,18 @@ class BriefApplication extends React.Component {
 			const applicationValues = {
 				tracks: this.state.selectedTracks,
 				author: `${this.props.userId}`,
-				brief: `${this.props.briefId}`,
+				brief: `${this.props.brief._id}`,
 			};
 			this.props.createApplication(applicationValues);
+			// Notify brief author of the application
+			const notif = {
+				title: "You've got a new application!",
+				description: `${this.props.brief.title} got a new application.`,
+				date: Date.now(),
+				link: `/show-brief/${this.props.brief._id}/applications`,
+				user: this.props.brief.author,
+			};
+			this.createNotification(notif);
 		}
 	};
 
@@ -139,6 +152,8 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { createApplication, burnPitchToken })(
-	BriefApplication
-);
+export default connect(mapStateToProps, {
+	createApplication,
+	burnPitchToken,
+	createNotification,
+})(BriefApplication);

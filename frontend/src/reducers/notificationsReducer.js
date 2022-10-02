@@ -1,4 +1,4 @@
-import { notificationsTypes } from "../actions/types";
+import { notificationsTypes, usersTypes } from "../actions/types";
 import _ from "lodash";
 
 const notificationsReducer = (state = {}, action) => {
@@ -8,7 +8,6 @@ const notificationsReducer = (state = {}, action) => {
 		case notificationsTypes.CREATE_NOTIFICATION:
 			return {
 				...state,
-				[action.payload._id]: action.payload,
 			};
 		case notificationsTypes.FETCH_NOTIFICATION:
 			return {
@@ -22,6 +21,8 @@ const notificationsReducer = (state = {}, action) => {
 			};
 		case notificationsTypes.DELETE_NOTIFICATION:
 			return _.omit(state, action.payload._id);
+		case usersTypes.LOGOUT_USER:
+			return {};
 		default:
 			return state;
 	}

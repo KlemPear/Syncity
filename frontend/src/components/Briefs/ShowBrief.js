@@ -269,7 +269,7 @@ class ShowBrief extends React.Component {
 									</Typography>
 								</>
 							) : (
-								<BriefApplication briefId={this.props.brief._id} />
+								<BriefApplication brief={this.props.brief} />
 							)}
 						</Grid>
 					</Grid>

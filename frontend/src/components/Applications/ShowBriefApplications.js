@@ -61,6 +61,7 @@ class ShowBriefApplications extends React.Component {
 									<ApplicationCard
 										key={application._id}
 										application={application}
+										brief={this.props.brief}
 									/>
 								))}
 							</List>

@@ -17,17 +17,17 @@ import {
 	Stack,
 	Switch,
 	Badge,
-	Card,
-	CardActions,
-	CardContent,
-	CardHeader,
 } from "@mui/material";
-import { dateFormatter } from "../util/textFormatHelper";
 import { Link } from "react-router-dom";
-import { logOutUser, editUser, fetchNotifications } from "../actions";
+import {
+	logOutUser,
+	editUser,
+	fetchNotifications,
+	editNotification,
+} from "../actions";
 import { connect } from "react-redux";
 import NotificationCard from "./Notifications/NotificationCard";
-
+import history from "../util/history";
 class ResponsiveAppBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -39,7 +39,7 @@ class ResponsiveAppBar extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchNotifications({ user: this.props.user._id, read: false });
+		this.props.fetchNotifications({ user: this.props.user._id });
 	}
 
 	handleDarkModeCheckChange = (event) => {
@@ -106,7 +106,14 @@ class ResponsiveAppBar extends React.Component {
 	handleCloseNotificationMenu = () => {
 		this.setState({ anchorElNotification: null });
 	};
-
+	handleClickNotification = (notif) => {
+		notif.read = true;
+		this.props.editNotification(notif);
+		this.handleCloseNotificationMenu();
+		if (notif.link) {
+			history.push(notif.link);
+		}
+	};
 	render() {
 		const { pages, settings } = this.getPagesAndSettings();
 		return (
@@ -229,7 +236,9 @@ class ResponsiveAppBar extends React.Component {
 										<Badge
 											color="secondary"
 											invisible={Boolean(!this.props.notifications)}
-											badgeContent={this.props.notifications?.length}
+											badgeContent={
+												this.props.notifications?.filter((o) => !o.read).length
+											}
 											max={99}
 										>
 											<IconButton
@@ -263,10 +272,15 @@ class ResponsiveAppBar extends React.Component {
 										open={Boolean(this.state.anchorElNotification)}
 										onClose={this.handleCloseNotificationMenu}
 									>
+										{this.props.notifications.length === 0 ? (
+											<MenuItem>0 Notifications.</MenuItem>
+										) : null}
 										{this.props.notifications?.map((notif) => (
 											<MenuItem
 												key={notif._id}
-												onClick={this.handleCloseNotificationMenu}
+												onClick={() => {
+													this.handleClickNotification(notif);
+												}}
 											>
 												<NotificationCard notification={notif} />
 											</MenuItem>
@@ -359,4 +373,5 @@ export default connect(mapStateToProps, {
 	logOutUser,
 	editUser,
 	fetchNotifications,
+	editNotification,
 })(ResponsiveAppBar);
