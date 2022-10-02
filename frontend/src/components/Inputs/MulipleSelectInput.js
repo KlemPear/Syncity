@@ -50,14 +50,15 @@ export default function MultipleSelectInput(props) {
 					multiple
 					value={selectedValue}
 					onChange={handleChange}
-					input={<OutlinedInput label="Chip"></OutlinedInput>}
-					renderValue={(selected) => (
-						<Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-							{selected.map((value) => (
-								<Chip key={value} label={value} />
-							))}
-						</Box>
-					)}
+					// input={<OutlinedInput label="Chip"></OutlinedInput>}
+					// renderValue={(selected) => (
+					// 	<Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+					// 		{selected.map((value) => (
+					// 			<Chip key={value} label={value} />
+					// 		))}
+					// 	</Box>
+					// )}
+					input={<OutlinedInput label="Name" />}
 					MenuProps={MenuProps}
 					{...props.input}
 					{...props.custom}

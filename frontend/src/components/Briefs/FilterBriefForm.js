@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
+import { Field, reduxForm, reset } from "redux-form";
 
 //mui
 import { Button, Stack, Grid } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import MultipleSelectInput from "../Inputs/MulipleSelectInput";
 import {
 	mediaOptions,
@@ -36,7 +36,7 @@ class FilterBriefForm extends Component {
 					helperText={Boolean(touched && error) ? error : null}
 					input={input}
 					{...custom}
-					width={120}
+					width={150}
 				/>
 			</>
 		);
@@ -46,53 +46,54 @@ class FilterBriefForm extends Component {
 		return (
 			<Grid
 				container
-				spacing={{ xs: 1, md: 1 }}
-				columns={{ md: 3, lg: 5 }}
-				justifyContent="center"
-				alignItems="center"
+				spacing={{ xs: 0.5 }}
+				columns={{ xs: 1, sm: 2, md: 3, lg: 5 }}
 			>
-				<Field
-					name="media"
-					component={this.renderMultipleSelectInput}
-					label="Media"
-					selectList={mediaOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/>
-				<Field
-					name="genre"
-					component={this.renderMultipleSelectInput}
-					label="Genre"
-					selectList={genresOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/>
-				{/* <Field
-					name="use"
-					component={this.renderMultipleSelectInput}
-					label="Use"
-					selectList={useOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/> */}
-				<Field
-					name="vocals"
-					component={this.renderMultipleSelectInput}
-					label="Vocals"
-					selectList={vocalsOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/>
-				<Field
-					name="moods"
-					component={this.renderMultipleSelectInput}
-					label="Moods"
-					selectList={moodsOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/>
-				<Field
-					name="tempo"
-					component={this.renderMultipleSelectInput}
-					label="Tempo"
-					selectList={tempoOptions}
-					format={(value) => (Array.isArray(value) ? value : [])}
-				/>
+				<Grid item xs={1} sm={1} md={1}>
+					<Field
+						name="media"
+						component={this.renderMultipleSelectInput}
+						label="Media"
+						selectList={mediaOptions}
+						format={(value) => (Array.isArray(value) ? value : [])}
+					/>
+				</Grid>
+				<Grid item xs={1} sm={1} md={1}>
+					<Field
+						name="genre"
+						component={this.renderMultipleSelectInput}
+						label="Genre"
+						selectList={genresOptions}
+						format={(value) => (Array.isArray(value) ? value : [])}
+					/>
+				</Grid>
+				<Grid item xs={1} sm={1} md={1}>
+					<Field
+						name="vocals"
+						component={this.renderMultipleSelectInput}
+						label="Vocals"
+						selectList={vocalsOptions}
+						format={(value) => (Array.isArray(value) ? value : [])}
+					/>
+				</Grid>
+				<Grid item xs={1} sm={1} md={1}>
+					<Field
+						name="moods"
+						component={this.renderMultipleSelectInput}
+						label="Moods"
+						selectList={moodsOptions}
+						format={(value) => (Array.isArray(value) ? value : [])}
+					/>
+				</Grid>
+				<Grid item xs={1} sm={1} md={1}>
+					<Field
+						name="tempo"
+						component={this.renderMultipleSelectInput}
+						label="Tempo"
+						selectList={tempoOptions}
+						format={(value) => (Array.isArray(value) ? value : [])}
+					/>
+				</Grid>
 			</Grid>
 		);
 	}
@@ -101,6 +102,11 @@ class FilterBriefForm extends Component {
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
 		this.props.onSubmit(formValues);
+	};
+
+	onClearFilter = () => {
+		this.props.dispatch(reset("FilterBriefForm"));
+		this.props.onSubmit({});
 	};
 
 	render() {
@@ -118,7 +124,7 @@ class FilterBriefForm extends Component {
 						>
 							Filter
 						</Button>
-            <Button
+						<Button
 							onClick={this.onClearFilter}
 							variant="text"
 							color="primary"

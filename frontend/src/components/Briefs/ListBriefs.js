@@ -76,7 +76,7 @@ class ListBriefs extends React.Component {
 							label="YOUR BRIEFS"
 						/>
 					</Tabs>
-					<Fab
+					{/* <Fab
 						variant="extended"
 						component={Link}
 						to="/create-brief"
@@ -86,8 +86,8 @@ class ListBriefs extends React.Component {
 					>
 						<Add sx={{ mr: 1 }} />
 						New Brief
-					</Fab>
-					{/* <Stack
+					</Fab> */}
+					<Stack
 						direction={{ xs: "column", lg: "row" }}
 						spacing={2}
 						sx={{
@@ -112,7 +112,7 @@ class ListBriefs extends React.Component {
 						) : (
 							<Box sx={{ display: "flex", flexGrow: 1 }}></Box>
 						)}
-					</Stack> */}
+					</Stack>
 					<Grid
 						container
 						spacing={{ xs: 1, md: 2 }}
