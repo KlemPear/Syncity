@@ -26,6 +26,7 @@ import { dateFormatter } from "../util/textFormatHelper";
 import { Link } from "react-router-dom";
 import { logOutUser, editUser, fetchNotifications } from "../actions";
 import { connect } from "react-redux";
+import NotificationCard from "./Notifications/NotificationCard";
 
 class ResponsiveAppBar extends React.Component {
 	constructor(props) {
@@ -267,28 +268,7 @@ class ResponsiveAppBar extends React.Component {
 												key={notif._id}
 												onClick={this.handleCloseNotificationMenu}
 											>
-												<Card sx={{ width: 300, height: 130 }} elevation={0}>
-													<CardHeader
-														// avatar={this.renderAvatar(brief.media)}
-														title={notif.title}
-														subheader={dateFormatter(notif.date)}
-														sx={{ py: 0.5 }}
-													/>
-													<CardContent sx={{ py: 0.5 }}>
-														<Typography variant="body2">
-															{notif.description}
-														</Typography>
-													</CardContent>
-													<CardActions sx={{ py: 0.5 }}>
-														<Button
-															size="small"
-															component={Link}
-															to={notif.link}
-														>
-															Check it out
-														</Button>
-													</CardActions>
-												</Card>
+												<NotificationCard notification={notif} />
 											</MenuItem>
 										))}
 									</Menu>
