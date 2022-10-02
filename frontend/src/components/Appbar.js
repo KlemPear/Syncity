@@ -241,7 +241,13 @@ class ResponsiveAppBar extends React.Component {
 										</Badge>
 									</Tooltip>
 									<Menu
-										sx={{ mt: "40px" }}
+										sx={{
+											mt: "40px",
+											height: 500,
+											overflow: "hidden",
+											overflowY: "auto",
+											py: 0.5,
+										}}
 										id="menu-appbar"
 										anchorEl={this.state.anchorElNotification}
 										anchorOrigin={{
@@ -261,7 +267,7 @@ class ResponsiveAppBar extends React.Component {
 												key={notif._id}
 												onClick={this.handleCloseNotificationMenu}
 											>
-												<Card sx={{ width: 300, height: 120 }}>
+												<Card sx={{ width: 300, height: 130 }} elevation={0}>
 													<CardHeader
 														// avatar={this.renderAvatar(brief.media)}
 														title={notif.title}
