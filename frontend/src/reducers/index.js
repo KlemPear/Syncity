@@ -5,7 +5,7 @@ import briefsReducer from "./briefsReducer";
 import applicationsReducer from "./applicationsReducer";
 import tracksReducer from "./tracksReducer";
 import trackPlayerReducer from "./trackPlayerReducer";
-
+import notificationsReducer from "./notificationsReducer";
 
 export default combineReducers({
 	auth: authReducer,
@@ -14,4 +14,5 @@ export default combineReducers({
 	applications: applicationsReducer,
 	tracks: tracksReducer,
 	trackPlayer: trackPlayerReducer,
+	notifications: notificationsReducer,
 });

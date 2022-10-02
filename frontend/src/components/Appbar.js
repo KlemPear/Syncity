@@ -12,10 +12,19 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 // import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Stack, Switch } from "@mui/material";
-
+import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
+import {
+	Stack,
+	Switch,
+	Badge,
+	Card,
+	CardActions,
+	CardContent,
+	CardHeader,
+} from "@mui/material";
+import { dateFormatter } from "../util/textFormatHelper";
 import { Link } from "react-router-dom";
-import { logOutUser, editUser } from "../actions";
+import { logOutUser, editUser, fetchNotifications } from "../actions";
 import { connect } from "react-redux";
 
 class ResponsiveAppBar extends React.Component {
@@ -24,7 +33,12 @@ class ResponsiveAppBar extends React.Component {
 		this.state = {
 			anchorElNav: null,
 			anchorElUser: null,
+			anchorElNotification: null,
 		};
+	}
+
+	componentDidMount() {
+		this.props.fetchNotifications({ user: this.props.user._id, read: false });
 	}
 
 	handleDarkModeCheckChange = (event) => {
@@ -78,13 +92,18 @@ class ResponsiveAppBar extends React.Component {
 	handleOpenUserMenu = (event) => {
 		this.setState({ anchorElUser: event.currentTarget });
 	};
+	handleOpenNotificationMenu = (event) => {
+		this.setState({ anchorElNotification: event.currentTarget });
+	};
 
 	handleCloseNavMenu = () => {
 		this.setState({ anchorElNav: null });
 	};
-
 	handleCloseUserMenu = () => {
 		this.setState({ anchorElUser: null });
+	};
+	handleCloseNotificationMenu = () => {
+		this.setState({ anchorElNotification: null });
 	};
 
 	render() {
@@ -203,7 +222,71 @@ class ResponsiveAppBar extends React.Component {
 						</Box>
 
 						{settings != null ? (
-							<Box sx={{ flexGrow: 0 }}>
+							<Box sx={{ flexGrow: 0, display: "flex", flexDirection: "row" }}>
+								<Box sx={{ mr: 5 }}>
+									<Tooltip title="Notifications">
+										<Badge
+											color="secondary"
+											invisible={Boolean(!this.props.notifications)}
+											badgeContent={this.props.notifications?.length}
+											max={99}
+										>
+											<IconButton
+												color="primary"
+												sx={{ p: 0 }}
+												onClick={this.handleOpenNotificationMenu}
+											>
+												<CircleNotificationsIcon fontSize="large" />
+											</IconButton>
+										</Badge>
+									</Tooltip>
+									<Menu
+										sx={{ mt: "40px" }}
+										id="menu-appbar"
+										anchorEl={this.state.anchorElNotification}
+										anchorOrigin={{
+											vertical: "top",
+											horizontal: "right",
+										}}
+										keepMounted
+										transformOrigin={{
+											vertical: "top",
+											horizontal: "right",
+										}}
+										open={Boolean(this.state.anchorElNotification)}
+										onClose={this.handleCloseNotificationMenu}
+									>
+										{this.props.notifications?.map((notif) => (
+											<MenuItem
+												key={notif._id}
+												onClick={this.handleCloseNotificationMenu}
+											>
+												<Card sx={{ width: 300, height: 120 }}>
+													<CardHeader
+														// avatar={this.renderAvatar(brief.media)}
+														title={notif.title}
+														subheader={dateFormatter(notif.date)}
+														sx={{ py: 0.5 }}
+													/>
+													<CardContent sx={{ py: 0.5 }}>
+														<Typography variant="body2">
+															{notif.description}
+														</Typography>
+													</CardContent>
+													<CardActions sx={{ py: 0.5 }}>
+														<Button
+															size="small"
+															component={Link}
+															to={notif.link}
+														>
+															Check it out
+														</Button>
+													</CardActions>
+												</Card>
+											</MenuItem>
+										))}
+									</Menu>
+								</Box>
 								<Tooltip title="Open settings">
 									<Button
 										onClick={this.handleOpenUserMenu}
@@ -282,9 +365,12 @@ const mapStateToProps = (state) => {
 		isSignedIn: state.auth.isSignedIn,
 		isUserPending: state.auth.user?.status === "Pending",
 		user: state.auth.user,
+		notifications: Object.values(state.notifications),
 	};
 };
 
-export default connect(mapStateToProps, { logOutUser, editUser })(
-	ResponsiveAppBar
-);
+export default connect(mapStateToProps, {
+	logOutUser,
+	editUser,
+	fetchNotifications,
+})(ResponsiveAppBar);

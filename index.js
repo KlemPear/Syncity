@@ -34,6 +34,7 @@ const briefRouter = require("./routes/brief");
 const applicationRouter = require("./routes/application");
 const paymentsRouter = require("./routes/payments");
 const trackRouter = require("./routes/track");
+const notificationRouter = require("./routes/notification");
 const { isLoggedIn } = require("./utils/middlewares");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
@@ -165,6 +166,7 @@ app.use("/briefs", isLoggedIn, briefRouter);
 app.use("/applications", isLoggedIn, applicationRouter);
 app.use("/payments", paymentsRouter);
 app.use("/tracks", isLoggedIn, trackRouter);
+app.use("/notifications", isLoggedIn, notificationRouter);
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production

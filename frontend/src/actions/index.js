@@ -4,12 +4,14 @@ import {
 	applicationsTypes,
 	tracksTypes,
 	trackPlayerTypes,
+	notificationsTypes,
 } from "./types";
 import history from "../util/history";
 import users from "../apis/users";
 import briefs from "../apis/briefs";
 import applications from "../apis/applications";
 import tracks from "../apis/tracks";
+import notifications from "../apis/notifications";
 
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
@@ -264,7 +266,52 @@ export const playTrack = (track) => async (dispatch, getState) => {
 };
 
 export const closeTrack = () => async (dispatch, getState) => {
-	dispatch({ type: trackPlayerTypes.CLOSE_TRACK});
+	dispatch({ type: trackPlayerTypes.CLOSE_TRACK });
+};
+
+//#endregion
+
+//#region Notifications
+
+export const fetchNotifications = (query) => async (dispatch, getState) => {
+	const response = await notifications.get(`/`, { params: query });
+	dispatch({
+		type: notificationsTypes.FETCH_NOTIFICATIONS,
+		payload: response.data,
+	});
+};
+
+export const createNotification = (body) => async (dispatch, getState) => {
+	const response = await notifications.post(`/`, body);
+	dispatch({
+		type: notificationsTypes.CREATE_NOTIFICATION,
+		payload: response.data,
+	});
+};
+
+export const fetchNotification =
+	(NotificationId) => async (dispatch, getState) => {
+		const response = await notifications.get(`/${NotificationId}`);
+		dispatch({
+			type: notificationsTypes.FETCH_NOTIFICATION,
+			payload: response.data,
+		});
+	};
+
+export const editNotification = (body) => async (dispatch, getState) => {
+	const response = await notifications.put(`/${body._id}`, body);
+	dispatch({
+		type: notificationsTypes.EDIT_NOTIFICATION,
+		payload: response.data,
+	});
+};
+
+export const deleteNotification = (id) => async (dispatch, getState) => {
+	const response = await notifications.delete(`/${id}`);
+	dispatch({
+		type: notificationsTypes.DELETE_NOTIFICATION,
+		payload: response.data,
+	});
 };
 
 //#endregion
