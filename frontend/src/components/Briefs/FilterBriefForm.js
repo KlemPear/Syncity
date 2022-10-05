@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm, reset } from "redux-form";
-
 //mui
 import { Button, Stack, Grid } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
@@ -60,7 +59,7 @@ class FilterBriefForm extends Component {
 				</Grid>
 				<Grid item xs={1} sm={1} md={1}>
 					<Field
-						name="genre"
+						name="genres"
 						component={this.renderMultipleSelectInput}
 						label="Genre"
 						selectList={genresOptions}
@@ -160,5 +159,8 @@ export default connect(mapStateToProps)(
 		form: "FilterBriefForm",
 		enableReinitialize: true,
 		validate: validate,
+		onChange: (values, dispatch, props, previousValues) => {
+			props.submit();
+		},
 	})(FilterBriefForm)
 );
