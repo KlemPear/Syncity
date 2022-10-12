@@ -13,11 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 // import LibraryMusicIcon from "@mui/icons-material/LibraryMusic";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
-import {
-	Stack,
-	Switch,
-	Badge,
-} from "@mui/material";
+import { Stack, Switch, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
 	logOutUser,
@@ -39,7 +35,9 @@ class ResponsiveAppBar extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchNotifications({ user: this.props.user._id });
+		if (this.props.user) {
+			this.props.fetchNotifications({ user: this.props.user._id });
+		}
 	}
 
 	handleDarkModeCheckChange = (event) => {
