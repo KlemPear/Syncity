@@ -132,9 +132,6 @@ class BriefCard extends React.Component {
 				<List key={ref.link}>
 					<ListItem>
 						<Stack>
-							{/* <MuiLink underline="hover" href={ref.link}>
-								{ref.title ? ref.title : "Link to reference song"}
-							</MuiLink> */}
 							<MuiLink
 								underline="hover"
 								onClick={() => this.onPlayTrack({ link: ref.link })}

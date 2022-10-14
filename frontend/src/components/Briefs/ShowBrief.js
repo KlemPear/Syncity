@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchBrief } from "../../actions";
+import { fetchBrief, playTrack } from "../../actions";
 import history from "../../util/history";
 import Loader from "../Loader";
 import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
@@ -100,6 +100,9 @@ class ShowBrief extends React.Component {
 	componentDidMount = () => {
 		this.props.fetchBrief(history.location.pathname.split("/")[2]);
 	};
+	onPlayTrack = (track) => {
+		this.props.playTrack(track);
+	};
 
 	renderReference = (ref) => {
 		return (
@@ -107,8 +110,11 @@ class ShowBrief extends React.Component {
 				<List key={ref.link}>
 					<ListItem>
 						<Stack>
-							<MuiLink underline="hover" href={ref.link}>
-								{ref.title ? ref.title : "Link to reference song"}
+							<MuiLink
+								underline="hover"
+								onClick={() => this.onPlayTrack({ link: ref.link })}
+							>
+								{ref.title}
 							</MuiLink>
 							{ref.comment ? (
 								<List>
@@ -285,4 +291,4 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchBrief })(ShowBrief);
+export default connect(mapStateToProps, { fetchBrief, playTrack })(ShowBrief);
