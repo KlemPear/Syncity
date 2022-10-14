@@ -3,10 +3,7 @@ import { connect } from "react-redux";
 import { fetchBrief } from "../../actions";
 import history from "../../util/history";
 import Loader from "../Loader";
-import {
-	moneyFormatter,
-	getNumberOfDays,
-} from "../../util/textFormatHelper";
+import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
 import BriefApplication from "./BriefApplication";
 
 //mui
@@ -281,7 +278,7 @@ class ShowBrief extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		userId: state.auth.user._id,
+		userId: state.auth?.user?._id,
 		brief: state.briefs
 			? state.briefs[history.location.pathname.split("/")[2]]
 			: null,

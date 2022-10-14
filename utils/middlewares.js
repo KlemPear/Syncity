@@ -18,6 +18,13 @@ module.exports.isLoggedIn = (req, res, next) => {
 	next();
 };
 
+module.exports.hasVerificationHeader = (req, res, next) => {
+	if (req.headers.originverification !== "800d0df5-7b35-45c2-b862-0493bd703c24") {
+		return res.status(401).json("Request origin not verified.");
+	}
+	next();
+};
+
 module.exports.isBriefAuthor = async (req, res, next) => {
 	const { id } = req.params;
 	const brief = await Brief.findById(id);

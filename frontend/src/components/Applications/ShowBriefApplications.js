@@ -57,13 +57,15 @@ class ShowBriefApplications extends React.Component {
 							}}
 						>
 							<List sx={{ m: 3 }}>
-								{this.props.applications.map((application) => (
-									<ApplicationCard
-										key={application._id}
-										application={application}
-										brief={this.props.brief}
-									/>
-								))}
+								{this.props.applications
+									.sort((a, b) => -(a.liked - b.liked))
+									.map((application) => (
+										<ApplicationCard
+											key={application._id}
+											application={application}
+											brief={this.props.brief}
+										/>
+									))}
 							</List>
 						</Box>
 					</Stack>
@@ -75,7 +77,7 @@ class ShowBriefApplications extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		userId: state.auth.user._id,
+		userId: state.auth?.user?._id,
 		applications: Object.values(state.applications),
 		brief: state.briefs
 			? state.briefs[history.location.pathname.split("/")[2]]

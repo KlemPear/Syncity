@@ -84,6 +84,24 @@ class BriefApplication extends React.Component {
 	};
 
 	render() {
+		if (!this.props.user) {
+			return (
+				<Stack spacing={2} sx={{ m: 2 }}>
+					<Typography
+						variant="h4"
+						align="center"
+					>
+						Create an account or login to submit your own application.
+					</Typography>
+					<Button component={Link} to="/register">
+						Sign Up
+					</Button>
+					<Button component={Link} to="/login">
+						Log In
+					</Button>
+				</Stack>
+			);
+		}
 		return (
 			<Stack spacing={2} sx={{ m: 2 }}>
 				<Typography variant="h3">Submit an application</Typography>
@@ -147,8 +165,8 @@ class BriefApplication extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		userId: state.auth.user._id,
-		user: state.auth.user,
+		userId: state.auth?.user?._id,
+		user: state.auth?.user,
 	};
 };
 

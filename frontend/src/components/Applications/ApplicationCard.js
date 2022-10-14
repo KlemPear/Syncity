@@ -28,6 +28,9 @@ class ApplicationCard extends React.Component {
 	}
 
 	onToggleLike = () => {
+		if (!this.props.userId) {
+			return null;
+		}
 		this.setState({ liked: !this.state.liked });
 		const updatedApp = this.props.application;
 		updatedApp.liked = !this.props.application.liked;
@@ -140,7 +143,7 @@ class ApplicationCard extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		userId: state.auth.user._id,
+		userId: state.auth?.user?._id,
 	};
 };
 

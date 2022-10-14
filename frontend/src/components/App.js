@@ -117,7 +117,7 @@ class App extends React.Component {
 						<Route
 							path="/show-brief/:id"
 							exact
-							component={this.props.isSignedIn ? ShowBrief : Login}
+							component={ShowBrief}
 						/>
 						<Route
 							path="/brief-creation-success"
@@ -127,7 +127,8 @@ class App extends React.Component {
 						<Route
 							path="/show-brief/:id/applications"
 							exact
-							component={this.props.isSignedIn ? ShowBriefApplications : Login}
+							component={ShowBriefApplications}
+							//http://localhost:3000/show-brief/632149c33408d5d827ce286a/applications
 						/>
 						<Route
 							path="/list-applications"
