@@ -26,7 +26,7 @@ class Footer extends Component {
 					>
 						<Grid item xs={2} sm={2}>
 							<Box>
-								<Typography component={Link} to="list-briefs">
+								<Typography component={Link} to="/list-briefs">
 									<img
 										style={{ width: 50, height: 50 }}
 										src={

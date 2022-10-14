@@ -122,7 +122,7 @@ class ResponsiveAppBar extends React.Component {
 							variant="h6"
 							noWrap
 							component={Link}
-							to="list-briefs"
+							to="/list-briefs"
 							sx={{
 								mr: 2,
 								display: { xs: "none", md: "flex" },
