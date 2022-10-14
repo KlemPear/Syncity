@@ -128,7 +128,6 @@ class App extends React.Component {
 							path="/show-brief/:id/applications"
 							exact
 							component={ShowBriefApplications}
-							//http://localhost:3000/show-brief/632149c33408d5d827ce286a/applications
 						/>
 						<Route
 							path="/list-applications"

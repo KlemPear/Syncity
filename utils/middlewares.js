@@ -19,8 +19,21 @@ module.exports.isLoggedIn = (req, res, next) => {
 };
 
 module.exports.hasVerificationHeader = (req, res, next) => {
-	if (req.headers.originverification !== "800d0df5-7b35-45c2-b862-0493bd703c24") {
+	if (
+		req.headers.originverification !== "800d0df5-7b35-45c2-b862-0493bd703c24"
+	) {
 		return res.status(401).json("Request origin not verified.");
+	}
+	next();
+};
+
+module.exports.isVerifiedBriefer = async (req, res, next) => {
+	const { author } = req.body;
+	const user = await User.findById(author);
+	if (user.briefSubscriptionPlan !== "Verified") {
+		res
+			.status(401)
+			.json("You need to be a verified briefer to create a brief.");
 	}
 	next();
 };

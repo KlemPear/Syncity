@@ -17,13 +17,6 @@ class BriefSubmitted extends Component {
 					<Typography variant="h4">
 						Your brief was submitted successfully!
 					</Typography>
-					<Typography>
-						You have{" "}
-						{this.props.user.briefTokens === -1
-							? "unlimited"
-							: this.props.user.briefTokens}{" "}
-						briefs left to create during this billing period.
-					</Typography>
 					<Button
 						component={Link}
 						variant="contained"

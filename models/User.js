@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
 			},
 		},
 		bio: String,
-		tokens: { type: Number, default: 10 },
+		// tokens: { type: Number, default: 10 },
 		connections: [
 			{
 				type: Schema.Types.ObjectId,
@@ -31,10 +31,14 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 		},
 		stripeCustomerId: String,
-		briefSubscriptionPlan: String,
-		pitchSubscriptionPlan: String,
-		briefTokens: { type: Number, default: 0 },
-		pitchTokens: { type: Number, default: 0 },
+		briefSubscriptionPlan: {
+			type: String,
+			enum: ["None", "Verified"],
+			default: "None",
+		},
+		pitchSubscriptionPlan: { type: String, default: "freeTrial" },
+		briefTokens: { type: Number, default: -1 },
+		pitchTokens: { type: Number, default: 5 },
 		prefersDarkMode: { type: Boolean, default: false },
 	},
 	{

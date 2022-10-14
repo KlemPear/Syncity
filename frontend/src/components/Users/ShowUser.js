@@ -28,9 +28,10 @@ const PlanFormatterDict = {
 	basicBriefPlan: "Basic Brief Plan",
 	proBriefPlan: "Pro Brief Plan",
 	businessBriefPlan: "Business Brief Plan",
-	basicPitchPlan: "Basic Pitch Plan",
-	proPitchPlan: "Pro Pitch Plan",
-	businessPitchPlan: "Business Pitch Plan",
+	basicPitchPlan: "Basic Application Plan",
+	proPitchPlan: "Pro Application Plan",
+	businessPitchPlan: "Business Application Plan",
+	freeTrial: "Free Trial",
 };
 
 class ShowUser extends React.Component {
@@ -139,24 +140,30 @@ class ShowUser extends React.Component {
 							<li>
 								<Typography variant="h6">
 									Brief Plan:{" "}
-									{this.props.currentUser.briefSubscriptionPlan
-										? PlanFormatterDict[
-												this.props.currentUser.briefSubscriptionPlan
-										  ]
-										: "No Plan."}
+									{this.props.currentUser.briefSubscriptionPlan === "Verified"
+										? "Verified"
+										: "Not Verified."}
 								</Typography>
 								<ul>
 									<li>
-										{this.props.currentUser.briefTokens === -1
-											? "unlimited"
-											: this.props.currentUser.briefTokens}{" "}
-										briefs remaining for this billing period.
+										{this.props.currentUser.briefSubscriptionPlan ===
+										"Verified" ? (
+											"Your account was verified, you can post unlimited briefs."
+										) : (
+											<Button
+												component="a"
+												href="https://tally.so/r/wob4vP"
+												target="_blank"
+											>
+												Become a verified Briefer.
+											</Button>
+										)}
 									</li>
 								</ul>
 							</li>
 							<li>
 								<Typography variant="h6">
-									Pitch Plan:{" "}
+									Application Plan:{" "}
 									{this.props.currentUser.pitchSubscriptionPlan
 										? PlanFormatterDict[
 												this.props.currentUser.pitchSubscriptionPlan
@@ -168,13 +175,21 @@ class ShowUser extends React.Component {
 										{this.props.currentUser.pitchTokens === -1
 											? "unlimited"
 											: this.props.currentUser.pitchTokens}{" "}
-										pitches remaining for this billing period.
+										applications remaining
+										{!this.props.currentUser.stripeCustomerId
+											? "."
+											: " for this billing period."}
 									</li>
 								</ul>
 							</li>
 						</ul>
-
-						<Box sx={{ mt: 2 }}>
+						<Box
+							sx={{
+								mt: 2,
+								display: "flex",
+								justifyContent: "center",
+							}}
+						>
 							{this.props.currentUser.stripeCustomerId ? (
 								<form
 									onSubmit={(event) =>

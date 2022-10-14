@@ -324,6 +324,19 @@ class ResponsiveAppBar extends React.Component {
 											/>
 										</Stack>
 									</MenuItem>
+									{this.props.user?.briefSubscriptionPlan !== "Verified" ? (
+										<MenuItem>
+											<Typography
+												component="a"
+												href="https://tally.so/r/wob4vP"
+												target="_blank"
+												texalign="center"
+												sx={{ textDecoration: "none", color: "inherit" }}
+											>
+												Become a verified briefer
+											</Typography>
+										</MenuItem>
+									) : null}
 									{Object.keys(settings).map((setting) => (
 										<MenuItem key={setting} onClick={this.handleCloseUserMenu}>
 											{setting === "Logout" ? (

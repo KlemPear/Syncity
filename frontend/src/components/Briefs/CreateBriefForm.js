@@ -132,20 +132,7 @@ class CreateBriefForm extends React.Component {
 	};
 
 	onSubmit = (event) => {
-		event.preventDefault();
-		if (
-			this.props.user.briefTokens !== -1 &&
-			this.props.user.briefTokens - 1 < 0 &&
-			this.props.onNotEnoughTokens !== null
-		) {
-			this.props.onNotEnoughTokens();
-		} else {
-			//do whatever we need with the form values
-			//send to a server, call an api etc...
-			if (!this.props.formErrors) {
-				this.props.onSubmit(this.props.formValues);
-			}
-		}
+		this.props.onSubmit(this.props.formValues);
 	};
 
 	renderFormFields = () => {
@@ -644,7 +631,10 @@ class CreateBriefForm extends React.Component {
 	render() {
 		return (
 			<div>
-				<form onSubmit={this.onSubmit} className="ui form error">
+				<form
+					onSubmit={this.props.handleSubmit(this.onSubmit)}
+					className="ui form error"
+				>
 					<Stack spacing={2} sx={{ m: 2 }}>
 						{this.renderFormFields()}
 						<Stack
