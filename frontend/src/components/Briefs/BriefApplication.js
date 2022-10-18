@@ -18,11 +18,16 @@ class BriefApplication extends React.Component {
 		this.state = {
 			notEnoughTokens: false,
 			addNewTrackToCatalog: false,
+			noTrackSelected: false,
 			selectedTracks: [],
 		};
 	}
 	onNotEnoughTokens = () => {
 		this.setState({ notEnoughTokens: true });
+	};
+
+	onNoTrackSelected = () => {
+		this.setState({ noTrackSelected: true });
 	};
 
 	onAddNewTrackToggle = () => {
@@ -52,13 +57,35 @@ class BriefApplication extends React.Component {
 			</React.Fragment>
 		);
 	}
-	// TODO: Modify this so that it takes an array of tracks to submit
+
+	renderNoTrackModalContent() {
+		return (
+			<Typography variant="body2">
+				You did not select any track in your application. Select up to 3 tracks
+				from your catalog, or add a new track to your catalog.
+			</Typography>
+		);
+	}
+
+	renderNoTrackModalActions() {
+		return (
+			<React.Fragment>
+				<Button onClick={() => this.onAddNewTrackToggle()}>
+					Add a new track to your catalog
+				</Button>
+			</React.Fragment>
+		);
+	}
+
 	onSubmit = () => {
 		if (
 			this.props.user.pitchTokens !== -1 &&
 			this.props.user.pitchTokens - 1 < 0
 		) {
 			this.onNotEnoughTokens();
+		}
+		if (this.state.selectedTracks.length === 0) {
+			this.onNoTrackSelected();
 		} else {
 			this.props.burnPitchToken(this.props.userId);
 			const applicationValues = {
@@ -87,10 +114,7 @@ class BriefApplication extends React.Component {
 		if (!this.props.user) {
 			return (
 				<Stack spacing={2} sx={{ m: 2 }}>
-					<Typography
-						variant="h4"
-						align="center"
-					>
+					<Typography variant="h4" align="center">
 						Create an account or login to submit your own application.
 					</Typography>
 					<Button component={Link} to="/register">
@@ -147,6 +171,15 @@ class BriefApplication extends React.Component {
 						content={this.renderModalContent()}
 						actions={this.renderModalActions()}
 						onDismiss={() => this.setState({ notEnoughTokens: false })}
+					/>
+				) : null}
+				{this.state.noTrackSelected ? (
+					<Modal
+						showModal={this.state.noTrackSelected}
+						title={"No Track Selected"}
+						content={this.renderNoTrackModalContent()}
+						actions={this.renderNoTrackModalActions()}
+						onDismiss={() => this.setState({ noTrackSelected: false })}
 					/>
 				) : null}
 				<Box>
