@@ -63,7 +63,7 @@ class CreateTrackForm extends React.Component {
 					<Field
 						name="link"
 						component={this.renderInput}
-						label="Link to media (Soundcloud, Youtube, Spotify)"
+						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
 						value={this.props.editTrack.link}
 						placeholder={this.props.editTrack.link}
 					/>
@@ -99,7 +99,7 @@ class CreateTrackForm extends React.Component {
 					<Field
 						name="link"
 						component={this.renderInput}
-						label="Link to media (Soundcloud, Youtube, Spotify)"
+						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
 					/>
 					<Field
 						name="masterContact"
@@ -188,10 +188,13 @@ const validate = (values) => {
 		values.link &&
 		!(values.link.includes("spotify") ||
 			values.link.includes("soundcloud") ||
-			values.link.includes("youtube"))
+			values.link.includes("youtube") ||
+			values.link.includes("share.bridge.audio") ||
+			values.link.includes("disco.ac") ||
+			values.link.includes("dropbox"))
 	) {
 		errors.link =
-			"Your track link must be from Souncloud, Youtube or Spotify.";
+			"Your track link must be from Souncloud, Youtube, Spotify, Bridge.audio, Disco.ac or Dropbox.";
 	}
 	// if (
 	// 	values.publisherContact &&
