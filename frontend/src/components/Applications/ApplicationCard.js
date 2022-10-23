@@ -14,7 +14,6 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  Link,
   Box,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
