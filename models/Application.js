@@ -17,6 +17,7 @@ const applicationSchema = new mongoose.Schema({
 		ref: "Brief",
 	},
 	liked: { type: Boolean, default: false },
+	likedTracks: [{ type: String }],
 });
 
 const Application = mongoose.model("Application", applicationSchema);

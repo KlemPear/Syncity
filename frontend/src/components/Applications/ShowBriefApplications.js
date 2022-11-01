@@ -62,7 +62,7 @@ class ShowBriefApplications extends React.Component {
 									.map((application) => (
 										<ApplicationCard
 											key={application._id}
-											application={application}
+											applicationId={application._id}
 											brief={this.props.brief}
 										/>
 									))}
