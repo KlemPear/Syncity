@@ -71,7 +71,7 @@ class ApplicationCard extends React.Component {
 		const updatedApp = this.props.application;
 		updatedApp.likedTracks = this.state.likedTracks;
 		this.props.likeApplication(updatedApp);
-		// Notify application author that his application was liked
+		// Notify application author that his track was liked
 		const notif = {
 			title: "Your track was liked!",
 			description: `A track from your application for ${this.props.brief.title} was liked!`,
