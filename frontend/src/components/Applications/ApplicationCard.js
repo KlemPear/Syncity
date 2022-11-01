@@ -4,13 +4,10 @@ import { likeApplication } from "../../actions/index";
 import Loader from "../Loader";
 import { playTrack, createNotification } from "../../actions";
 import TrackLink from "../Catalog/TrackLink";
-import _ from "lodash";
 //mui
 import {
 	List,
 	ListItem,
-	ListItemIcon,
-	Collapse,
 	IconButton,
 	ListItemAvatar,
 	Avatar,
@@ -20,7 +17,6 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import EmailIcon from "@mui/icons-material/Email";
 import { red } from "@mui/material/colors";
 
 class ApplicationCard extends React.Component {
@@ -32,32 +28,12 @@ class ApplicationCard extends React.Component {
 		};
 	}
 
-	onToggleLike = () => {
-		if (!this.props.userId) {
-			return null;
-		}
-		this.setState({ liked: !this.state.liked });
-		const updatedApp = this.props.application;
-		updatedApp.liked = !this.props.application.liked;
-		this.props.likeApplication(updatedApp);
-		// Notify application author that his application was liked
-		const notif = {
-			title: "Your application was liked!",
-			description: `You've been pre-selected for ${this.props.brief.title}`,
-			link: "/list-applications",
-			date: Date.now(),
-			user: updatedApp.author._id,
-		};
-		this.props.createNotification(notif);
-	};
-
 	onToggleLikeTrack = (trackId) => {
 		if (!this.props.userId) {
 			return null;
 		}
 		const currentLikedTracks = this.state.likedTracks;
 		const index = currentLikedTracks.indexOf(trackId);
-		console.log(index);
 		if (index > -1) {
 			currentLikedTracks.splice(index, 1);
 			this.setState({
@@ -96,6 +72,11 @@ class ApplicationCard extends React.Component {
 									<ListItem
 										secondaryAction={
 											<Box>
+												{this.props.likedTracks.includes(track._id) ? (
+													<Button variant="contained">
+														License this track!
+													</Button>
+												) : null}
 												<IconButton
 													edge="end"
 													onClick={() => this.onToggleLikeTrack(track._id)}
@@ -111,12 +92,12 @@ class ApplicationCard extends React.Component {
 									>
 										<TrackLink track={track} />
 									</ListItem>
-									<Collapse
+									{/* <Collapse
 										in={this.props.likedTracks.includes(track._id)}
 										timeout="auto"
 										unmountOnExit
 									>
-										{/* <List component="div" disablePadding>
+										<List component="div" disablePadding>
 											<ListItem sx={{ pl: 4 }} disablePadding>
 												<ListItemIcon>
 													<EmailIcon />
@@ -133,9 +114,8 @@ class ApplicationCard extends React.Component {
 													primary={`Master: ${track.publisherContact}`}
 												/>
 											</ListItem>
-										</List> */}
-										<Button variant="contained">License this track!</Button>
-									</Collapse>
+										</List>
+									</Collapse> */}
 								</Box>
 						  ))
 						: null}

@@ -58,7 +58,9 @@ class ShowBriefApplications extends React.Component {
 						>
 							<List sx={{ m: 3 }}>
 								{this.props.applications
-									.sort((a, b) => -(a.liked - b.liked))
+									.sort(
+										(a, b) => -(a.likedTracks?.length - b.likedTracks?.length)
+									)
 									.map((application) => (
 										<ApplicationCard
 											key={application._id}

@@ -102,7 +102,7 @@ class BriefApplication extends React.Component {
 				link: `/show-brief/${this.props.brief._id}/applications`,
 				user: this.props.brief.author,
 			};
-			this.createNotification(notif);
+			this.props.createNotification(notif);
 		}
 	};
 
