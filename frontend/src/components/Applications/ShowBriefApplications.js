@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { fetchApplications, fetchBrief } from "../../actions";
 import history from "../../util/history";
 import ApplicationCard from "./ApplicationCard";
-
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { grey } from "@mui/material/colors";
 //mui
 import { Stack, Box, Typography, List } from "@mui/material";
 
@@ -44,8 +45,13 @@ class ShowBriefApplications extends React.Component {
 					<Stack spacing={2}>
 						<Typography variant="h3">{`${this.props.brief.title}`}</Typography>
 						<Typography variant="p">
-							If you like an application you will be able to see its contact
-							information, and the applicant will be notified.
+							If you like a track, you can pre-select it by clicking on{" "}
+							<FavoriteIcon sx={{ color: grey[600] }} />.
+						</Typography>
+						<Typography variant="p">
+							Once tracks are pre-selected, you can start the licensing process
+							directly on NOST! You will be taken to a Stripe payment page, and
+							we will start taking care of the contracts.
 						</Typography>
 						<Box
 							sx={{
