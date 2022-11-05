@@ -35,7 +35,7 @@ class ListLicensingJobs extends Component {
 						<Typography variant="h3">{`Licensing Jobs`}</Typography>
 						<Typography variant="p">
 							Here is the list of pending licensing jobs. Take actions, and
-							click on "Mark As Done" when everything is finished.
+							click on "Licensing Job Done" when everything is finished.
 						</Typography>
 						<Box
 							sx={{
@@ -90,6 +90,7 @@ function mapStateToProps(state) {
 						firstName: "Jean",
 						lastName: "Gabin",
 						email: "jean.gabin@gmail.com",
+						pitchSubscriptionPlan: "freePlan",
 					},
 				},
 				done: false,
@@ -117,6 +118,7 @@ function mapStateToProps(state) {
 						firstName: "Jean",
 						lastName: "Gabin",
 						email: "jean.gabin@gmail.com",
+						pitchSubscriptionPlan: "freePlan",
 					},
 				},
 				done: true,

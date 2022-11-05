@@ -76,7 +76,10 @@ class BuyTokens extends React.Component {
 						justifyContent: "space-between",
 					}}
 				>
-					<CardHeader title={"Become a verified briefer"} subheader="It is free!" />
+					<CardHeader
+						title={"Become a verified briefer"}
+						subheader="It is free!"
+					/>
 					<CardContent>
 						<Typography variant="body2">
 							To help maintain our high standards trust and integrity on the
@@ -132,28 +135,28 @@ class BuyTokens extends React.Component {
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"5 applications per month."
+					"5 applications per month. 30% Commision on brief budget."
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
 					"15.00/month",
-					"Basic Applications Plan",
+					"Basic Application Plan",
 					this.props.user,
-					"25 applications per month."
+					"25 applications per month. 20% Commision on brief budget."
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
 					"29.00/month",
-					"Pro Applications Plan",
+					"Pro Application Plan",
 					this.props.user,
-					"50 applications per month."
+					"50 applications per month. 15% Commission on brief budget."
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
 					"49.00/month",
-					"Business Applications Plan",
+					"Business Application Plan",
 					this.props.user,
-					"Unlimited applications."
+					"Unlimited applications. 10% Commission on brief budget."
 				)}
 			</Grid>
 		);

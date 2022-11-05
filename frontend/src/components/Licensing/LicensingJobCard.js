@@ -15,6 +15,8 @@ import {
 	Button,
 	Typography,
 	Stack,
+	Checkbox,
+	FormControlLabel,
 } from "@mui/material";
 import MuiLink from "@mui/material/Link";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -22,6 +24,14 @@ import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 function mapStateToProps(state) {
 	return {};
 }
+
+const pitchPlanToCommisionDict = {
+	freeTrial: 30,
+	freePlan: 30,
+	basicPitchPlan: 20,
+	proPitchPlan: 15,
+	businessPitchPlan: 10,
+};
 
 class LicensingJobCard extends Component {
 	renderBriefInfo = (brief) => {
@@ -41,10 +51,14 @@ class LicensingJobCard extends Component {
 					<Typography variant="body2">{`Submitted by ${brief.author.firstName} ${brief.author.lastName} - ${brief.author.email}`}</Typography>
 				</ListItem>
 				<ListItem>
-					<Typography variant="body2">{`Budget: ${moneyFormatter.format(brief.budget)}`}</Typography>
+					<Typography variant="body2">{`Budget: ${moneyFormatter.format(
+						brief.budget
+					)}`}</Typography>
 				</ListItem>
 				<ListItem>
-					<Typography variant="body2">{`DueDate: ${dateFormatter(brief.dueDate)}`}</Typography>
+					<Typography variant="body2">{`DueDate: ${dateFormatter(
+						brief.dueDate
+					)}`}</Typography>
 				</ListItem>
 			</List>
 		);
@@ -57,7 +71,13 @@ class LicensingJobCard extends Component {
 					<TrackLink track={track} />
 				</ListItem>
 				<ListItem>
-					<Typography variant="body2">{`Submitted by ${track.author.firstName} ${track.author.lastName} - ${track.author.email}`}</Typography>
+					<Typography variant="body2">{`Submitted by ${
+						track.author.firstName
+					} ${track.author.lastName} - ${track.author.email} - ${
+						track.author.pitchSubscriptionPlan
+					} - Commision: ${
+						pitchPlanToCommisionDict[track.author.pitchSubscriptionPlan]
+					}%`}</Typography>
 				</ListItem>
 				<ListItem>
 					<Typography variant="body2">{`Master Contact: ${track.masterContact}`}</Typography>
@@ -69,6 +89,10 @@ class LicensingJobCard extends Component {
 		);
 	};
 
+	handleJobDoneChange = (event) => {
+		console.log(`${this.props.licensingJob._id}: `, event.target.checked);
+	};
+
 	render() {
 		const job = this.props.licensingJob;
 		return (
@@ -77,15 +101,16 @@ class LicensingJobCard extends Component {
 					sx={{ border: 1, borderRadius: "16px", m: 1 }}
 					secondaryAction={
 						<>
-							{job.done ? (
-								<Button variant="contained" color="primary" edge="end">
-									Done
-								</Button>
-							) : (
-								<Button variant="contained" color="secondary" edge="end">
-									Mark As Done
-								</Button>
-							)}
+							<FormControlLabel
+								labelPlacement="start"
+								control={
+									<Checkbox
+										defaultChecked={job.done}
+										onChange={this.handleJobDoneChange}
+									/>
+								}
+								label="Licensing Job Done"
+							/>
 						</>
 					}
 				>
