@@ -3,16 +3,14 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import TrackLink from "../Catalog/TrackLink";
 import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
+import { editLicensingJob } from "../../actions";
 //mui
 import {
 	List,
 	ListItem,
-	IconButton,
 	ListItemAvatar,
 	Avatar,
-	ListItemText,
 	Box,
-	Button,
 	Typography,
 	Stack,
 	Checkbox,
@@ -44,7 +42,7 @@ class LicensingJobCard extends Component {
 						component={Link}
 						to={`show-brief/${brief._id}`}
 					>
-						{brief.title}
+						Brief: {brief.title}
 					</MuiLink>
 				</ListItem>
 				<ListItem>
@@ -68,6 +66,9 @@ class LicensingJobCard extends Component {
 		return (
 			<List>
 				<ListItem>
+					<Typography variant="h6" sx={{ mr: 1 }}>
+						Track:
+					</Typography>
 					<TrackLink track={track} />
 				</ListItem>
 				<ListItem>
@@ -90,7 +91,9 @@ class LicensingJobCard extends Component {
 	};
 
 	handleJobDoneChange = (event) => {
-		console.log(`${this.props.licensingJob._id}: `, event.target.checked);
+		const updatedLicensingJob = this.props.licensingJob;
+		updatedLicensingJob.done = event.target.checked;
+		this.props.editLicensingJob(updatedLicensingJob);
 	};
 
 	render() {
@@ -105,8 +108,9 @@ class LicensingJobCard extends Component {
 								labelPlacement="start"
 								control={
 									<Checkbox
-										defaultChecked={job.done}
+										checked={job.done}
 										onChange={this.handleJobDoneChange}
+										inputProps={{ "aria-label": "controlled" }}
 									/>
 								}
 								label="Licensing Job Done"
@@ -129,4 +133,4 @@ class LicensingJobCard extends Component {
 	}
 }
 
-export default connect(mapStateToProps)(LicensingJobCard);
+export default connect(mapStateToProps, { editLicensingJob })(LicensingJobCard);

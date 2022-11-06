@@ -97,7 +97,7 @@ class BriefApplication extends React.Component {
 				a commission of ${
 					pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan]
 				}% on this brief budget. `}
-				{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] == 10
+				{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] === 10
 					? "You are on the Business Application Plan, you are getting the best commission rate possible!"
 					: `Upgrade your account before
 				submitting your selection to change your commission rate.`}

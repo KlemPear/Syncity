@@ -1,18 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchApplications, fetchBrief } from "../../actions";
+import {
+	fetchApplications,
+	fetchBrief,
+	createLicensingJob,
+} from "../../actions";
 import history from "../../util/history";
 import ApplicationCard from "./ApplicationCard";
+import Modal from "../Modal";
+
+//mui
+import { Stack, Box, Typography, List, Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { grey } from "@mui/material/colors";
-//mui
-import { Stack, Box, Typography, List } from "@mui/material";
 
 class ShowBriefApplications extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { fetchApplicationsOnce: false };
+		this.state = {
+			fetchApplicationsOnce: false,
+			validateOnSubmit: false,
+			selectedTrack: null,
+		};
 	}
+
+	onValidateOnSubmit = (track) => {
+		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
+		this.setState({ selectedTrack: track });
+	};
+
 	componentDidMount() {
 		this.props.fetchBrief(history.location.pathname.split("/")[2]);
 		if (this.props.brief) {
@@ -25,6 +41,46 @@ class ShowBriefApplications extends React.Component {
 			this.props.fetchApplications({ brief: this.props.brief._id });
 			this.setState({ fetchApplicationsOnce: true });
 		}
+	}
+
+	renderOnValidateSubmitContent() {
+		return (
+			<>
+				<Typography variant="body2">
+					{`You will be taken to a Stripe payment page to deposit the brief budget amount. Then
+				we will contact you directly at ${this.props.user.email} within 3 business days.`}
+				</Typography>
+				<Typography variant="body2">
+					{`If we cannot get both parties signatures on the contract within 10 days, we will refund your deposit. `}
+				</Typography>
+			</>
+		);
+	}
+
+	renderOnValidateSubmitActions() {
+		return (
+			<React.Fragment>
+				<Button onClick={() => this.setState({ validateOnSubmit: false })}>
+					Cancel
+				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={() => this.createLicensingJob()}
+				>
+					Get me this track!
+				</Button>
+			</React.Fragment>
+		);
+	}
+
+	createLicensingJob() {
+		const licensingJob = {
+			brief: this.props.brief,
+			track: this.state.selectedTrack,
+		};
+		this.props.createLicensingJob(licensingJob);
+		this.setState({ validateOnSubmit: false });
 	}
 
 	render() {
@@ -72,11 +128,21 @@ class ShowBriefApplications extends React.Component {
 											key={application._id}
 											applicationId={application._id}
 											brief={this.props.brief}
+											onValidateOnSubmit={this.onValidateOnSubmit}
 										/>
 									))}
 							</List>
 						</Box>
 					</Stack>
+					{this.state.validateOnSubmit ? (
+						<Modal
+							showModal={this.state.validateOnSubmit}
+							title={`Do you want to license the track "${this.state.selectedTrack.title} - ${this.state.selectedTrack.artist}?"`}
+							content={this.renderOnValidateSubmitContent()}
+							actions={this.renderOnValidateSubmitActions()}
+							onDismiss={() => this.setState({ validateOnSubmit: false })}
+						/>
+					) : null}
 				</>
 			);
 		}
@@ -86,6 +152,7 @@ class ShowBriefApplications extends React.Component {
 const mapStateToProps = (state) => {
 	return {
 		userId: state.auth?.user?._id,
+		user: state.auth?.user,
 		applications: Object.values(state.applications),
 		brief: state.briefs
 			? state.briefs[history.location.pathname.split("/")[2]]
@@ -93,6 +160,8 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchApplications, fetchBrief })(
-	ShowBriefApplications
-);
+export default connect(mapStateToProps, {
+	fetchApplications,
+	fetchBrief,
+	createLicensingJob,
+})(ShowBriefApplications);

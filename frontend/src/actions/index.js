@@ -5,6 +5,7 @@ import {
 	tracksTypes,
 	trackPlayerTypes,
 	notificationsTypes,
+	licensingJobsTypes,
 } from "./types";
 import history from "../util/history";
 import users from "../apis/users";
@@ -12,6 +13,7 @@ import briefs from "../apis/briefs";
 import applications from "../apis/applications";
 import tracks from "../apis/tracks";
 import notifications from "../apis/notifications";
+import licensingJobs from "../apis/licensingJobs";
 
 //#region Users
 export const registerUser = (body) => async (dispatch, getState) => {
@@ -33,7 +35,9 @@ export const loginUser = (formValues) => async (dispatch, getState) => {
 		const response = await users.post(`/login`, formValues);
 		dispatch({ type: usersTypes.LOGIN_USER, payload: response.data });
 
-		const response2 = await notifications.get(`/`, { params: { user: response.data._id }});
+		const response2 = await notifications.get(`/`, {
+			params: { user: response.data._id },
+		});
 		dispatch({
 			type: notificationsTypes.FETCH_NOTIFICATIONS,
 			payload: response2.data,
@@ -316,6 +320,50 @@ export const deleteNotification = (id) => async (dispatch, getState) => {
 	const response = await notifications.delete(`/${id}`);
 	dispatch({
 		type: notificationsTypes.DELETE_NOTIFICATION,
+		payload: response.data,
+	});
+};
+
+//#endregion
+
+//#region Licensing Jobs
+
+export const fetchLicensingJobs = (query) => async (dispatch, getState) => {
+	const response = await licensingJobs.get(`/`, { params: query });
+	dispatch({
+		type: licensingJobsTypes.FETCH_LICENSINGJOBS,
+		payload: response.data,
+	});
+};
+
+export const createLicensingJob = (body) => async (dispatch, getState) => {
+	const response = await licensingJobs.post(`/`, body);
+	dispatch({
+		type: licensingJobsTypes.CREATE_LICENSINGJOB,
+		payload: response.data,
+	});
+};
+
+export const fetchLicensingJob = (jobId) => async (dispatch, getState) => {
+	const response = await licensingJobs.get(`/${jobId}`);
+	dispatch({
+		type: licensingJobsTypes.FETCH_LICENSINGJOB,
+		payload: response.data,
+	});
+};
+
+export const editLicensingJob = (body) => async (dispatch, getState) => {
+	const response = await licensingJobs.put(`/${body._id}`, body);
+	dispatch({
+		type: licensingJobsTypes.EDIT_LICENSINGJOB,
+		payload: response.data,
+	});
+};
+
+export const deleteLicensingJob = (id) => async (dispatch, getState) => {
+	const response = await licensingJobs.delete(`/${id}`);
+	dispatch({
+		type: licensingJobsTypes.DELETE_LICENSINGJOB,
 		payload: response.data,
 	});
 };

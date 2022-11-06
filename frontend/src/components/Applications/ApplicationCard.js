@@ -73,7 +73,10 @@ class ApplicationCard extends React.Component {
 										secondaryAction={
 											<Box>
 												{this.props.likedTracks.includes(track._id) ? (
-													<Button variant="contained">
+													<Button
+														variant="contained"
+														onClick={() => this.props.onValidateOnSubmit(track)}
+													>
 														License this track!
 													</Button>
 												) : null}
