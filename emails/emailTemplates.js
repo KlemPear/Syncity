@@ -3,6 +3,16 @@ const baseUrl =
 		? "https://app.nost.audio"
 		: "http://localhost:3000";
 
+const dateFormatter = (date) => {
+	return new Date(date).toLocaleDateString("en-Us");
+};
+
+const moneyFormatter = Intl.NumberFormat("en-US", {
+	style: "currency",
+	currency: "USD",
+	maximumFractionDigits: 2,
+});
+
 module.exports.welcomeEmailOptions = (name, confirmationCode, email) => {
 	return {
 		subject: `Welcome to NOST ${name}!`,
@@ -44,6 +54,30 @@ module.exports.forgotPasswordEmailOptions = (
 		dynamicTemplateData: {
 			url: `${baseUrl}/forgot-password/reset/${confirmationCode}`,
 			first_name: firstName,
+		},
+	};
+};
+
+module.exports.newBriefEmailOptions = (
+	briefTitle,
+	briefDeadline,
+	briefMedia,
+	briefGenre,
+	briefBudget,
+	briefId
+) => {
+	return {
+		subject: `There is a new brief on nost: ${briefTitle}`,
+		text: `There is a new brief on nost, check it out at https://app.nost.audio`,
+		html: "<p>Hello World!</p>",
+		templateId: "d-569347cd97224b40a424dbaa1fff34b0",
+		dynamicTemplateData: {
+			brief_title: briefTitle,
+			brief_media: briefMedia,
+			brief_deadline: dateFormatter(briefDeadline),
+			brief_id: briefId,
+			brief_genre: briefGenre,
+			brief_budget: moneyFormatter.format(briefBudget),
 		},
 	};
 };

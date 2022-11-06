@@ -139,17 +139,17 @@ class BuyTokens extends React.Component {
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
-					"15.00/month",
+					"5.00/month",
 					"Basic Application Plan",
 					this.props.user,
-					"25 applications per month. 20% Commision on brief budget."
+					"15 applications per month. 25% Commision on brief budget."
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
-					"29.00/month",
+					"19.00/month",
 					"Pro Application Plan",
 					this.props.user,
-					"50 applications per month. 15% Commission on brief budget."
+					"30 applications per month. 18% Commission on brief budget."
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",

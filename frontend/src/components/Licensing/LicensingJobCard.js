@@ -26,8 +26,8 @@ function mapStateToProps(state) {
 const pitchPlanToCommisionDict = {
 	freeTrial: 30,
 	freePlan: 30,
-	basicPitchPlan: 20,
-	proPitchPlan: 15,
+	basicPitchPlan: 25,
+	proPitchPlan: 18,
 	businessPitchPlan: 10,
 };
 
