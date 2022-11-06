@@ -20,7 +20,7 @@ const frontendItemToProductId =
 				basicBriefPlan: "price_1LWnTQAJKEnyYMFYZv5EXxDm",
 				proBriefPlan: "price_1LWnUvAJKEnyYMFYwiMO2LCo",
 				businessBriefPlan: "price_1LWnUZAJKEnyYMFYINexbfQE",
-				basicPitchPlan: "price_1LWnU8AJKEnyYMFYAVMFhUUC",
+				basicPitchPlan: "price_1M1IH6AJKEnyYMFYOYuM62P6",
 				proPitchPlan: "price_1LWnTpAJKEnyYMFYvxvlSM2d",
 				businessPitchPlan: "price_1LWnRyAJKEnyYMFYcyLTKgMJ",
 				freePlan: "price_1LWnSvAJKEnyYMFYMRyTPGDZ",
