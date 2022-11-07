@@ -13,7 +13,8 @@ module.exports.onGetAllLicensingJob = async (req, res, next) => {
 			.populate({
 				path: "track",
 				populate: { path: "author" },
-			});
+			})
+			.populate("application");
 		return res.status(200).json(licensingJobs);
 	} catch (error) {
 		console.log(error);
@@ -31,7 +32,8 @@ module.exports.onGetLicensingJobById = async (req, res, next) => {
 			.populate({
 				path: "track",
 				populate: { path: "author" },
-			});
+			})
+			.populate("application");
 		return res.status(200).json(licensingJob);
 	} catch (error) {
 		console.log(error);
@@ -63,7 +65,8 @@ module.exports.onEditLicensingJobById = async (req, res, next) => {
 			.populate({
 				path: "track",
 				populate: { path: "author" },
-			});
+			})
+			.populate("application");
 		return res.status(200).json(licensingJob);
 	} catch (error) {
 		return res.status(500).json(error);

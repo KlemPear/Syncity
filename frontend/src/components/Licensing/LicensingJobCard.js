@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import TrackLink from "../Catalog/TrackLink";
 import { moneyFormatter, dateFormatter } from "../../util/textFormatHelper";
-import { editLicensingJob } from "../../actions";
+import { editLicensingJob, likeApplication } from "../../actions";
 //mui
 import {
 	List,
@@ -91,9 +91,14 @@ class LicensingJobCard extends Component {
 	};
 
 	handleJobDoneChange = (event) => {
+		// Update Licensing Job Status
 		const updatedLicensingJob = this.props.licensingJob;
 		updatedLicensingJob.done = event.target.checked;
 		this.props.editLicensingJob(updatedLicensingJob);
+		// Update Application Status
+		const updatedApplication = this.props.licensingJob.application;
+		updatedApplication.licensingJobStatus = "Obtained";
+		this.props.likeApplication(updatedApplication);
 	};
 
 	render() {
@@ -133,4 +138,6 @@ class LicensingJobCard extends Component {
 	}
 }
 
-export default connect(mapStateToProps, { editLicensingJob })(LicensingJobCard);
+export default connect(mapStateToProps, { editLicensingJob, likeApplication })(
+	LicensingJobCard
+);

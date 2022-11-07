@@ -6,14 +6,12 @@ import { Stack, Box, Typography, Button } from "@mui/material";
 
 const PaymentSucceded = (props) => {
 	return (
-		<Box sx={{ display: "flex", justifyContent: "center" }}>
+		<Box sx={{ display: "flex", justifyContent: "center", m: 5 }}>
 			<Stack spacing={2}>
 				<Typography variant="h3">
-					Thank you! Your payment was successful.
+					Your payment was successful.
 				</Typography>
-				<Typography>
-					You can see your updated token count on your profile page
-				</Typography>
+				<Typography variant="body1">Thank you for your business.</Typography>
 				<Button component={Link} to="/profile">
 					Profile
 				</Button>

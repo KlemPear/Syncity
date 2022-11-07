@@ -19,6 +19,11 @@ const applicationSchema = new mongoose.Schema(
 		},
 		liked: { type: Boolean, default: false },
 		likedTracks: [{ type: String }],
+		licensingJobStatus: {
+			type: String,
+			enum: ["None", "Pending", "Obtained"],
+			default: "None",
+		},
 	},
 	{
 		timestamps: true,

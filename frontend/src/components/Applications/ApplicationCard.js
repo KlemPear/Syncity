@@ -50,7 +50,7 @@ class ApplicationCard extends React.Component {
 		// Notify application author that his track was liked
 		const notif = {
 			title: "Your track was liked!",
-			description: `A track from your application for ${this.props.brief.title} was liked!`,
+			description: `A track for ${this.props.brief.title} was liked!`,
 			link: "/list-applications",
 			date: Date.now(),
 			user: updatedApp.author._id,
@@ -73,12 +73,26 @@ class ApplicationCard extends React.Component {
 										secondaryAction={
 											<Box>
 												{this.props.likedTracks.includes(track._id) ? (
-													<Button
-														variant="contained"
-														onClick={() => this.props.onValidateOnSubmit(track)}
-													>
-														License this track!
-													</Button>
+													<>
+														{this.props.application.licensingJobStatus !==
+														"None" ? (
+															<Button variant="contained">
+																{`License ${this.props.application.licensingJobStatus}`}
+															</Button>
+														) : (
+															<Button
+																variant="contained"
+																onClick={() =>
+																	this.props.onValidateOnSubmit(
+																		track,
+																		this.props.application
+																	)
+																}
+															>
+																License this track!
+															</Button>
+														)}
+													</>
 												) : null}
 												<IconButton
 													edge="end"
@@ -95,30 +109,6 @@ class ApplicationCard extends React.Component {
 									>
 										<TrackLink track={track} />
 									</ListItem>
-									{/* <Collapse
-										in={this.props.likedTracks.includes(track._id)}
-										timeout="auto"
-										unmountOnExit
-									>
-										<List component="div" disablePadding>
-											<ListItem sx={{ pl: 4 }} disablePadding>
-												<ListItemIcon>
-													<EmailIcon />
-												</ListItemIcon>
-												<ListItemText
-													primary={`Publisher: ${track.publisherContact}`}
-												/>
-											</ListItem>
-											<ListItem sx={{ pl: 4 }} disablePadding>
-												<ListItemIcon>
-													<EmailIcon />
-												</ListItemIcon>
-												<ListItemText
-													primary={`Master: ${track.publisherContact}`}
-												/>
-											</ListItem>
-										</List>
-									</Collapse> */}
 								</Box>
 						  ))
 						: null}
@@ -127,30 +117,16 @@ class ApplicationCard extends React.Component {
 		);
 	};
 
-	renderApplication(authorFirstName, authorLastName, authorEmail, tracks) {
+	renderApplication(tracks) {
 		return (
 			<>
-				<ListItem
-					sx={{ border: 1, borderRadius: "16px", m: 1 }}
-					// secondaryAction={
-					// 	<IconButton edge="end" onClick={() => this.onToggleLike()}>
-					// 		{this.state.liked ? (
-					// 			<FavoriteIcon sx={{ color: red[500] }} />
-					// 		) : (
-					// 			<FavoriteIcon />
-					// 		)}
-					// 	</IconButton>
-					// }
-				>
+				<ListItem sx={{ border: 1, borderRadius: "16px", m: 1 }}>
 					<ListItemAvatar>
 						<Avatar sx={{ bgcolor: "#458FF7" }}>
 							<AudiotrackIcon color="primary" />
 						</Avatar>
 					</ListItemAvatar>
-					<ListItemText
-						// secondary={`Submitted by ${authorFirstName} ${authorLastName} - ${authorEmail}`}
-						primary={this.renderTracks(tracks)}
-					/>
+					<ListItemText primary={this.renderTracks(tracks)} />
 				</ListItem>
 			</>
 		);
@@ -164,12 +140,7 @@ class ApplicationCard extends React.Component {
 				</div>
 			);
 		} else {
-			return this.renderApplication(
-				this.props.application.author.firstName,
-				this.props.application.author.lastName,
-				this.props.application.author.email,
-				this.props.application.tracks
-			);
+			return this.renderApplication(this.props.application.tracks);
 		}
 	}
 }

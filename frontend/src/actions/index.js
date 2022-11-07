@@ -200,6 +200,24 @@ export const fetchApplications = (query) => async (dispatch, getState) => {
 	});
 };
 
+export const fetchUserLikedApplications =
+	(query) => async (dispatch, getState) => {
+		const response = await applications.get(`/liked`, { params: query });
+		dispatch({
+			type: applicationsTypes.FETCH_APPLICATIONS,
+			payload: response.data,
+		});
+	};
+
+export const fetchUserSuccessfulApplications =
+	(query) => async (dispatch, getState) => {
+		const response = await applications.get(`/successful`, { params: query });
+		dispatch({
+			type: applicationsTypes.FETCH_APPLICATIONS,
+			payload: response.data,
+		});
+	};
+
 export const createApplication = (body) => async (dispatch, getState) => {
 	const response = await applications.post(`/`, body);
 	dispatch({

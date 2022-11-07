@@ -11,6 +11,10 @@ const licensingJobSchema = new mongoose.Schema(
 			type: Schema.Types.ObjectId,
 			ref: "Brief",
 		},
+		application: {
+			type: Schema.Types.ObjectId,
+			ref: "Application",
+		},
 		done: { type: Boolean, default: false },
 	},
 	{

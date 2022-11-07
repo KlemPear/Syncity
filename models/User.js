@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 		},
 		stripeCustomerId: String,
+		stripeAccount: String,
 		briefSubscriptionPlan: {
 			type: String,
 			enum: ["None", "Verified"],

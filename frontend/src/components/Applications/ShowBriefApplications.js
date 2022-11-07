@@ -4,11 +4,12 @@ import {
 	fetchApplications,
 	fetchBrief,
 	createLicensingJob,
+	likeApplication,
 } from "../../actions";
 import history from "../../util/history";
 import ApplicationCard from "./ApplicationCard";
 import Modal from "../Modal";
-
+import payments from "../../apis/payments";
 //mui
 import { Stack, Box, Typography, List, Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,12 +22,14 @@ class ShowBriefApplications extends React.Component {
 			fetchApplicationsOnce: false,
 			validateOnSubmit: false,
 			selectedTrack: null,
+			selectedApplication: null,
 		};
 	}
 
-	onValidateOnSubmit = (track) => {
+	onValidateOnSubmit = (track, application) => {
 		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
 		this.setState({ selectedTrack: track });
+		this.setState({ selectedApplication: application });
 	};
 
 	componentDidMount() {
@@ -66,7 +69,7 @@ class ShowBriefApplications extends React.Component {
 				<Button
 					variant="contained"
 					color="secondary"
-					onClick={() => this.createLicensingJob()}
+					onClick={() => this.handleLicenseTrackProcess()}
 				>
 					Get me this track!
 				</Button>
@@ -74,14 +77,31 @@ class ShowBriefApplications extends React.Component {
 		);
 	}
 
-	createLicensingJob() {
+	handleLicenseTrackProcess = async () => {
+		// create licensing job
 		const licensingJob = {
 			brief: this.props.brief,
 			track: this.state.selectedTrack,
 		};
 		this.props.createLicensingJob(licensingJob);
+		// update application to reflect pending licensing job
+		const updatedApplication = this.state.selectedApplication;
+		updatedApplication.licensingJobStatus = "Pending";
+		this.props.likeApplication(updatedApplication);
+		// close modal
 		this.setState({ validateOnSubmit: false });
-	}
+		// send user to stripe checkout session
+		const checkoutSessionBody = {
+			brief: this.props.brief,
+			user: this.props.user,
+		};
+		const response = await payments.post(
+			`/create-brief-checkout-session`,
+			checkoutSessionBody
+		);
+		const redirectUrl = response.data;
+		window.location.href = redirectUrl;
+	};
 
 	render() {
 		if (!this.props.applications || this.props.applications.length === 0) {
@@ -164,4 +184,5 @@ export default connect(mapStateToProps, {
 	fetchApplications,
 	fetchBrief,
 	createLicensingJob,
+	likeApplication,
 })(ShowBriefApplications);
