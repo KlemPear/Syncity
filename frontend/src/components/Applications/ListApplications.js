@@ -9,7 +9,7 @@ import BriefCard from "../Briefs/BriefCard";
 
 //mui
 import { Grid, Typography, Box, Tabs, Tab } from "@mui/material";
-import { Public, Favorite, EmojiEvents } from "@mui/icons-material";
+import { AudioFile, Favorite, EmojiEvents } from "@mui/icons-material";
 
 class ListApplications extends React.Component {
 	constructor(props) {
@@ -50,7 +50,7 @@ class ListApplications extends React.Component {
 					sx={{ my: 5 }}
 				>
 					<Tab
-						icon={<Public />}
+						icon={<AudioFile />}
 						onClick={() => this.onAllApplicationsClick()}
 						label="All your applications"
 					/>
