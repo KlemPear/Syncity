@@ -61,64 +61,6 @@ class ListLicensingJobs extends Component {
 function mapStateToProps(state) {
 	return {
 		licensingJobs: Object.values(state.licensingJobs),
-		// licensingJobs: [
-		// 	{
-		// 		_id: 1,
-		// 		brief: {
-		// 			_id: 123,
-		// 			title: "brief title",
-		// 			budget: "100",
-		// 			dueDate: Date.now(),
-		// 			author: {
-		// 				firstName: "Arlette",
-		// 				lastName: "Chabot",
-		// 				email: "alertte.chabot@gmail.com",
-		// 			},
-		// 		},
-		// 		track: {
-		// 			title: "track title",
-		// 			artist: "artist",
-		// 			link: "https:///www.youtube.com",
-		// 			masterContact: "master@gmail.com",
-		// 			publisherContact: "publisher@gmail.com",
-		// 			author: {
-		// 				firstName: "Jean",
-		// 				lastName: "Gabin",
-		// 				email: "jean.gabin@gmail.com",
-		// 				pitchSubscriptionPlan: "freePlan",
-		// 			},
-		// 		},
-		// 		done: false,
-		// 	},
-		// 	{
-		// 		_id: 2,
-		// 		brief: {
-		// 			_id: 456,
-		// 			title: "brief title",
-		// 			budget: "100",
-		// 			dueDate: Date.now(),
-		// 			author: {
-		// 				firstName: "Arlette",
-		// 				lastName: "Chabot",
-		// 				email: "alertte.chabot@gmail.com",
-		// 			},
-		// 		},
-		// 		track: {
-		// 			title: "track title",
-		// 			artist: "artist",
-		// 			link: "https:///www.youtube.com",
-		// 			masterContact: "master@gmail.com",
-		// 			publisherContact: "publisher@gmail.com",
-		// 			author: {
-		// 				firstName: "Jean",
-		// 				lastName: "Gabin",
-		// 				email: "jean.gabin@gmail.com",
-		// 				pitchSubscriptionPlan: "freePlan",
-		// 			},
-		// 		},
-		// 		done: true,
-		// 	},
-		// ],
 	};
 }
 
