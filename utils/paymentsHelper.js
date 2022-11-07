@@ -24,7 +24,7 @@ const productIdTofrontendItem =
 				price_1LWnTQAJKEnyYMFYZv5EXxDm: "basicBriefPlan", // 10 brief per month
 				price_1LWnUvAJKEnyYMFYwiMO2LCo: "proBriefPlan", // 50 brief per month
 				price_1LWnUZAJKEnyYMFYINexbfQE: "businessBriefPlan", // unlimited brief
-				price_1LWnU8AJKEnyYMFYAVMFhUUC: "basicPitchPlan", // 20 pitch per month
+				price_1M1IH6AJKEnyYMFYOYuM62P6: "basicPitchPlan", // 15 pitch per month
 				price_1LWnTpAJKEnyYMFYvxvlSM2d: "proPitchPlan", // 50 pitch per month
 				price_1LWnRyAJKEnyYMFYcyLTKgMJ: "businessPitchPlan", // unlimited pitch
 				price_1LWnSvAJKEnyYMFYMRyTPGDZ: "freePlan", // 1 brief and 5 Pitch per month
@@ -33,7 +33,7 @@ const productIdTofrontendItem =
 				price_1LF6GBAJKEnyYMFYHHAsfZxR: "basicBriefPlan",
 				price_1LF7HJAJKEnyYMFY5mJ7j6W9: "proBriefPlan",
 				price_1LF7IDAJKEnyYMFYIWy343RR: "businessBriefPlan",
-				price_1LF7JJAJKEnyYMFYPijW95kO: "basicPitchPlan",
+				price_1M1IH6AJKEnyYMFYOYuM62P6: "basicPitchPlan",
 				price_1LF7JsAJKEnyYMFYKjZbX8j8: "proPitchPlan",
 				price_1LF7KPAJKEnyYMFYF44VKJfY: "businessPitchPlan",
 				price_1LF80PAJKEnyYMFYZF8MzwUj: "freePlan",
@@ -48,11 +48,11 @@ const updatePlans = async (user, plan) => {
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "basicPitchPlan":
-			user.pitchTokens = 25;
+			user.pitchTokens = 15;
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "proPitchPlan":
-			user.pitchTokens = 50;
+			user.pitchTokens = 30;
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "businessPitchPlan":

@@ -6,6 +6,7 @@ import applicationsReducer from "./applicationsReducer";
 import tracksReducer from "./tracksReducer";
 import trackPlayerReducer from "./trackPlayerReducer";
 import notificationsReducer from "./notificationsReducer";
+import licensingJobsReducer from "./licensingJobReducer";
 
 export default combineReducers({
 	auth: authReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
 	tracks: tracksReducer,
 	trackPlayer: trackPlayerReducer,
 	notifications: notificationsReducer,
+	licensingJobs: licensingJobsReducer,
 });

@@ -8,13 +8,9 @@ import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import MultipleSelectInput from "../Inputs/MulipleSelectInput";
 import {
 	mediaOptions,
-	useOptions,
 	genresOptions,
-	licenseDurationOptions,
-	territoryOptions,
 	vocalsOptions,
 	moodsOptions,
-	instrumentsOptions,
 	tempoOptions,
 } from "../Inputs/BriefOptionsLists";
 

@@ -20,7 +20,7 @@ const frontendItemToProductId =
 				basicBriefPlan: "price_1LWnTQAJKEnyYMFYZv5EXxDm",
 				proBriefPlan: "price_1LWnUvAJKEnyYMFYwiMO2LCo",
 				businessBriefPlan: "price_1LWnUZAJKEnyYMFYINexbfQE",
-				basicPitchPlan: "price_1LWnU8AJKEnyYMFYAVMFhUUC",
+				basicPitchPlan: "price_1M1IH6AJKEnyYMFYOYuM62P6",
 				proPitchPlan: "price_1LWnTpAJKEnyYMFYvxvlSM2d",
 				businessPitchPlan: "price_1LWnRyAJKEnyYMFYcyLTKgMJ",
 				freePlan: "price_1LWnSvAJKEnyYMFYMRyTPGDZ",
@@ -101,7 +101,7 @@ module.exports.onCreateCheckoutSession = async (req, res, next) => {
 			mode: subscription ? "subscription" : "payment",
 			customer: user.stripeCustomerId ?? updatedUser.stripeCustomerId,
 			success_url: `${baseUrl}/payment-success`, // `http://localhost:5000/payments/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${baseUrl}/paymentcanceled`,
+			cancel_url: `${baseUrl}/payment-canceled`,
 		});
 
 		res.status(200).json(session.url);
@@ -205,6 +205,46 @@ module.exports.onPaymentSuccess = async (req, res, next) => {
 		res.send(
 			`<html><body><h1>Thanks for your order, ${customer.name}!</h1></body></html>`
 		);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onCreateBriefCheckoutSession = async (req, res, next) => {
+	try {
+		const { brief, user } = req.body;
+		if (!user.stripeCustomerId) {
+			const customer = await stripe.customers.create({
+				email: user.email,
+				description: "verified briefer",
+				name: user.firstName + " " + user.lastName,
+			});
+			user.stripeCustomerId = customer.id;
+			const updatedUser = await User.findByIdAndUpdate(user._id, user, {
+				returnDocument: "after",
+			});
+		}
+		const session = await stripe.checkout.sessions.create({
+			line_items: [
+				{
+					price_data: {
+						currency: "usd",
+						product_data: {
+							name: `Brief Budget for ${brief.title}`,
+						},
+						unit_amount: brief.budget * 100,
+					},
+					quantity: 1,
+				},
+			],
+			mode: "payment",
+			customer: user.stripeCustomerId ?? updatedUser.stripeCustomerId,
+			success_url: `${baseUrl}/payment-success`, // `http://localhost:5000/payments/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${baseUrl}/payment-canceled`,
+		});
+
+		res.status(200).json(session.url);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);

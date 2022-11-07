@@ -6,144 +6,155 @@ import { playTrack, createNotification } from "../../actions";
 import TrackLink from "../Catalog/TrackLink";
 //mui
 import {
-  List,
-  ListItem,
-  ListItemIcon,
-  Collapse,
-  IconButton,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  Link,
-  Box,
+	List,
+	ListItem,
+	IconButton,
+	ListItemAvatar,
+	Avatar,
+	ListItemText,
+	Box,
+	Button,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import EmailIcon from "@mui/icons-material/Email";
 import { red } from "@mui/material/colors";
 
 class ApplicationCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: this.props.application.liked };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			liked: this.props.application?.liked,
+			likedTracks: this.props.likedTracks ?? [],
+		};
+	}
 
-  onToggleLike = () => {
-    if (!this.props.userId) {
-      return null;
-    }
-    this.setState({ liked: !this.state.liked });
-    const updatedApp = this.props.application;
-    updatedApp.liked = !this.props.application.liked;
-    this.props.likeApplication(updatedApp);
-    // Notify application author that his application was liked
-    const notif = {
-      title: "Your application was liked!",
-      description: `You've been pre-selected for ${this.props.brief.title}`,
-      link: "/list-applications",
-      date: Date.now(),
-      user: updatedApp.author._id,
-    };
-    this.props.createNotification(notif);
-  };
+	onToggleLikeTrack = (trackId) => {
+		if (!this.props.userId) {
+			return null;
+		}
+		const currentLikedTracks = this.state.likedTracks;
+		const index = currentLikedTracks.indexOf(trackId);
+		if (index > -1) {
+			currentLikedTracks.splice(index, 1);
+			this.setState({
+				likedTracks: currentLikedTracks.length > 0 ? currentLikedTracks : [],
+			});
+		} else {
+			currentLikedTracks.push(trackId);
+			this.setState({ likedTracks: currentLikedTracks });
+		}
 
-  onPlayTrack = (track) => {
-    this.props.playTrack(track);
-  };
+		const updatedApp = this.props.application;
+		updatedApp.likedTracks = this.state.likedTracks;
+		this.props.likeApplication(updatedApp);
+		// Notify application author that his track was liked
+		const notif = {
+			title: "Your track was liked!",
+			description: `A track for ${this.props.brief.title} was liked!`,
+			link: "/list-applications",
+			date: Date.now(),
+			user: updatedApp.author._id,
+		};
+		this.props.createNotification(notif);
+	};
 
-  renderTracks(tracks) {
-    return (
-      <>
-        <List>
-          {tracks.length !== 0
-            ? tracks.map((track) => (
-                <Box key={track._id}>
-                  <ListItem>
-                    <TrackLink track={track} />
-                  </ListItem>
-                  <Collapse in={this.state.liked} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <ListItem sx={{ pl: 4 }} disablePadding>
-                        <ListItemIcon>
-                          <EmailIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`Publisher: ${track.publisherContact}`}
-                        />
-                      </ListItem>
-                      <ListItem sx={{ pl: 4 }} disablePadding>
-                        <ListItemIcon>
-                          <EmailIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={`Master: ${track.publisherContact}`}
-                        />
-                      </ListItem>
-                    </List>
-                  </Collapse>
-                </Box>
-              ))
-            : null}
-        </List>
-      </>
-    );
-  }
+	onPlayTrack = (track) => {
+		this.props.playTrack(track);
+	};
 
-  renderApplication(authorFirstName, authorLastName, authorEmail, tracks) {
-    return (
-      <>
-        <ListItem
-          sx={{ border: 1, borderRadius: "16px", m: 1 }}
-          secondaryAction={
-            <IconButton edge="end" onClick={() => this.onToggleLike()}>
-              {this.state.liked ? (
-                <FavoriteIcon sx={{ color: red[500] }} />
-              ) : (
-                <FavoriteIcon />
-              )}
-            </IconButton>
-          }
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: "#458FF7" }}>
-              <AudiotrackIcon color="primary" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            secondary={`Submitted by ${authorFirstName} ${authorLastName} - ${authorEmail}`}
-            primary={this.renderTracks(tracks)}
-          />
-        </ListItem>
-      </>
-    );
-  }
+	renderTracks = (tracks) => {
+		return (
+			<>
+				<List>
+					{tracks.length !== 0
+						? tracks.map((track) => (
+								<Box key={track._id}>
+									<ListItem
+										secondaryAction={
+											<Box>
+												{this.props.likedTracks.includes(track._id) ? (
+													<>
+														{this.props.application.licensingJobStatus !==
+														"None" ? (
+															<Button variant="contained">
+																{`License ${this.props.application.licensingJobStatus}`}
+															</Button>
+														) : (
+															<Button
+																variant="contained"
+																onClick={() =>
+																	this.props.onValidateOnSubmit(
+																		track,
+																		this.props.application
+																	)
+																}
+															>
+																License this track!
+															</Button>
+														)}
+													</>
+												) : null}
+												<IconButton
+													edge="end"
+													onClick={() => this.onToggleLikeTrack(track._id)}
+												>
+													{this.props.likedTracks.includes(track._id) ? (
+														<FavoriteIcon sx={{ color: red[500] }} />
+													) : (
+														<FavoriteIcon />
+													)}
+												</IconButton>
+											</Box>
+										}
+									>
+										<TrackLink track={track} />
+									</ListItem>
+								</Box>
+						  ))
+						: null}
+				</List>
+			</>
+		);
+	};
 
-  render() {
-    if (!this.props.application) {
-      return (
-        <div>
-          <Loader />
-        </div>
-      );
-    } else {
-      return this.renderApplication(
-        this.props.application.author.firstName,
-        this.props.application.author.lastName,
-        this.props.application.author.email,
-        this.props.application.tracks
-      );
-    }
-  }
+	renderApplication(tracks) {
+		return (
+			<>
+				<ListItem sx={{ border: 1, borderRadius: "16px", m: 1 }}>
+					<ListItemAvatar>
+						<Avatar sx={{ bgcolor: "#458FF7" }}>
+							<AudiotrackIcon color="primary" />
+						</Avatar>
+					</ListItemAvatar>
+					<ListItemText primary={this.renderTracks(tracks)} />
+				</ListItem>
+			</>
+		);
+	}
+
+	render() {
+		if (!this.props.application) {
+			return (
+				<div>
+					<Loader />
+				</div>
+			);
+		} else {
+			return this.renderApplication(this.props.application.tracks);
+		}
+	}
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    userId: state.auth?.user?._id,
-  };
+	return {
+		userId: state.auth?.user?._id,
+		application: state.applications[ownProps.applicationId],
+		likedTracks: state.applications[ownProps.applicationId].likedTracks,
+	};
 };
 
 export default connect(mapStateToProps, {
-  likeApplication,
-  playTrack,
-  createNotification,
+	likeApplication,
+	playTrack,
+	createNotification,
 })(ApplicationCard);

@@ -12,6 +12,14 @@ import CreateTrack from "../Catalog/CreateTrack";
 //mui
 import { Box, Button, Typography, Stack } from "@mui/material";
 
+const pitchPlanToCommisionDict = {
+	freeTrial: 30,
+	freePlan: 30,
+	basicPitchPlan: 25,
+	proPitchPlan: 18,
+	businessPitchPlan: 10,
+};
+
 class BriefApplication extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,6 +27,7 @@ class BriefApplication extends React.Component {
 			notEnoughTokens: false,
 			addNewTrackToCatalog: false,
 			noTrackSelected: false,
+			validateOnSubmit: false,
 			selectedTracks: [],
 		};
 	}
@@ -32,6 +41,10 @@ class BriefApplication extends React.Component {
 
 	onAddNewTrackToggle = () => {
 		this.setState({ addNewTrackToCatalog: !this.state.addNewTrackToCatalog });
+	};
+
+	onValidateOnSubmit = () => {
+		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
 	};
 
 	renderModalContent() {
@@ -77,6 +90,38 @@ class BriefApplication extends React.Component {
 		);
 	}
 
+	renderOnValidateSubmitContent() {
+		return (
+			<Typography variant="body2">
+				{`Upon submission of your application, you accept that nost will perceive
+				a commission of ${
+					pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan]
+				}% on this brief budget. `}
+				{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] === 10
+					? "You are on the Business Application Plan, you are getting the best commission rate possible!"
+					: `Upgrade your account before
+				submitting your selection to change your commission rate.`}
+			</Typography>
+		);
+	}
+
+	renderOnValidateSubmitActions() {
+		return (
+			<React.Fragment>
+				<Button onClick={() => this.setState({ validateOnSubmit: false })}>
+					Cancel
+				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={() => this.createApplicationAndNotification()}
+				>
+					I agree. Submit!
+				</Button>
+			</React.Fragment>
+		);
+	}
+
 	onSubmit = () => {
 		if (
 			this.props.user.pitchTokens !== -1 &&
@@ -87,24 +132,28 @@ class BriefApplication extends React.Component {
 		if (this.state.selectedTracks.length === 0) {
 			this.onNoTrackSelected();
 		} else {
-			this.props.burnPitchToken(this.props.userId);
-			const applicationValues = {
-				tracks: this.state.selectedTracks,
-				author: `${this.props.userId}`,
-				brief: `${this.props.brief._id}`,
-			};
-			this.props.createApplication(applicationValues);
-			// Notify brief author of the application
-			const notif = {
-				title: "You've got a new application!",
-				description: `${this.props.brief.title} got a new application.`,
-				date: Date.now(),
-				link: `/show-brief/${this.props.brief._id}/applications`,
-				user: this.props.brief.author,
-			};
-			this.createNotification(notif);
+			this.onValidateOnSubmit();
 		}
 	};
+
+	createApplicationAndNotification() {
+		this.props.burnPitchToken(this.props.userId);
+		const applicationValues = {
+			tracks: this.state.selectedTracks,
+			author: `${this.props.userId}`,
+			brief: `${this.props.brief._id}`,
+		};
+		this.props.createApplication(applicationValues);
+		// Notify brief author of the application
+		const notif = {
+			title: "You've got a new application!",
+			description: `${this.props.brief.title} got a new application.`,
+			date: Date.now(),
+			link: `/show-brief/${this.props.brief._id}/applications`,
+			user: this.props.brief.author,
+		};
+		this.props.createNotification(notif);
+	}
 
 	selectedTracks = (selectedTracks) => {
 		this.setState({ selectedTracks: selectedTracks });
@@ -180,6 +229,15 @@ class BriefApplication extends React.Component {
 						content={this.renderNoTrackModalContent()}
 						actions={this.renderNoTrackModalActions()}
 						onDismiss={() => this.setState({ noTrackSelected: false })}
+					/>
+				) : null}
+				{this.state.validateOnSubmit ? (
+					<Modal
+						showModal={this.state.validateOnSubmit}
+						title={"Please confirm your submission"}
+						content={this.renderOnValidateSubmitContent()}
+						actions={this.renderOnValidateSubmitActions()}
+						onDismiss={() => this.setState({ validateOnSubmit: false })}
 					/>
 				) : null}
 				<Box>

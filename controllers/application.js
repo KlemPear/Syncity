@@ -27,6 +27,42 @@ module.exports.onGetApplicationById = async (req, res, next) => {
 	}
 };
 
+module.exports.onGetAllUsersLikedApplications = async (req, res, next) => {
+	try {
+		const { author } = req.query;
+		const applications = await Application.find({
+			author: author,
+			"likedTracks.0": { $exists: true },
+		})
+			.populate("author")
+			.populate("brief")
+			.populate("tracks");
+		return res.status(200).json(applications);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onGetAllUsersSuccessfulApplications = async (req, res, next) => {
+	try {
+		const { author } = req.query;
+		const applications = await Application.find({
+			$or: [
+				{ author: author, licensingJobStatus: "Pending" },
+				{ author: author, licensingJobStatus: "Obtained" },
+			],
+		})
+			.populate("author")
+			.populate("brief")
+			.populate("tracks");
+		return res.status(200).json(applications);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
 module.exports.onCreateApplication = async (req, res, next) => {
 	try {
 		const brief = await Brief.findById(req.body.brief);

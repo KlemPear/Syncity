@@ -1,5 +1,7 @@
 const Brief = require("../models/Brief");
 const User = require("../models/User");
+const sendMultipleEmails = require("../emails/mail");
+const { newBriefEmailOptions } = require("../emails/emailTemplates");
 
 const getNumberOfDays = (start, end) => {
 	const date1 = new Date(start);
@@ -82,6 +84,32 @@ module.exports.onCreateBrief = async (req, res, next) => {
 	try {
 		const newBrief = new Brief(req.body);
 		newBrief.save();
+		var applicantsEmailList = [];
+		// if brief is public send email to all potential applicants
+		if (!newBrief.private) {
+			applicantsEmailList = await User.find(
+				{ briefSubscriptionPlan: "None" },
+				"email"
+			);
+		} else {
+			const { connections } = await User.findById(newBrief.author._id).populate(
+				"connections"
+			);
+			connections.map((connection) =>
+				applicantsEmailList.push(connection.email)
+			);
+		}
+		sendMultipleEmails(
+			newBriefEmailOptions(
+				newBrief.title,
+				newBrief.dueDate,
+				newBrief.media,
+				newBrief.genre,
+				newBrief.budget,
+				newBrief._id
+			),
+			applicantsEmailList
+		);
 		return res.status(200).json(newBrief);
 	} catch (error) {
 		console.log(error);

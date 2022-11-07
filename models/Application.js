@@ -1,23 +1,35 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const applicationSchema = new mongoose.Schema({
-	tracks: [
-		{
+const applicationSchema = new mongoose.Schema(
+	{
+		tracks: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Track",
+			},
+		],
+		author: {
 			type: Schema.Types.ObjectId,
-			ref: "Track",
+			ref: "User",
 		},
-	],
-	author: {
-		type: Schema.Types.ObjectId,
-		ref: "User",
+		brief: {
+			type: Schema.Types.ObjectId,
+			ref: "Brief",
+		},
+		liked: { type: Boolean, default: false },
+		likedTracks: [{ type: String }],
+		licensingJobStatus: {
+			type: String,
+			enum: ["None", "Pending", "Obtained"],
+			default: "None",
+		},
 	},
-	brief: {
-		type: Schema.Types.ObjectId,
-		ref: "Brief",
-	},
-	liked: { type: Boolean, default: false },
-});
+	{
+		timestamps: true,
+		collection: "applications",
+	}
+);
 
 const Application = mongoose.model("Application", applicationSchema);
 module.exports = Application;

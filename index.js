@@ -6,20 +6,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const path = require("path");
-const helmet = require("helmet");
-
-// SSL Cert
-// const fs = require("fs");
-// const http = require("http");
-// const https = require("https");
-// const httpsPort = 443;
-// const httpsOptions = {
-// 	cert: fs.readFileSync("./ssl/nost_audio.crt"),
-// 	ca: fs.readFileSync("./ssl/nost_audio.ca-bundle"),
-// 	key: fs.readFileSync("./ssl/nost.audio.key"),
-// };
-// httpServer = http.createServer(app);
-// httpsServer = https.createServer(httpsOptions, app);
+// const helmet = require("helmet");
 
 // session
 const session = require("express-session");
@@ -35,6 +22,7 @@ const applicationRouter = require("./routes/application");
 const paymentsRouter = require("./routes/payments");
 const trackRouter = require("./routes/track");
 const notificationRouter = require("./routes/notification");
+const licensingJobRouter = require("./routes/licensingJob");
 const { isLoggedIn, hasVerificationHeader } = require("./utils/middlewares");
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
@@ -115,32 +103,6 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(session(sessionConfig));
 
-//Helmet Set up
-// const scriptSrcUrls = [];
-// const styleSrcUrls = [
-// 	"https://fonts.googleapis.com/",
-// 	"https://fonts.googleapis.com/icon?family=Material+Icons",
-// ];
-// const connectSrcUrls = ["https://dashboard.stripe.com/"];
-// const fontSrcUrls = [
-// 	"https://fonts.googleapis.com/css?family=Inter:300,400,500,700&display=swap",
-// 	"https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap",
-// ];
-// app.use(
-// 	helmet.contentSecurityPolicy({
-// 		directives: {
-// 			defaultSrc: [],
-// 			connectSrc: ["'self'", ...connectSrcUrls],
-// 			scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-// 			styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-// 			workerSrc: ["'self'", "blob:"],
-// 			objectSrc: [],
-// 			imgSrc: ["'self'", "blob:", "data:"],
-// 			fontSrc: ["'self'", ...fontSrcUrls],
-// 		},
-// 	})
-// );
-
 //Passport set up
 app.use(passport.initialize());
 app.use(passport.session());
@@ -172,6 +134,7 @@ app.use(
 	isLoggedIn,
 	notificationRouter
 );
+app.use("/licensingJobs", hasVerificationHeader, isLoggedIn, licensingJobRouter);
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production
@@ -193,13 +156,3 @@ if (process.env.NODE_ENV === "production") {
 app.listen(port, () => {
 	console.log(`Listening on port: ${port}`);
 });
-
-// app.use((req, res, next) => {
-// 	if (req.protocol === "http") {
-// 		res.redirect(301, `https://${req.headers.host}${req.url}`);
-// 	}
-// 	next();
-// });
-
-// httpsServer.listen(httpsPort, "www.nost.audio");
-// httpServer.listen(port, "localhost");

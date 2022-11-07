@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { moneyFormatter, getNumberOfDays } from "../../util/textFormatHelper";
 import { playTrack } from "../../actions";
+import TrackLink from "../Catalog/TrackLink";
 //mui
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
@@ -175,7 +176,14 @@ class BriefCard extends React.Component {
 	renderHeader(brief) {
 		return (
 			<>
-				<Typography variant="h6">{brief.title}</Typography>
+				<MuiLink
+					variant="h6"
+					component={Link}
+					to={`/show-brief/${brief._id}`}
+					underline="hover"
+				>
+					{brief.title}
+				</MuiLink>
 			</>
 		);
 	}
@@ -228,7 +236,7 @@ class BriefCard extends React.Component {
 	renderMuiBrief(brief) {
 		return (
 			<Card
-				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500}}
+				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500 }}
 				elevation={8}
 			>
 				<CardHeader
@@ -350,14 +358,14 @@ class BriefCard extends React.Component {
 			border: `2px solid ${theme.palette.background.paper}`,
 		}));
 
-		if (application.liked) {
+		if (application.likedTracks?.length > 0) {
 			return (
 				<Badge
 					overlap="circular"
 					anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
 					badgeContent={
 						<SmallAvatar sx={{ bgcolor: "white" }} aria-label="media">
-							<FavoriteIcon sx={{ color: red[500] }} />
+							<FavoriteIcon sx={{ color: red[500] }} size="small" />
 						</SmallAvatar>
 					}
 				>
@@ -367,6 +375,28 @@ class BriefCard extends React.Component {
 		} else {
 			return <>{this.renderAvatar(brief.media)}</>;
 		}
+	}
+
+	renderApplicationStatus(application) {
+		if (
+			application.licensingJobStatus === "None" &&
+			application.likedTracks.length > 0
+		) {
+			return `The briefer liked your track(s): ${application.tracks
+				.filter((t) => application.likedTracks.includes(t._id))
+				.map((t) => {
+					return `${t.title} - ${t.artist}`;
+				})
+				.join(", ")}.
+				You are in the short list!`;
+		}
+		if (application.licensingJobStatus === "Pending") {
+			return `Your application has been selected! The licensing process is pending. You should receive an email from us shortly.`;
+		}
+		if (application.licensingJobStatus === "Obtained") {
+			return `Congratulations! This application was selected and the license was delivered.`;
+		}
+		return `Application pending. The briefer might still be reviewing application or chose a different one.`;
 	}
 
 	renderMuiApplication(application) {
@@ -397,38 +427,11 @@ class BriefCard extends React.Component {
 						overflowY: "auto",
 					}}
 				>
-					<CardContent sx={{ py: 0.5 }}>
-						<Stack direction="row" justifyContent="space-between">
-							<Typography>Description:</Typography>
-							<ExpandMore
-								expand={this.state.expanded}
-								onClick={this.handleExpandClick}
-								aria-expanded={this.state.expanded}
-								aria-label="show more"
-								align="right"
-							>
-								<ExpandMoreIcon align="right" />
-							</ExpandMore>
-						</Stack>
-
-						<Typography variant="body1" color="text.primary">
-							{brief.description}
+					<CardContent>
+						<Typography variant="body2">
+							{this.renderApplicationStatus(application)}
 						</Typography>
 					</CardContent>
-				</Box>
-				<Box
-					sx={{
-						display: "flex",
-						flexDirection: "column",
-						maxHeight: 150,
-						overflow: "hidden",
-						overflowY: "auto",
-					}}
-				>
-					<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-						<Divider variant="middle" sx={{ margin: 1 }} />
-						<CardContent>{this.renderCollaspableInfo(brief)}</CardContent>
-					</Collapse>
 				</Box>
 				<Divider variant="middle" sx={{ margin: 1 }} />
 				<Box
@@ -441,13 +444,12 @@ class BriefCard extends React.Component {
 					}}
 				>
 					<CardContent sx={{ py: 0.5 }}>
-						<Typography variant="h6">Tracks you submitted:</Typography>
+						<Typography variant="body2">Tracks you submitted:</Typography>
 						<List>
 							{application.tracks.length !== 0
 								? application.tracks.map((track) => (
 										<ListItem key={track._id}>
-											{/* <ShowTrack track={track} /> */}
-											{track.title} - {track.artist}
+											<TrackLink track={track} />
 										</ListItem>
 								  ))
 								: null}

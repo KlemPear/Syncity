@@ -48,7 +48,11 @@ class ResponsiveAppBar extends React.Component {
 	};
 
 	getPagesAndSettings = () => {
-		if (this.props.isSignedIn && !this.props.isUserPending) {
+		if (
+			this.props.isSignedIn &&
+			!this.props.isUserPending &&
+			!this.props.isUserAdmin
+		) {
 			return {
 				pages: {
 					Briefs: "/list-briefs",
@@ -69,6 +73,20 @@ class ResponsiveAppBar extends React.Component {
 					"Music Catalog": "/user-status-pending",
 				},
 				settings: null,
+			};
+		} else if (this.props.isUserAdmin) {
+			return {
+				pages: {
+					Briefs: "/list-briefs",
+					"My Applications": "/list-applications",
+					"Music Catalog": "/catalog",
+					"Licensing Jobs": "/licensing-jobs",
+				},
+				settings: {
+					"Subscription Plans": "/buy-tokens",
+					"Profile & Connections": "/profile",
+					Logout: "/",
+				},
 			};
 		} else {
 			return {
@@ -375,6 +393,7 @@ const mapStateToProps = (state) => {
 	return {
 		isSignedIn: state.auth.isSignedIn,
 		isUserPending: state.auth.user?.status === "Pending",
+		isUserAdmin: state.auth.user?.admin === true,
 		user: state.auth.user,
 		notifications: Object.values(state.notifications),
 	};

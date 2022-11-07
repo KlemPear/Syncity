@@ -25,6 +25,7 @@ import EditTrack from "./Catalog/EditTrack";
 import TrackPlayer from "./Catalog/TrackPlayer";
 import Appbar from "./Appbar";
 import Footer from "./Footer";
+import ListLicensingJobs from "./Licensing/ListLicensingJobs";
 
 //mui
 import { Container } from "@mui/material";
@@ -114,11 +115,7 @@ class App extends React.Component {
 							exact
 							component={this.props.isSignedIn ? EditBrief : Login}
 						/>
-						<Route
-							path="/show-brief/:id"
-							exact
-							component={ShowBrief}
-						/>
+						<Route path="/show-brief/:id" exact component={ShowBrief} />
 						<Route
 							path="/brief-creation-success"
 							exact
@@ -159,6 +156,11 @@ class App extends React.Component {
 							exact
 							component={this.props.isSignedIn ? CreateTrack : Login}
 						/>
+						<Route
+							path="/licensing-jobs"
+							exact
+							component={this.props.isAdmin ? ListLicensingJobs : Login}
+						/>
 						<Redirect to="/list-briefs" />
 					</Switch>
 				</Container>
@@ -176,6 +178,7 @@ const mapStateToProps = (state) => {
 		isSignedIn: state.auth.isSignedIn,
 		isUserPending: state.auth.user?.status === "Pending",
 		trackPlayer: state.trackPlayer,
+		isAdmin: state.auth.user?.admin === true,
 	};
 };
 

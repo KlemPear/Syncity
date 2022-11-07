@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
 			unique: true,
 		},
 		stripeCustomerId: String,
+		stripeAccount: String,
 		briefSubscriptionPlan: {
 			type: String,
 			enum: ["None", "Verified"],
@@ -40,6 +41,7 @@ const userSchema = new mongoose.Schema(
 		briefTokens: { type: Number, default: -1 },
 		pitchTokens: { type: Number, default: 5 },
 		prefersDarkMode: { type: Boolean, default: false },
+		admin: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,
