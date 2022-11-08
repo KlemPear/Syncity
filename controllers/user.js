@@ -1,6 +1,6 @@
 // models
 const User = require("../models/User");
-const SendEmail = require("../emails/mail");
+const { SendEmail } = require("../emails/mail");
 const {
 	welcomeEmailOptions,
 	inviteEmailOptions,

@@ -1,6 +1,6 @@
 const Brief = require("../models/Brief");
 const User = require("../models/User");
-const sendMultipleEmails = require("../emails/mail");
+const { sendMultipleEmails } = require("../emails/mail");
 const { newBriefEmailOptions } = require("../emails/emailTemplates");
 
 const getNumberOfDays = (start, end) => {

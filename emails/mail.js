@@ -1,7 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = (options) => {
+module.exports.sendEmail = (options) => {
 	const mailOptions = {
 		from: options.fromAddress ?? "hugo@nost.audio",
 		to: options.toAddress ?? "",
@@ -22,9 +22,7 @@ const sendEmail = (options) => {
 		});
 };
 
-module.exports = sendEmail;
-
-const sendMultipleEmails = (options, emailList) => {
+module.exports.sendMultipleEmails = (options, emailList) => {
 	const mailOptions = {
 		from: options.fromAddress ?? "hugo@nost.audio",
 		to: emailList ?? "",
@@ -44,5 +42,3 @@ const sendMultipleEmails = (options, emailList) => {
 			console.error(error.response.body);
 		});
 };
-
-module.exports = sendMultipleEmails;
