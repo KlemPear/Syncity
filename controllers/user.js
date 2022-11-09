@@ -1,6 +1,6 @@
 // models
 const User = require("../models/User");
-const { SendEmail } = require("../emails/mail");
+const { sendEmail } = require("../emails/mail");
 const {
 	welcomeEmailOptions,
 	inviteEmailOptions,
@@ -70,11 +70,11 @@ module.exports.onCreateUser = async (req, res, next) => {
 		user.confirmationCode = GenerateVerificationToken();
 		const registeredUser = await User.register(user, password);
 		await req.login(registeredUser, (err) => {
-			if (err) return res.status(500).json(error);
+			if (err) return res.status(500).json(err);
 			return res.status(200).json(registeredUser);
 		});
 		req.session.user = registeredUser;
-		SendEmail(
+		sendEmail(
 			welcomeEmailOptions(
 				registeredUser.firstName,
 				registeredUser.confirmationCode,

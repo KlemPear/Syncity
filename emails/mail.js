@@ -36,7 +36,7 @@ module.exports.sendMultipleEmails = (options, emailList) => {
 	sgMail
 		.sendMultiple(mailOptions)
 		.then(() => {
-			console.log("Email sent");
+			console.log("Emails sent");
 		})
 		.catch((error) => {
 			console.error(error.response.body);
