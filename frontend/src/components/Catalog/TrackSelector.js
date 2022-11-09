@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchTracks } from "../../actions";
 import Modal from "../Modal";
+import TrackLink from "./TrackLink";
 
 //mui
 import {
@@ -102,13 +103,14 @@ class TrackSelector extends React.Component {
 							</ListItemAvatar>
 							<ListItemText
 								primary={
-									<Typography
-										component={MuiLink}
-										underline="hover"
-										href={track.link}
-									>
-										{track.title} - {track.artist}
-									</Typography>
+									// <Typography
+									// 	component={MuiLink}
+									// 	underline="hover"
+									// 	href={track.link}
+									// >
+									// 	{track.title} - {track.artist}
+									// </Typography>
+									<TrackLink track={track} />
 								}
 								secondary={
 									<Typography variant="body2">

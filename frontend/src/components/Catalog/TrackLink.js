@@ -2,48 +2,59 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import MuiLink from "@mui/material/Link";
 import { playTrack } from "../../actions";
+import HeadphonesIcon from "@mui/icons-material/Headphones";
+import { Stack } from "@mui/material";
 
 class TrackLink extends Component {
-  onPlayTrack = () => {
-    this.props.playTrack(this.props.track);
-  };
+	onPlayTrack = () => {
+		this.props.playTrack(this.props.track);
+	};
 
-  render() {
-    const track = this.props.track;
-    if (
-      track.link.includes("spotify") ||
-      track.link.includes("youtube") ||
-      track.link.includes("soundcloud")
-    ) {
-      return (
-        <>
-          <MuiLink
-            variant="h6"
-            onClick={this.onPlayTrack}
-            underline="hover"
-            rel="noopener noreferrer"
-          >
-            {track.title} - {track.artist}
-          </MuiLink>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <MuiLink
-            variant="h6"
-            component="a"
-            href={track.link}
-            underline="hover"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {track.title} - {track.artist}
-          </MuiLink>
-        </>
-      );
-    }
-  }
+	render() {
+		const track = this.props.track;
+		if (
+			track.link.includes("spotify") ||
+			track.link.includes("youtube") ||
+			track.link.includes("soundcloud")
+		) {
+			return (
+				<>
+					<Stack direction="row" spacing={1}>
+						<MuiLink
+							variant="h6"
+							component="a"
+							href={track.link}
+							target="_blank"
+							underline="hover"
+							rel="noopener noreferrer"
+						>
+							{track.title} - {track.artist}
+						</MuiLink>
+						<HeadphonesIcon
+							onClick={this.onPlayTrack}
+							color="primary"
+							fontSize="large"
+						/>
+					</Stack>
+				</>
+			);
+		} else {
+			return (
+				<>
+					<MuiLink
+						variant="h6"
+						component="a"
+						href={track.link}
+						underline="hover"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{track.title} - {track.artist}
+					</MuiLink>
+				</>
+			);
+		}
+	}
 }
 
 export default connect(null, { playTrack })(TrackLink);
