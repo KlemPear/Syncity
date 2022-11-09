@@ -106,6 +106,7 @@ module.exports.onCreateBrief = async (req, res, next) => {
 				newBrief.media,
 				newBrief.genre,
 				newBrief.budget,
+				newBrief.currency,
 				newBrief._id
 			),
 			applicantsEmailList

@@ -7,11 +7,13 @@ const dateFormatter = (date) => {
 	return new Date(date).toLocaleDateString("en-Us");
 };
 
-const moneyFormatter = Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	maximumFractionDigits: 2,
-});
+const moneyFormatter = (currency) => {
+	return new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: currency ?? "USD",
+		maximumFractionDigits: 2,
+	});
+};
 
 module.exports.welcomeEmailOptions = (name, confirmationCode, email) => {
 	return {
@@ -64,6 +66,7 @@ module.exports.newBriefEmailOptions = (
 	briefMedia,
 	briefGenre,
 	briefBudget,
+	briefCurrency,
 	briefId
 ) => {
 	return {
@@ -77,7 +80,7 @@ module.exports.newBriefEmailOptions = (
 			brief_deadline: dateFormatter(briefDeadline),
 			brief_id: briefId,
 			brief_genre: briefGenre,
-			brief_budget: moneyFormatter.format(briefBudget),
+			brief_budget: moneyFormatter(briefCurrency).format(briefBudget),
 		},
 	};
 };

@@ -229,7 +229,7 @@ module.exports.onCreateBriefCheckoutSession = async (req, res, next) => {
 			line_items: [
 				{
 					price_data: {
-						currency: "usd",
+						currency: brief.currency?.toLowerCase() ?? "usd",
 						product_data: {
 							name: `Brief Budget for ${brief.title}`,
 						},

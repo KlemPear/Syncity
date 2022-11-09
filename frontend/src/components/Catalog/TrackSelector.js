@@ -103,13 +103,6 @@ class TrackSelector extends React.Component {
 							</ListItemAvatar>
 							<ListItemText
 								primary={
-									// <Typography
-									// 	component={MuiLink}
-									// 	underline="hover"
-									// 	href={track.link}
-									// >
-									// 	{track.title} - {track.artist}
-									// </Typography>
 									<TrackLink track={track} />
 								}
 								secondary={

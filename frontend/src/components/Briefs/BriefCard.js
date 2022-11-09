@@ -167,7 +167,7 @@ class BriefCard extends React.Component {
 						: `${(numberOfDaysLeft * -1).toString()} days past due date`}
 				</Typography>
 				<Typography>
-					Budget: {moneyFormatter.format(brief.budget)} all in
+					Budget: {moneyFormatter(brief.currency).format(brief.budget)} all in
 				</Typography>
 			</>
 		);

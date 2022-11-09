@@ -1,8 +1,10 @@
-export const moneyFormatter = new Intl.NumberFormat("en-US", {
-	style: "currency",
-	currency: "USD",
-	maximumFractionDigits: 0,
-});
+export const moneyFormatter = (currency) => {
+	return new Intl.NumberFormat("en-US", {
+		style: "currency",
+		currency: currency ?? "USD",
+		maximumFractionDigits: 2,
+	});
+};
 
 export const dateFormatter = (date) => {
 	return new Date(date).toLocaleDateString("en-Us");
@@ -22,4 +24,4 @@ export function getNumberOfDays(start, end) {
 	const diffInDays = Math.round(diffInTime / oneDay);
 
 	return diffInDays;
-};
+}

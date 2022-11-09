@@ -7,6 +7,11 @@ const briefSchema = new mongoose.Schema(
 		description: String,
 		dueDate: Date,
 		budget: Number,
+		currency: {
+			type: String,
+			enum: ["USD", "CAD", "EUR", "GBP"],
+		},
+
 		logo: String,
 		author: {
 			type: Schema.Types.ObjectId,

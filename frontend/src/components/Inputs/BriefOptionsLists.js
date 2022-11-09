@@ -12,7 +12,11 @@ module.exports.mediaOptions = [
 	"All Media",
 ].sort();
 
-module.exports.useOptions = ["Soundtrack", "Background Music", "Credits"].sort();
+module.exports.useOptions = [
+	"Soundtrack",
+	"Background Music",
+	"Credits",
+].sort();
 
 module.exports.licenseDurationOptions = [
 	"1 week",
@@ -150,3 +154,12 @@ module.exports.tempoOptions = [
 	"Fast (110-150)",
 	"Very fast (150-200)",
 ];
+
+module.exports.currencyOptions = ["USD", "CAD", "EUR", "GBP"];
+
+module.exports.currencySymbols = {
+	USD: "US$",
+	EUR: "€",
+	CAD: "CA$",
+	GBP: "£",
+};

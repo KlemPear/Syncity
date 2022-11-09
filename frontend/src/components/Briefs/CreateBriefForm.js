@@ -28,6 +28,8 @@ import {
 	moodsOptions,
 	instrumentsOptions,
 	tempoOptions,
+	currencyOptions,
+	currencySymbols,
 } from "../Inputs/BriefOptionsLists";
 
 class CreateBriefForm extends React.Component {
@@ -131,6 +133,14 @@ class CreateBriefForm extends React.Component {
 		);
 	};
 
+	renderBudgetAdornment() {
+		const selectedCurrency = this.props.formValues?.currency;
+		if (!selectedCurrency) {
+			return "*";
+		}
+		return currencySymbols[selectedCurrency];
+	}
+
 	onSubmit = (event) => {
 		this.props.onSubmit(this.props.formValues);
 	};
@@ -198,24 +208,36 @@ class CreateBriefForm extends React.Component {
 						value={editBrief.use}
 						placeholder={editBrief.use}
 					/>
-					<Field
-						name="budget"
-						disabled
-						component={this.renderInput}
-						type="number"
-						label="Budget"
-						InputProps={{
-							inputProps: {
-								max: 10000000,
-								min: 1,
-							},
-							startAdornment: (
-								<InputAdornment position="start">$</InputAdornment>
-							),
-						}}
-						value={editBrief.budget}
-						placeholder={editBrief.budget.toString()}
-					/>
+					<Stack direction="row">
+						<Field
+							name="currency"
+							component={this.renderInput}
+							label="Currency"
+							selectList={currencyOptions}
+							sx={{ width: 150 }}
+							value={editBrief.currency}
+							placeholder={editBrief.currency}
+						/>
+						<Field
+							name="budget"
+							component={this.renderInput}
+							type="number"
+							label="Budget"
+							InputProps={{
+								inputProps: {
+									max: 10000000,
+									min: 1,
+								},
+								startAdornment: (
+									<InputAdornment position="start">
+										{this.renderBudgetAdornment()}
+									</InputAdornment>
+								),
+							}}
+							value={editBrief.budget}
+							placeholder={editBrief.budget.toString()}
+						/>
+					</Stack>
 					<Field
 						name="licenseDuration"
 						component={this.renderInput}
@@ -493,21 +515,32 @@ class CreateBriefForm extends React.Component {
 						selectList={useOptions}
 						format={(value) => (Array.isArray(value) ? value : [])}
 					/>
-					<Field
-						name="budget"
-						component={this.renderInput}
-						type="number"
-						label="Budget"
-						InputProps={{
-							inputProps: {
-								max: 10000000,
-								min: 1,
-							},
-							startAdornment: (
-								<InputAdornment position="start">$</InputAdornment>
-							),
-						}}
-					/>
+					<Stack direction="row">
+						<Field
+							name="currency"
+							component={this.renderInput}
+							label="Currency"
+							selectList={currencyOptions}
+							sx={{ width: 150 }}
+						/>
+						<Field
+							name="budget"
+							component={this.renderInput}
+							type="number"
+							label="Budget"
+							InputProps={{
+								inputProps: {
+									max: 10000000,
+									min: 1,
+								},
+								startAdornment: (
+									<InputAdornment position="start">
+										{this.renderBudgetAdornment()}
+									</InputAdornment>
+								),
+							}}
+						/>
+					</Stack>
 					<Field
 						name="licenseDuration"
 						component={this.renderInput}
@@ -676,6 +709,7 @@ const validate = (values) => {
 		"title",
 		"dueDate",
 		"media",
+		"currency",
 		"budget",
 		"licenseDuration",
 	];
