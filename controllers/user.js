@@ -187,7 +187,7 @@ module.exports.onSearch = async (req, res, next) => {
 module.exports.onInviteNewUser = async (req, res, next) => {
 	try {
 		const { inviteFrom, inviteTo } = req.body;
-		SendEmail(inviteEmailOptions(inviteFrom, inviteTo));
+		sendEmail(inviteEmailOptions(inviteFrom, inviteTo));
 		res.status(200).json(inviteTo);
 	} catch (error) {
 		console.log(error);
@@ -202,7 +202,7 @@ module.exports.onForgotPassword = async (req, res, next) => {
 		if (!user) {
 			return res.status(204).json("user not found");
 		}
-		SendEmail(
+		sendEmail(
 			forgotPasswordEmailOptions(
 				user.firstName,
 				user.confirmationCode,
