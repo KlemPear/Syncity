@@ -51,6 +51,7 @@ function Dropzone(props) {
 					setfileUploadProgress({ fileName: file.name, percentCompleted });
 				},
 			});
+			props.input.onChange(file);
 			props.onDrop(response.data.fileId);
 		},
 		[props]
@@ -170,6 +171,17 @@ function Dropzone(props) {
 					/>
 				</Box>
 			) : null}
+			{props.error && (
+				<Box>
+					<Typography
+						variant="caption"
+						color="error"
+						sx={{ display: "flex", justifyContent: "center" }}
+					>
+						You must upload a file here.
+					</Typography>
+				</Box>
+			)}
 		</>
 	);
 }
