@@ -134,7 +134,16 @@ app.use(
 	isLoggedIn,
 	notificationRouter
 );
-app.use("/licensingJobs", hasVerificationHeader, isLoggedIn, licensingJobRouter);
+app.use(
+	"/licensingJobs",
+	hasVerificationHeader,
+	isLoggedIn,
+	licensingJobRouter
+);
+app.post("/audio-files/upload", (req, res, next) => {
+	console.log("Audio Files Request: ", req.file);
+	res.status(200).json({ fileId: 123465 });
+});
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production

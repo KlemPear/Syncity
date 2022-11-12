@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import Dropzone from "../Inputs/Dropzone";
 
 //mui
-import { TextField, Button, Stack, Box} from "@mui/material";
+import { TextField, Button, Stack, Box } from "@mui/material";
 
 class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
@@ -36,10 +37,17 @@ class CreateTrackForm extends React.Component {
 		);
 	};
 
+	onDropzoneDrop = (fileUploadId) => {
+		console.log("From CreateTrack: ", fileUploadId);
+	};
+
 	onSubmit = (formValues) => {
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
-		this.props.onSubmit(this.props.formValues);
+		// if (!this.props.formValues) {
+		// 	this.props.onSubmit(this.props.formValues);
+		// }
+		console.log(this.props.formValues);
 	};
 
 	renderFormFields = () => {
@@ -96,11 +104,11 @@ class CreateTrackForm extends React.Component {
 						label="Track Title"
 					/>
 					<Field name="artist" component={this.renderInput} label="Artist" />
-					<Field
+					{/* <Field
 						name="link"
 						component={this.renderInput}
 						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
-					/>
+					/> */}
 					<Field
 						name="masterContact"
 						component={this.renderInput}
@@ -113,6 +121,7 @@ class CreateTrackForm extends React.Component {
 						label="Publisher email"
 						type="email"
 					/>
+					<Dropzone onDrop={this.onDropzoneDrop} />
 				</>
 			);
 		}
@@ -186,22 +195,18 @@ const validate = (values) => {
 	});
 	if (
 		values.link &&
-		!(values.link.includes("spotify") ||
+		!(
+			values.link.includes("spotify") ||
 			values.link.includes("soundcloud") ||
 			values.link.includes("youtube") ||
 			values.link.includes("share.bridge.audio") ||
 			values.link.includes("disco.ac") ||
-			values.link.includes("dropbox"))
+			values.link.includes("dropbox")
+		)
 	) {
 		errors.link =
 			"Your track link must be from Souncloud, Youtube, Spotify, Bridge.audio, Disco.ac or Dropbox.";
 	}
-	// if (
-	// 	values.publisherContact &&
-	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)
-	// ) {
-	// 	errors.publisherContact = "Invalid email address";
-	// }
 	return errors;
 };
 
