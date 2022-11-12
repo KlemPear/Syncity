@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import Dropzone from "../Inputs/Dropzone";
+import DropzoneField from "../Inputs/DropzoneField";
 
 //mui
 import { TextField, Button, Stack, Box } from "@mui/material";
+
+const fileIsRequired = (value) => (!value ? "Required" : undefined);
 
 class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
@@ -38,6 +41,10 @@ class CreateTrackForm extends React.Component {
 	};
 
 	onDropzoneDrop = (fileUploadId) => {
+		console.log("From CreateTrack: ", fileUploadId);
+	};
+
+	handleOnDrop = (fileUploadId) => {
 		console.log("From CreateTrack: ", fileUploadId);
 	};
 
@@ -122,6 +129,13 @@ class CreateTrackForm extends React.Component {
 						type="email"
 					/>
 					<Dropzone onDrop={this.onDropzoneDrop} />
+					<Field
+						name="upload"
+						component={DropzoneField }
+						type="file"
+						handleOnDrop={this.handleOnDrop}
+						validate={[fileIsRequired]}
+					/>
 				</>
 			);
 		}
