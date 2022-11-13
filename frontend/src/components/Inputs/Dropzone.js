@@ -39,20 +39,26 @@ function Dropzone(props) {
 	const onDrop = useCallback(
 		async (files) => {
 			const file = files[0];
-			console.log("From Dropzone Component: ", file);
-
+			props.input.onChange(file);
 			const formData = new FormData();
 			formData.append("file", file);
 
 			const response = await audioFiles.post(`/upload`, formData, {
 				onUploadProgress: (p) => {
 					const percentCompleted = Math.round((p.loaded * 100) / p.total);
-					console.log(`file ${percentCompleted}% uploaded`);
-					setfileUploadProgress({ fileName: file.name, percentCompleted });
+					setfileUploadProgress({
+						fileName: file.name,
+						percentCompleted,
+						stillLoading: true,
+					});
 				},
 			});
-			props.input.onChange(file);
-			props.onDrop(response.data.fileId);
+			setfileUploadProgress({
+				fileName: file.name,
+				percentCompleted: 100,
+				stillLoading: false,
+			});
+			props.onDrop(response.data.key);
 		},
 		[props]
 	);
@@ -69,8 +75,6 @@ function Dropzone(props) {
 		accept: {
 			"audio/mpeg": [],
 			"audio/wav": [],
-			// "audio/flac": [],
-			// "audio/MPA": [],
 		},
 		maxFiles: 1,
 		maxSize: 100000000, //100 MB
@@ -157,14 +161,14 @@ function Dropzone(props) {
 				<Box sx={{ width: "100%" }}>
 					<Stack direction="row" spacing={1}>
 						<Typography>{fileUploadProgress.fileName}</Typography>
-						{fileUploadProgress.percentCompleted === 100 ? (
+						{fileUploadProgress.stillLoading === false ? (
 							<CheckCircleIcon color="success" />
 						) : null}
 					</Stack>
 					<LinearProgressWithLabel
 						value={fileUploadProgress.percentCompleted}
 						color={
-							fileUploadProgress.percentCompleted === 100
+							fileUploadProgress.stillLoading === false
 								? "success"
 								: "secondary"
 						}

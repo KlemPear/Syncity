@@ -37,17 +37,17 @@ class CreateTrackForm extends React.Component {
 		);
 	};
 
-	handleOnDrop = (fileUploadId) => {
-		console.log("From CreateTrack: ", fileUploadId);
+	handleOnDrop = (key) => {
+		this.props.formValues.audioFile.key = key;
 	};
 
 	onSubmit = (formValues) => {
+		console.log(this.props.formValues);
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
-		// if (!this.props.formValues) {
-		// 	this.props.onSubmit(this.props.formValues);
-		// }
-		console.log(this.props.formValues);
+		if (this.props.formValues) {
+			this.props.onSubmit(this.props.formValues);
+		}
 	};
 
 	renderFormFields = () => {
@@ -117,7 +117,7 @@ class CreateTrackForm extends React.Component {
 						type="email"
 					/>
 					<Field
-						name="upload"
+						name="audioFile"
 						component={DropzoneField}
 						type="file"
 						handleOnDrop={this.handleOnDrop}
@@ -186,7 +186,7 @@ const validate = (values) => {
 		"artist",
 		"masterContact",
 		"publisherContact",
-		"upload"
+		"audioFile",
 	];
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
