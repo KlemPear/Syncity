@@ -7,10 +7,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
 import audioFiles from "../../apis/audioFiles";
+import Loader from "../Loader";
 
 class TrackPlayer extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { url: null };
+	}
+
 	onCloseTrack = () => {
 		this.props.closeTrack();
+	};
+
+	componentDidMount = async () => {
+		if (this.props.track.audioFile) {
+			const url = await this.getAudioFileObjectUrl();
+			this.setState({ url: url });
+		} else {
+			this.setState({ url: "None" });
+		}
 	};
 
 	getAudioFileObjectUrl = async () => {
@@ -24,13 +39,47 @@ class TrackPlayer extends Component {
 		const file = new Blob([data], {
 			type: "audio/*",
 		});
-		return URL.createObjectURL(file);
+		const url = URL.createObjectURL(file);
+		return url;
+	};
+
+	renderPlayer = () => {
+		const track = this.props.track;
+		if (track.audioFile) {
+			return (
+				<>
+					<ReactPlayer
+						url={this.state.url}
+						controls={true}
+						height={80}
+						width="100%"
+					/>
+				</>
+			);
+		}
+		if (track.link.includes("spotify")) {
+			return (
+				<>
+					<Spotify link={track.link} height={80} width="auto" />
+				</>
+			);
+		}
+		return (
+			<ReactPlayer url={track.link} controls={true} height={80} width="auto" />
+		);
 	};
 
 	render() {
 		const track = this.props.track;
 		if (Object.keys(track).length === 0) {
 			return <></>;
+		}
+		if (this.state.url === null) {
+			return (
+				<>
+					<Loader />
+				</>
+			);
 		}
 		return (
 			<AppBar position="fixed" sx={{ bottom: 0, top: "auto" }} color="white">
@@ -46,36 +95,7 @@ class TrackPlayer extends Component {
 							justifyContent: "center",
 						}}
 					>
-						{track.audioFile && (
-							<ReactPlayer
-								url={this.getAudioFileObjectUrl}
-								controls={true}
-								height={80}
-								width="auto"
-							/>
-						)}
-						{track.audioFile === null && track.link.includes("spotify") && (
-							<Spotify link={track.link} height={80} width="auto" />
-						)}
-						{track.audioFile === null && !track.link.includes("spotify") && (
-							<ReactPlayer
-								url={track.link}
-								controls={true}
-								height={80}
-								width="auto"
-							/>
-						)}
-
-						{/* {track.link.includes("spotify") ? (
-							<Spotify link={track.link} height={80} width="auto" />
-						) : (
-							<ReactPlayer
-								url={track.link}
-								controls={true}
-								height={80}
-								width="auto"
-							/>
-						)} */}
+						{this.renderPlayer()}
 					</Box>
 					<Box
 						sx={{
