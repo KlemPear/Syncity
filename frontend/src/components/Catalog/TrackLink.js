@@ -20,9 +20,15 @@ class TrackLink extends Component {
 		});
 		console.log(data);
 		// file object
-		const file = new Blob(new Uint8Array(data.Body), {
-			type: data.contentType,
-		});
+		// const file = new Blob(data.Body, {
+		// 	type: data.contentType,
+		// });
+
+		const file = new File(
+			new Uint8Array(data.Body),
+			this.props.track.audioFile.path,
+			{ type: data.ContentType }
+		);
 		// anchor link
 		const element = document.createElement("a");
 		element.href = URL.createObjectURL(file);
