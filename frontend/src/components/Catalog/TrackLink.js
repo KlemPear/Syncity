@@ -25,7 +25,6 @@ class TrackLink extends Component {
 			type: "audio/*",
 		});
 
-		
 		// anchor link
 		const element = document.createElement("a");
 		element.href = URL.createObjectURL(file);
@@ -46,6 +45,11 @@ class TrackLink extends Component {
 						</Typography>
 						<DownloadIcon
 							onClick={this.onDownloadTrack}
+							color="primary"
+							fontSize="large"
+						/>
+						<HeadphonesIcon
+							onClick={this.onPlayTrack}
 							color="primary"
 							fontSize="large"
 						/>

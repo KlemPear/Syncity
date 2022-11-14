@@ -6,10 +6,25 @@ import { Box, AppBar, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
+import audioFiles from "../../apis/audioFiles";
 
 class TrackPlayer extends Component {
 	onCloseTrack = () => {
 		this.props.closeTrack();
+	};
+
+	getAudioFileObjectUrl = async () => {
+		const { data } = await audioFiles.get("/", {
+			params: {
+				key: this.props.track.audioFile?.key,
+			},
+			responseType: "blob",
+		});
+		// file object
+		const file = new Blob([data], {
+			type: "audio/*",
+		});
+		return URL.createObjectURL(file);
 	};
 
 	render() {
@@ -31,7 +46,27 @@ class TrackPlayer extends Component {
 							justifyContent: "center",
 						}}
 					>
-						{track.link.includes("spotify") ? (
+						{track.audioFile && (
+							<ReactPlayer
+								url={this.getAudioFileObjectUrl}
+								controls={true}
+								height={80}
+								width="auto"
+							/>
+						)}
+						{track.audioFile === null && track.link.includes("spotify") && (
+							<Spotify link={track.link} height={80} width="auto" />
+						)}
+						{track.audioFile === null && !track.link.includes("spotify") && (
+							<ReactPlayer
+								url={track.link}
+								controls={true}
+								height={80}
+								width="auto"
+							/>
+						)}
+
+						{/* {track.link.includes("spotify") ? (
 							<Spotify link={track.link} height={80} width="auto" />
 						) : (
 							<ReactPlayer
@@ -40,7 +75,7 @@ class TrackPlayer extends Component {
 								height={80}
 								width="auto"
 							/>
-						)}
+						)} */}
 					</Box>
 					<Box
 						sx={{
