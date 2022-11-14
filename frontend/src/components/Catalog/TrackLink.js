@@ -3,15 +3,53 @@ import { connect } from "react-redux";
 import MuiLink from "@mui/material/Link";
 import { playTrack } from "../../actions";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
-import { Stack } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
+import { Stack, Typography } from "@mui/material";
+import audioFiles from "../../apis/audioFiles";
 
 class TrackLink extends Component {
 	onPlayTrack = () => {
 		this.props.playTrack(this.props.track);
 	};
 
+	onDownloadTrack = async () => {
+		const { data } = await audioFiles.get("/", {
+			params: {
+				key: this.props.track.audioFile?.key,
+			},
+		});
+		console.log(data);
+		// file object
+		const file = new Blob(new Uint8Array(data.Body), {
+			type: data.contentType,
+		});
+		// anchor link
+		const element = document.createElement("a");
+		element.href = URL.createObjectURL(file);
+		element.download = this.props.track.audioFile.path;
+		// simulate link click
+		document.body.appendChild(element); // Required for this to work in FireFox
+		element.click();
+	};
+
 	render() {
 		const track = this.props.track;
+		if (track.audioFile) {
+			return (
+				<>
+					<Stack direction="row" spacing={1}>
+						<Typography variant="h6" rel="noopener noreferrer">
+							{track.title} - {track.artist}
+						</Typography>
+						<DownloadIcon
+							onClick={this.onDownloadTrack}
+							color="primary"
+							fontSize="large"
+						/>
+					</Stack>
+				</>
+			);
+		}
 		if (
 			track.link.includes("spotify") ||
 			track.link.includes("youtube") ||

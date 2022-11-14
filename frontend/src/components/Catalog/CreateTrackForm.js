@@ -42,7 +42,6 @@ class CreateTrackForm extends React.Component {
 	};
 
 	onSubmit = (formValues) => {
-		console.log(this.props.formValues);
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
 		if (this.props.formValues) {
