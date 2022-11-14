@@ -48,11 +48,9 @@ module.exports.getAudioFile = async (key) => {
 	});
 	try {
 		const data = await s3.send(command);
-		// Convert the ReadableStream to a string.
-		const body = await data.Body.transformToByteArray();
-		return { error: "", ContentType: data.ContentType, Body: body };
+		return { error: null, data: data };
 	} catch (error) {
 		console.log(error);
-		return { error: error, file: null };
+		return { error: error, data: null };
 	}
 };

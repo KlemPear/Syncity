@@ -17,18 +17,15 @@ class TrackLink extends Component {
 			params: {
 				key: this.props.track.audioFile?.key,
 			},
+			responseType: "blob",
 		});
 		console.log(data);
 		// file object
-		// const file = new Blob(data.Body, {
-		// 	type: data.contentType,
-		// });
+		const file = new Blob([data], {
+			type: "audio/*",
+		});
 
-		const file = new File(
-			new Uint8Array(data.Body),
-			this.props.track.audioFile.path,
-			{ type: data.ContentType }
-		);
+		
 		// anchor link
 		const element = document.createElement("a");
 		element.href = URL.createObjectURL(file);

@@ -1,4 +1,4 @@
-const { uploadToS3, getAudioFile } = require("../utils/s3");
+const { uploadToS3, getAudioFile, getAudioFileStream } = require("../utils/s3");
 const { parse, stringify, toJSON, fromJSON } = require("flatted");
 
 module.exports.onUploadAudioFiles = async (req, res, next) => {
@@ -16,8 +16,10 @@ module.exports.onUploadAudioFiles = async (req, res, next) => {
 module.exports.onGetAudioFiles = async (req, res, next) => {
 	try {
 		const { key } = req.query;
-		const { error, ContentType, Body } = await getAudioFile(key);
-		res.status(200).json({ ContentType, Body });
+		const { error, data } = await getAudioFile(key);
+		if (error) return res.status(500).json(error);
+		res.attachment(key);
+		data.Body.pipe(res);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);
