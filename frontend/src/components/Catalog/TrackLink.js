@@ -19,7 +19,6 @@ class TrackLink extends Component {
 			},
 			responseType: "blob",
 		});
-		console.log(data);
 		// file object
 		const file = new Blob([data], {
 			type: "audio/*",

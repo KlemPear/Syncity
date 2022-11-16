@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeTrack } from "../../actions";
 //mui
-import { Box, AppBar, Stack } from "@mui/material";
+import { Box, AppBar, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
@@ -12,7 +12,7 @@ import Loader from "../Loader";
 class TrackPlayer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { url: null };
+		this.state = { url: null, songTitle: null };
 	}
 
 	onCloseTrack = () => {
@@ -22,9 +22,20 @@ class TrackPlayer extends Component {
 	componentDidMount = async () => {
 		if (this.props.track.audioFile) {
 			const url = await this.getAudioFileObjectUrl();
-			this.setState({ url: url });
+			this.setState({ url: url, songTitle: this.props.track.audioFile.path });
 		} else {
-			this.setState({ url: "None" });
+			this.setState({ url: "none", songTitle: this.props.track.title });
+		}
+	};
+
+	componentDidUpdate = async () => {
+		if (
+			this.state.songTitle &&
+			this.props.track.audioFile?.path &&
+			this.props.track.audioFile?.path !== this.state.songTitle
+		) {
+			const url = await this.getAudioFileObjectUrl();
+			this.setState({ url: url, songTitle: this.props.track.audioFile.path });
 		}
 	};
 
@@ -45,9 +56,13 @@ class TrackPlayer extends Component {
 
 	renderPlayer = () => {
 		const track = this.props.track;
-		if (track.audioFile) {
+		if (
+			this.state.url !== "none" &&
+			this.state.songTitle === track.audioFile?.path
+		) {
 			return (
 				<>
+					<Typography>{this.state.songTitle}</Typography>
 					<ReactPlayer
 						url={this.state.url}
 						controls={true}
@@ -57,7 +72,7 @@ class TrackPlayer extends Component {
 				</>
 			);
 		}
-		if (track.link.includes("spotify")) {
+		if (track.link?.includes("spotify")) {
 			return (
 				<>
 					<Spotify link={track.link} height={80} width="auto" />

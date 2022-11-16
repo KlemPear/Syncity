@@ -7,7 +7,7 @@ const trackSchema = new mongoose.Schema(
 		artist: String,
 		link: {
 			type: String,
-			default: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+			//default: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 		},
 		masterContact: String,
 		publisherContact: String,

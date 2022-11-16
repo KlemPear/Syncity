@@ -68,13 +68,6 @@ class CreateTrackForm extends React.Component {
 						placeholder={this.props.editTrack.artist}
 					/>
 					<Field
-						name="link"
-						component={this.renderInput}
-						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
-						value={this.props.editTrack.link}
-						placeholder={this.props.editTrack.link}
-					/>
-					<Field
 						name="masterContact"
 						component={this.renderInput}
 						label="Master owner email"
@@ -91,6 +84,13 @@ class CreateTrackForm extends React.Component {
 						value={this.props.editTrack.publisherContact}
 						placeholder={this.props.editTrack.publisherContact}
 						multiline
+					/>
+					<Field
+						name="audioFile"
+						component={DropzoneField}
+						type="file"
+						value={this.props.editTrack.audioFile}
+						handleOnDrop={this.handleOnDrop}
 					/>
 				</>
 			);
