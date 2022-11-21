@@ -8,6 +8,18 @@ import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
 import audioFiles from "../../apis/audioFiles";
 import Loader from "../Loader";
+import MuiPlayer from "../Player/MuiPlayer";
+
+const wrapperStyle = {
+	position: "relative",
+};
+
+const playerStyle = {
+	position: "absolute",
+	top: 0,
+	left: 0,
+	bgcolor: "blue",
+};
 
 class TrackPlayer extends Component {
 	constructor(props) {
@@ -62,12 +74,23 @@ class TrackPlayer extends Component {
 		) {
 			return (
 				<>
-					<Typography>{this.state.songTitle}</Typography>
-					<ReactPlayer
+					{/* <Typography variant="h6" sx={{ ml: 4, mt: 1 }}>
+						{this.state.songTitle}
+					</Typography>
+					<div style={wrapperStyle}>
+						<ReactPlayer
+							url={this.state.url}
+							controls={true}
+							height={50}
+							width="100%"
+							playing={true}
+							//style={playerStyle}
+						/>
+					</div> */}
+					<MuiPlayer
 						url={this.state.url}
-						controls={true}
-						height={80}
-						width="100%"
+						title={this.state.songTitle}
+						playing={true}
 					/>
 				</>
 			);
@@ -75,12 +98,18 @@ class TrackPlayer extends Component {
 		if (track.link?.includes("spotify")) {
 			return (
 				<>
-					<Spotify link={track.link} height={80} width="auto" />
+					<Spotify link={track.link} height={80} width="auto" playing={true} />
 				</>
 			);
 		}
 		return (
-			<ReactPlayer url={track.link} controls={true} height={80} width="auto" />
+			<ReactPlayer
+				url={track.link}
+				controls={true}
+				height={80}
+				width="auto"
+				playing={true}
+			/>
 		);
 	};
 
