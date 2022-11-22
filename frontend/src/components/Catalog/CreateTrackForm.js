@@ -42,6 +42,9 @@ class CreateTrackForm extends React.Component {
 	};
 
 	onSubmit = (formValues) => {
+		if (!this.props.formValues.audioFile?.key) {
+			return;
+		}
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
 		if (this.props.formValues) {
@@ -54,11 +57,11 @@ class CreateTrackForm extends React.Component {
 			return (
 				<>
 					<Field
-						name="title"
-						component={this.renderInput}
-						label="Track Title"
-						value={this.props.editTrack.title}
-						placeholder={this.props.editTrack.title}
+						name="audioFile"
+						component={DropzoneField}
+						type="file"
+						value={this.props.editTrack.audioFile}
+						handleOnDrop={this.handleOnDrop}
 					/>
 					<Field
 						name="artist"
@@ -66,6 +69,13 @@ class CreateTrackForm extends React.Component {
 						label="Artist"
 						value={this.props.editTrack.artist}
 						placeholder={this.props.editTrack.artist}
+					/>
+					<Field
+						name="title"
+						component={this.renderInput}
+						label="Track Title"
+						value={this.props.editTrack.title}
+						placeholder={this.props.editTrack.title}
 					/>
 					<Field
 						name="masterContact"
@@ -85,24 +95,23 @@ class CreateTrackForm extends React.Component {
 						placeholder={this.props.editTrack.publisherContact}
 						multiline
 					/>
-					<Field
-						name="audioFile"
-						component={DropzoneField}
-						type="file"
-						value={this.props.editTrack.audioFile}
-						handleOnDrop={this.handleOnDrop}
-					/>
 				</>
 			);
 		} else {
 			return (
 				<>
 					<Field
+						name="audioFile"
+						component={DropzoneField}
+						type="file"
+						handleOnDrop={this.handleOnDrop}
+					/>
+					<Field name="artist" component={this.renderInput} label="Artist" />
+					<Field
 						name="title"
 						component={this.renderInput}
 						label="Track Title"
 					/>
-					<Field name="artist" component={this.renderInput} label="Artist" />
 					<Field
 						name="masterContact"
 						component={this.renderInput}
@@ -114,12 +123,6 @@ class CreateTrackForm extends React.Component {
 						component={this.renderInput}
 						label="Publisher email"
 						type="email"
-					/>
-					<Field
-						name="audioFile"
-						component={DropzoneField}
-						type="file"
-						handleOnDrop={this.handleOnDrop}
 					/>
 				</>
 			);
