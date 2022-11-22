@@ -41,6 +41,9 @@ export const theme = (prefersDarkMode = false) => {
 						appBarButton: {
 							main: "#000000",
 						},
+						success: {
+							main: "#4caf50",
+						},
 				  }
 				: {
 						primary: {
@@ -57,6 +60,9 @@ export const theme = (prefersDarkMode = false) => {
 						},
 						appBarButton: {
 							main: "#FFFFFF",
+						},
+						success: {
+							main: "#4caf50",
 						},
 				  }),
 		},

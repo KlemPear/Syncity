@@ -37,7 +37,7 @@ class App extends React.Component {
 		return (
 			<>
 				<Appbar />
-				<Container fixed sx={{ pb: 12 }}>
+				<Container fixed sx={{ pb: "120px" }}>
 					<Switch>
 						{this.props.isUserPending ? (
 							<>

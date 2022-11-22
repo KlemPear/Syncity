@@ -2,9 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
+import DropzoneField from "../Inputs/DropzoneField";
 
 //mui
-import { TextField, Button, Stack, Box} from "@mui/material";
+import { TextField, Button, Stack, Box } from "@mui/material";
 
 class CreateTrackForm extends React.Component {
 	componentDidMount = () => {
@@ -36,10 +37,16 @@ class CreateTrackForm extends React.Component {
 		);
 	};
 
+	handleOnDrop = (key) => {
+		this.props.formValues.audioFile.key = key;
+	};
+
 	onSubmit = (formValues) => {
 		//do whatever we need with the form values
 		//send to a server, call an api etc...
-		this.props.onSubmit(this.props.formValues);
+		if (this.props.formValues) {
+			this.props.onSubmit(this.props.formValues);
+		}
 	};
 
 	renderFormFields = () => {
@@ -61,13 +68,6 @@ class CreateTrackForm extends React.Component {
 						placeholder={this.props.editTrack.artist}
 					/>
 					<Field
-						name="link"
-						component={this.renderInput}
-						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
-						value={this.props.editTrack.link}
-						placeholder={this.props.editTrack.link}
-					/>
-					<Field
 						name="masterContact"
 						component={this.renderInput}
 						label="Master owner email"
@@ -85,6 +85,13 @@ class CreateTrackForm extends React.Component {
 						placeholder={this.props.editTrack.publisherContact}
 						multiline
 					/>
+					<Field
+						name="audioFile"
+						component={DropzoneField}
+						type="file"
+						value={this.props.editTrack.audioFile}
+						handleOnDrop={this.handleOnDrop}
+					/>
 				</>
 			);
 		} else {
@@ -97,11 +104,6 @@ class CreateTrackForm extends React.Component {
 					/>
 					<Field name="artist" component={this.renderInput} label="Artist" />
 					<Field
-						name="link"
-						component={this.renderInput}
-						label="Link to media (Soundcloud, Youtube, Spotify, Disco, Bridge.audio or Dropbox)"
-					/>
-					<Field
 						name="masterContact"
 						component={this.renderInput}
 						label="Master owner email"
@@ -112,6 +114,12 @@ class CreateTrackForm extends React.Component {
 						component={this.renderInput}
 						label="Publisher email"
 						type="email"
+					/>
+					<Field
+						name="audioFile"
+						component={DropzoneField}
+						type="file"
+						handleOnDrop={this.handleOnDrop}
 					/>
 				</>
 			);
@@ -175,32 +183,28 @@ const validate = (values) => {
 	const requiredFields = [
 		"title",
 		"artist",
-		"link",
 		"masterContact",
 		"publisherContact",
+		"audioFile",
 	];
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
 			errors[field] = "Required";
 		}
 	});
-	if (
-		values.link &&
-		!(values.link.includes("spotify") ||
-			values.link.includes("soundcloud") ||
-			values.link.includes("youtube") ||
-			values.link.includes("share.bridge.audio") ||
-			values.link.includes("disco.ac") ||
-			values.link.includes("dropbox"))
-	) {
-		errors.link =
-			"Your track link must be from Souncloud, Youtube, Spotify, Bridge.audio, Disco.ac or Dropbox.";
-	}
 	// if (
-	// 	values.publisherContact &&
-	// 	!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.publisherContact)
+	// 	values.link &&
+	// 	!(
+	// 		values.link.includes("spotify") ||
+	// 		values.link.includes("soundcloud") ||
+	// 		values.link.includes("youtube") ||
+	// 		values.link.includes("share.bridge.audio") ||
+	// 		values.link.includes("disco.ac") ||
+	// 		values.link.includes("dropbox")
+	// 	)
 	// ) {
-	// 	errors.publisherContact = "Invalid email address";
+	// 	errors.link =
+	// 		"Your track link must be from Souncloud, Youtube, Spotify, Bridge.audio, Disco.ac or Dropbox.";
 	// }
 	return errors;
 };
