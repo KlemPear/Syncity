@@ -10,17 +10,6 @@ import audioFiles from "../../apis/audioFiles";
 import Loader from "../Loader";
 import MuiPlayer from "../Player/MuiPlayer";
 
-const wrapperStyle = {
-	position: "relative",
-};
-
-const playerStyle = {
-	position: "absolute",
-	top: 0,
-	left: 0,
-	bgcolor: "blue",
-};
-
 class TrackPlayer extends Component {
 	constructor(props) {
 		super(props);
