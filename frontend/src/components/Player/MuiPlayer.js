@@ -111,7 +111,7 @@ function MuiPlayer(props) {
 
 	return (
 		<>
-			<Container maxWidth="md">
+			{/* <Container maxWidth="lg"> */}
 				<div className="playerDiv" ref={playerDivRef}>
 					<ReactPlayer
 						width={"100%"}
@@ -148,7 +148,7 @@ function MuiPlayer(props) {
             title={props.title}
 					/>
 				</div>
-			</Container>
+			{/* </Container> */}
 		</>
 	);
 }

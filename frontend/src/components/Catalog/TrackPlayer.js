@@ -74,22 +74,9 @@ class TrackPlayer extends Component {
 		) {
 			return (
 				<>
-					{/* <Typography variant="h6" sx={{ ml: 4, mt: 1 }}>
-						{this.state.songTitle}
-					</Typography>
-					<div style={wrapperStyle}>
-						<ReactPlayer
-							url={this.state.url}
-							controls={true}
-							height={50}
-							width="100%"
-							playing={true}
-							//style={playerStyle}
-						/>
-					</div> */}
 					<MuiPlayer
 						url={this.state.url}
-						title={this.state.songTitle}
+						title={`${track.title} - ${track.artist}`}
 						playing={true}
 					/>
 				</>

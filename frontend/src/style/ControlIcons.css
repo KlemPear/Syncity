@@ -9,7 +9,7 @@
 	justify-content: space-between;
 	/* align-items: flex-start; */
 	z-index: 2;
-	background: rgb(255, 255, 255);
+	/* background: rgb(255, 255, 255); */
 }
 
 .controls__nav {
@@ -41,5 +41,5 @@
 	width: 100;
 	margin-top: -50px;
 	margin-left: 130px;
-	//color: #458ff7;
+	/* color: #fff; */
 }

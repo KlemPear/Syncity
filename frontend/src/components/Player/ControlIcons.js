@@ -98,82 +98,105 @@ const ControlIcons = ({
 			{/* Bottom Controls */}
 			<Grid
 				container
-				direction="row"
-				alignItems="center"
-				justifyContent="space-between"
-				style={{ padding: 16 }}
+				direction="column"
+				alignItems="left"
+				justifyContent="space-around"
+				style={{ padding: 8 }}
+				color="background"
 			>
 				<Grid item>
-					<Typography variant="h5" color="primary">
+					<Typography
+						variant="h6"
+						color="primary"
+						sx={{ paddingLeft: 2 }}
+					>
 						{title}
 					</Typography>
 				</Grid>
 
-				<Grid item xs={12}>
-					<PrettoSlider
-						min={0}
-						max={100}
-						value={played * 100}
-						onChange={onSeek}
-						onMouseDown={onSeekMouseDown}
-						onChangeCommitted={onSeekMouseUp}
-						valueLabelDisplay="off"
-						// aria-label="custom thumb label"
-						components={{
-							ValueLabel: ValueLabelComponent,
-						}}
-						color="secondary"
-					/>
-					<Grid container direction="row" justifyContent="space-between">
-						<Typography variant="h7" color="primary">
-							{playedTime}
-						</Typography>
-						<Typography variant="h7" color="primary">
-							{fullMovieTime}
-						</Typography>
-					</Grid>
-				</Grid>
-
-				<Grid item>
-					<Grid container alignItems="center" direction="row">
-						<IconButton
-							className="controls__icons"
-							aria-label="reqind"
-							onClick={playandpause}
+				<Grid
+					container
+					direction="row"
+					alignItems="center"
+					justifyContent="space-around"
+					color="background"
+				>
+					<Grid item>
+						<Grid
+							container
+							alignItems="center"
+							justifyContent="space-between"
+							direction="row"
 						>
-							{playing ? (
-								<PauseSharp fontSize="large" color="primary" />
-							) : (
-								<PlayArrowSharp fontSize="large" color="primary" />
-							)}
-						</IconButton>
+							<IconButton
+								className="controls__icons"
+								aria-label="reqind"
+								onClick={playandpause}
+							>
+								{playing ? (
+									<PauseSharp fontSize="large" color="primary" />
+								) : (
+									<PlayArrowSharp fontSize="large" color="primary" />
+								)}
+							</IconButton>
 
-						<IconButton
-							className="controls__icons"
-							aria-label="reqind"
-							onClick={muting}
+							<IconButton
+								className="controls__icons"
+								aria-label="reqind"
+								onClick={muting}
+							>
+								{muted ? (
+									<VolumeOff fontSize="large" color="primary" />
+								) : (
+									<VolumeUp fontSize="large" color="primary" />
+								)}
+							</IconButton>
+
+							{/* <Typography
+							color="secondary"
+							style={{ paddingTop: "5px", paddingRight: "5px" }}
 						>
-							{muted ? (
-								<VolumeOff fontSize="large" color="primary" />
-							) : (
-								<VolumeUp fontSize="large" color="primary" />
-							)}
-						</IconButton>
-
-						<Typography color="secondary" style={{ paddingTop: "5px" }}>
 							{volume * 100}
 						</Typography>
 						<Slider
 							min={0}
 							max={100}
-							value={volume * 100}
+							value={Math.floor(volume * 100)}
 							onChange={volumeChange}
 							onChangeCommitted={volumeSeek}
 							className="volume__slider"
-						/>
+							color="primary"
+						/> */}
+						</Grid>
 					</Grid>
-				</Grid>
 
+					<Grid item xs={6} sm={8} md={10}>
+						<PrettoSlider
+							min={0}
+							max={100}
+							value={played * 100}
+							onChange={onSeek}
+							onMouseDown={onSeekMouseDown}
+							onChangeCommitted={onSeekMouseUp}
+							valueLabelDisplay="off"
+							// aria-label="custom thumb label"
+							components={{
+								ValueLabel: ValueLabelComponent,
+							}}
+							color="secondary"
+							sx={{ paddingBottom: 0 }}
+						/>
+						<Grid container direction="row" justifyContent="space-between">
+							<Typography variant="h7" color="primary">
+								{playedTime}
+							</Typography>
+							<Typography variant="h7" color="primary">
+								{fullMovieTime}
+							</Typography>
+						</Grid>
+					</Grid>
+
+					{/* 
 				<Grid item>
 					<Button
 						variant="text"
@@ -199,7 +222,11 @@ const ControlIcons = ({
 					>
 						<Grid container direction="column-reverse">
 							{[0.5, 1, 1.5, 2].map((rate) => (
-								<Button variant="text" onClick={() => playRate(rate)}>
+								<Button
+									variant="text"
+									key={rate}
+									onClick={() => playRate(rate)}
+								>
 									<Typography
 										color={rate === playerbackRate ? "secondary" : "default"}
 									>
@@ -209,6 +236,7 @@ const ControlIcons = ({
 							))}
 						</Grid>
 					</Popover>
+				</Grid> */}
 				</Grid>
 			</Grid>
 		</div>

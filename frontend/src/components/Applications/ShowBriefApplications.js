@@ -50,11 +50,10 @@ class ShowBriefApplications extends React.Component {
 		return (
 			<>
 				<Typography variant="body2">
-					{`You will be taken to a Stripe payment page to deposit the brief budget amount. Then
-				we will contact you directly at ${this.props.user.email} within 3 business days.`}
+					{`We will get started on the contacts.`}
 				</Typography>
 				<Typography variant="body2">
-					{`If we cannot get both parties signatures on the contract within 10 days, we will refund your deposit. `}
+					{`We will contact you directly at ${this.props.user.email} within 3 business days.`}
 				</Typography>
 			</>
 		);
@@ -91,16 +90,16 @@ class ShowBriefApplications extends React.Component {
 		// close modal
 		this.setState({ validateOnSubmit: false });
 		// send user to stripe checkout session
-		const checkoutSessionBody = {
-			brief: this.props.brief,
-			user: this.props.user,
-		};
-		const response = await payments.post(
-			`/create-brief-checkout-session`,
-			checkoutSessionBody
-		);
-		const redirectUrl = response.data;
-		window.location.href = redirectUrl;
+		// const checkoutSessionBody = {
+		// 	brief: this.props.brief,
+		// 	user: this.props.user,
+		// };
+		// const response = await payments.post(
+		// 	`/create-brief-checkout-session`,
+		// 	checkoutSessionBody
+		// );
+		// const redirectUrl = response.data;
+		// window.location.href = redirectUrl;
 	};
 
 	render() {
@@ -126,8 +125,8 @@ class ShowBriefApplications extends React.Component {
 						</Typography>
 						<Typography variant="p">
 							Once tracks are pre-selected, you can start the licensing process
-							directly on NOST! You will be taken to a Stripe payment page, and
-							we will start taking care of the contracts.
+							directly on NOST! Click on License This Track and we will start
+							taking care of the contracts for you.
 						</Typography>
 						<Box
 							sx={{
