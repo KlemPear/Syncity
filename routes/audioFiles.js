@@ -21,6 +21,7 @@ const router = express.Router();
 
 router
 	.get("/", audioFiles.onGetAudioFiles)
+	.get("/stream", audioFiles.onStreamAudioFiles2)
 	.post("/upload", upload.single("file"), audioFiles.onUploadAudioFiles);
 
 module.exports = router;

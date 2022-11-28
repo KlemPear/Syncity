@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { closeTrack } from "../../actions";
 //mui
-import { Box, AppBar, Stack, Typography } from "@mui/material";
+import { Box, AppBar, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ReactPlayer from "react-player/lazy";
 import Spotify from "react-spotify-embed";
-import audioFiles from "../../apis/audioFiles";
+import baseUrl from "../../apis/baseUrl";
 import Loader from "../Loader";
 import MuiPlayer from "../Player/MuiPlayer";
 
@@ -20,38 +20,29 @@ class TrackPlayer extends Component {
 		this.props.closeTrack();
 	};
 
-	componentDidMount = async () => {
+	componentDidMount = () => {
 		if (this.props.track.audioFile) {
-			const url = await this.getAudioFileObjectUrl();
+			const url = this.getAudioFileObjectUrl();
 			this.setState({ url: url, songTitle: this.props.track.audioFile.path });
 		} else {
 			this.setState({ url: "none", songTitle: this.props.track.title });
 		}
 	};
 
-	componentDidUpdate = async () => {
+	componentDidUpdate = () => {
 		if (
 			this.state.songTitle &&
 			this.props.track.audioFile?.path &&
 			this.props.track.audioFile?.path !== this.state.songTitle
 		) {
-			const url = await this.getAudioFileObjectUrl();
+			const url = this.getAudioFileObjectUrl();
 			this.setState({ url: url, songTitle: this.props.track.audioFile.path });
 		}
 	};
 
-	getAudioFileObjectUrl = async () => {
-		const { data } = await audioFiles.get("/", {
-			params: {
-				key: this.props.track.audioFile?.key,
-			},
-			responseType: "blob",
-		});
-		// file object
-		const file = new Blob([data], {
-			type: "audio/*",
-		});
-		const url = URL.createObjectURL(file);
+	getAudioFileObjectUrl = () => {
+		const key = this.props.track.audioFile?.key;
+		const url = baseUrl + `/audio-files/stream?key=${key}`;
 		return url;
 	};
 

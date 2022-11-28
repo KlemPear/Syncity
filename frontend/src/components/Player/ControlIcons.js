@@ -28,6 +28,8 @@ const ControlIcons = ({
 	playerbackRate,
 	onSeek,
 	played,
+	playedSeconds,
+	loadedSeconds,
 	onSeekMouseUp,
 	onSeekMouseDown,
 	fullMovieTime,
@@ -105,11 +107,7 @@ const ControlIcons = ({
 				color="background"
 			>
 				<Grid item>
-					<Typography
-						variant="h6"
-						color="primary"
-						sx={{ paddingLeft: 2 }}
-					>
+					<Typography variant="h6" color="primary" sx={{ paddingLeft: 2 }}>
 						{title}
 					</Typography>
 				</Grid>
@@ -174,7 +172,9 @@ const ControlIcons = ({
 						<PrettoSlider
 							min={0}
 							max={100}
+							//max={fullAudioTimeInSec}
 							value={played * 100}
+							//value={playedSeconds}
 							onChange={onSeek}
 							onMouseDown={onSeekMouseDown}
 							onChangeCommitted={onSeekMouseUp}

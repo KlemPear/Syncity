@@ -6,7 +6,13 @@ const {
 	DeleteObjectCommand,
 } = require("@aws-sdk/client-s3");
 const { v4: uuid } = require("uuid");
+const AWS = require("aws-sdk");
 const Track = require("../models/Track");
+
+const aws = new AWS.S3({
+	region: "us-east-2",
+	apiVersion: "2006-03-01",
+});
 
 const s3 = new S3Client({
 	region: "us-east-2",
@@ -82,6 +88,35 @@ module.exports.getAudioFile = async (key) => {
 	});
 	try {
 		const data = await s3.send(command);
+		return { error: null, data: data };
+	} catch (error) {
+		console.log(error);
+		return { error: error, data: null };
+	}
+};
+
+module.exports.getAudioFileStream = (key) => {
+	const s3Config = {
+		Bucket: BUCKET,
+		Key: key,
+	};
+	try {
+		let readStream = aws.getObject(s3Config).createReadStream();
+		return { error: null, data: readStream };
+	} catch (error) {
+		console.log(error);
+		return { error: error, data: null };
+	}
+};
+
+module.exports.getAudioFileStream2 = (key, range) => {
+	const command = new GetObjectCommand({
+		Bucket: BUCKET,
+		Key: key,
+		Range: range,
+	});
+	try {
+		const data = s3.send(command);
 		return { error: null, data: data };
 	} catch (error) {
 		console.log(error);

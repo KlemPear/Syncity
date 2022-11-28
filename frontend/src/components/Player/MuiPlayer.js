@@ -1,8 +1,6 @@
 import * as React from "react";
 import { useState, useRef } from "react";
 import ReactPlayer from "react-player";
-//import screenfull from "screenfull";
-import Container from "@mui/material/Container";
 import "../../style/MuiPlayer.css";
 import ControlIcons from "./ControlIcons";
 
@@ -24,18 +22,29 @@ const format = (seconds) => {
 };
 
 function MuiPlayer(props) {
+
 	const [playerstate, setPlayerState] = useState({
 		playing: true,
 		muted: false,
 		volume: 1,
 		playerbackRate: 1.0,
 		played: 0,
+		playedSeconds: 0,
+		loadedSeconds: 0,
 		seeking: false,
 	});
 
 	//Destructure State in other to get the values in it
-	const { playing, muted, volume, playerbackRate, played, seeking } =
-		playerstate;
+	const {
+		playing,
+		muted,
+		volume,
+		playerbackRate,
+		played,
+		playedSeconds,
+		loadedSeconds,
+		seeking,
+	} = playerstate;
 	const playerRef = useRef(null);
 	const playerDivRef = useRef(null);
 
@@ -76,18 +85,23 @@ function MuiPlayer(props) {
 		setPlayerState({ ...playerstate, playerbackRate: rate });
 	};
 
-
 	const handlePlayerProgress = (state) => {
-		//console.log("onProgress", state);
+		console.log("onProgress", state);
 		if (!playerstate.seeking) {
 			setPlayerState({ ...playerstate, ...state });
 		}
-		//console.log("afterProgress", state);
+		console.log("afterProgress", state);
 	};
 
 	const handlePlayerSeek = (e, newValue) => {
-		setPlayerState({ ...playerstate, played: parseFloat(newValue / 100) });
+		//console.log(newValue);
+		setPlayerState({
+			...playerstate,
+			played: parseFloat(newValue / 100),
+			playedSeconds: newValue,
+		});
 		playerRef.current.seekTo(parseFloat(newValue / 100));
+		//playerRef.current.seekTo(newValue);
 		// console.log(played)
 	};
 
@@ -111,44 +125,44 @@ function MuiPlayer(props) {
 
 	return (
 		<>
-			{/* <Container maxWidth="lg"> */}
-				<div className="playerDiv" ref={playerDivRef}>
-					<ReactPlayer
-						width={"100%"}
-						height="100%"
-						ref={playerRef}
-						url={props.url}
-						playing={playing}
-						volume={volume}
-						playbackRate={playerbackRate}
-						onProgress={handlePlayerProgress}
-						muted={muted}
-					/>
+			<div className="playerDiv" ref={playerDivRef}>
+				<ReactPlayer
+					width={"100%"}
+					height="100%"
+					ref={playerRef}
+					url={props.url}
+					playing={playing}
+					volume={volume}
+					playbackRate={playerbackRate}
+					onProgress={handlePlayerProgress}
+					muted={muted}
+				/>
 
-					<ControlIcons
-						key={volume.toString()}
-						playandpause={handlePlayAndPause}
-						playing={playing}
-						rewind={handleRewind}
-						fastForward={handleFastForward}
-						muting={handleMuting}
-						muted={muted}
-						volumeChange={handleVolumeChange}
-						volumeSeek={handleVolumeSeek}
-						volume={volume}
-						playerbackRate={playerbackRate}
-						playRate={handlePlayerRate}
-						played={played}
-						onSeek={handlePlayerSeek}
-						onSeekMouseUp={handlePlayerMouseSeekUp}
-						onSeekMouseDown={handlePlayerMouseSeekDown}
-						playedTime={playedTime}
-						fullMovieTime={fullMovieTime}
-						seeking={seeking}
-            title={props.title}
-					/>
-				</div>
-			{/* </Container> */}
+				<ControlIcons
+					key={volume.toString()}
+					playandpause={handlePlayAndPause}
+					playing={playing}
+					rewind={handleRewind}
+					fastForward={handleFastForward}
+					muting={handleMuting}
+					muted={muted}
+					volumeChange={handleVolumeChange}
+					volumeSeek={handleVolumeSeek}
+					volume={volume}
+					playerbackRate={playerbackRate}
+					playRate={handlePlayerRate}
+					played={played}
+					playedSeconds={playedSeconds}
+					loadedSeconds={loadedSeconds}
+					onSeek={handlePlayerSeek}
+					onSeekMouseUp={handlePlayerMouseSeekUp}
+					onSeekMouseDown={handlePlayerMouseSeekDown}
+					playedTime={playedTime}
+					fullMovieTime={fullMovieTime}
+					seeking={seeking}
+					title={props.title}
+				/>
+			</div>
 		</>
 	);
 }
