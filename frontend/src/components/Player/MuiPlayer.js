@@ -86,11 +86,11 @@ function MuiPlayer(props) {
 	};
 
 	const handlePlayerProgress = (state) => {
-		console.log("onProgress", state);
+		//console.log("onProgress", state);
 		if (!playerstate.seeking) {
 			setPlayerState({ ...playerstate, ...state });
 		}
-		console.log("afterProgress", state);
+		//console.log("afterProgress", state);
 	};
 
 	const handlePlayerSeek = (e, newValue) => {
