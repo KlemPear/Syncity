@@ -26,7 +26,11 @@ module.exports.onGetAudioFiles = async (req, res, next) => {
 		const { error, data } = await getAudioFile(key);
 		if (error) return res.status(500).json(error);
 		res.attachment(key);
-		//data.Body.pipe(res);
+		const headers = {
+			"Content-Length": data.ContentLength,
+			"Content-Type": data.ContentType,
+		};
+		res.writeHead(200, headers);
 		const stream = data.Body;
 		stream.pipe(res);
 		stream.on("end", res.end);

@@ -27,8 +27,10 @@ class TrackLink extends Component {
 				},
 				responseType: "blob",
 				onDownloadProgress: (progressEvent) => {
-					let percentCompleted = Math.round(
-						(progressEvent.loaded * 100) / progressEvent.total
+					const length =
+						progressEvent.srcElement.getResponseHeader("content-length");
+					const percentCompleted = Math.round(
+						(progressEvent.loaded * 100) / length
 					);
 					this.setState({
 						fileUploadProgress: {
