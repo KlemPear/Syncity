@@ -6,31 +6,49 @@ import HeadphonesIcon from "@mui/icons-material/Headphones";
 import DownloadIcon from "@mui/icons-material/Download";
 import { Stack, Typography } from "@mui/material";
 import audioFiles from "../../apis/audioFiles";
+import fileDownload from "js-file-download";
+import FileUploadProgress from "../Inputs/FileUploadProgress";
 
 class TrackLink extends Component {
+	constructor(props) {
+		super(props);
+		this.state = { fileUploadProgress: null };
+	}
+
 	onPlayTrack = () => {
 		this.props.playTrack(this.props.track);
 	};
 
 	onDownloadTrack = async () => {
-		const { data } = await audioFiles.get("/", {
-			params: {
-				key: this.props.track.audioFile?.key,
-			},
-			responseType: "blob",
-		});
-		// file object
-		const file = new Blob([data], {
-			type: "audio/*",
-		});
-
-		// anchor link
-		const element = document.createElement("a");
-		element.href = URL.createObjectURL(file);
-		element.download = this.props.track.audioFile.path;
-		// simulate link click
-		document.body.appendChild(element); // Required for this to work in FireFox
-		element.click();
+		audioFiles
+			.get("/", {
+				params: {
+					key: this.props.track.audioFile?.key,
+				},
+				responseType: "blob",
+				onDownloadProgress: (progressEvent) => {
+					let percentCompleted = Math.round(
+						(progressEvent.loaded * 100) / progressEvent.total
+					);
+					this.setState({
+						fileUploadProgress: {
+							fileName: this.props.track.audioFile?.path,
+							percentCompleted,
+							stillLoading: true,
+						},
+					});
+				},
+			})
+			.then((res) => {
+				this.setState({
+					fileUploadProgress: {
+						fileName: this.props.track.audioFile?.path,
+						percentCompleted: 100,
+						stillLoading: false,
+					},
+				});
+				fileDownload(res.data, this.props.track.audioFile?.path);
+			});
 	};
 
 	render() {
@@ -52,6 +70,11 @@ class TrackLink extends Component {
 							color="primary"
 							fontSize="large"
 						/>
+						{this.state.fileUploadProgress ? (
+							<FileUploadProgress
+								fileUploadProgress={this.state.fileUploadProgress}
+							/>
+						) : null}
 					</Stack>
 				</>
 			);

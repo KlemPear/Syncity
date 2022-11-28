@@ -13,6 +13,7 @@
 		"@testing-library/react": "^12.1.4",
 		"@testing-library/user-event": "^13.5.0",
 		"axios": "^0.26.1",
+		"js-file-download": "^0.4.12",
 		"lodash": "^4.17.21",
 		"material-ui-audio-player": "^1.7.1",
 		"react": "^17.0.2",

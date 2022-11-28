@@ -95,6 +95,17 @@ module.exports.getAudioFile = async (key) => {
 	}
 };
 
+module.exports.getAudioFileSignedUrl = async (key) => {
+	var params = {Bucket: BUCKET, Key: key, Expires: 5*60};
+	try {
+		var url = aws.getSignedUrl('getObject', params);
+		return { error: null, url: url };
+	} catch (error) {
+		console.log(error);
+		return { error: error, url: null };
+	}
+};
+
 module.exports.getAudioFileStream = (key) => {
 	const s3Config = {
 		Bucket: BUCKET,

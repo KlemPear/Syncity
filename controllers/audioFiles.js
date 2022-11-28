@@ -3,6 +3,7 @@ const {
 	getAudioFile,
 	getAudioFileStream,
 	getAudioFileStream2,
+	getAudioFileSignedUrl,
 } = require("../utils/s3");
 const fs = require("fs");
 const { start } = require("repl");
@@ -29,6 +30,18 @@ module.exports.onGetAudioFiles = async (req, res, next) => {
 		const stream = data.Body;
 		stream.pipe(res);
 		stream.on("end", res.end);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json(error);
+	}
+};
+
+module.exports.onGetAudioFilesSignedUrl = async (req, res, next) => {
+	try {
+		const { key } = req.query;
+		const { error, url } = await getAudioFileSignedUrl(key);
+		if (error) return res.status(500).json(error);
+		res.redirect(url);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json(error);
