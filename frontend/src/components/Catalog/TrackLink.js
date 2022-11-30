@@ -4,7 +4,7 @@ import MuiLink from "@mui/material/Link";
 import { playTrack } from "../../actions";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import DownloadIcon from "@mui/icons-material/Download";
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography, Box } from "@mui/material";
 import audioFiles from "../../apis/audioFiles";
 import fileDownload from "js-file-download";
 import FileUploadProgress from "../Inputs/FileUploadProgress";
@@ -58,7 +58,7 @@ class TrackLink extends Component {
 		if (track.audioFile) {
 			return (
 				<>
-					<Stack direction="row" spacing={1}>
+					<Stack direction="row" spacing={1} width="100%">
 						<Typography variant="h6" rel="noopener noreferrer">
 							{track.title} - {track.artist}
 						</Typography>
@@ -73,9 +73,11 @@ class TrackLink extends Component {
 							fontSize="large"
 						/>
 						{this.state.fileUploadProgress ? (
-							<FileUploadProgress
-								fileUploadProgress={this.state.fileUploadProgress}
-							/>
+							<Box width="40%">
+								<FileUploadProgress
+									fileUploadProgress={this.state.fileUploadProgress}
+								/>
+							</Box>
 						) : null}
 					</Stack>
 				</>
