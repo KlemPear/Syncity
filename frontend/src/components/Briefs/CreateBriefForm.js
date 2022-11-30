@@ -320,7 +320,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="exclusivity"
 						component={this.renderCheckBox}
-						label="Exclusivity"
+						label="Exclusivity (the music will only belong to this project during all the license duration)"
 						defaultChecked={Boolean(editBrief.exclusivity)}
 					/>
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
@@ -607,7 +607,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="exclusivity"
 						component={this.renderCheckBox}
-						label="Exclusivity (track never been synchronized before)"
+						label="Exclusivity (the music will only belong to this project during all the license duration)"
 					/>
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
 					<Typography variant="h5">Reference(s)</Typography>

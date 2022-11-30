@@ -92,16 +92,26 @@ class BriefApplication extends React.Component {
 
 	renderOnValidateSubmitContent() {
 		return (
-			<Typography variant="body2">
-				{`Upon submission of your application, you accept that nost will perceive
+			<Box>
+				<Typography variant="body2">
+					{`Upon submission of your application, you accept that nost will perceive
 				a commission of ${
 					pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan]
 				}% on this brief budget. `}
-				{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] === 10
-					? "You are on the Business Application Plan, you are getting the best commission rate possible!"
-					: `Upgrade your account before
+					{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] ===
+					10
+						? "You are on the Business Application Plan, you are getting the best commission rate possible!"
+						: `Upgrade your account before
 				submitting your selection to change your commission rate.`}
-			</Typography>
+				</Typography>
+				{this.props.brief.exclusivity === true && (
+					<Typography variant="body2" sx={{ color: "red" }}>
+						It is important to note that this brief requires exclusive music, so
+						you won’t be able to re-license it during the entire duration of the
+						license.
+					</Typography>
+				)}
+			</Box>
 		);
 	}
 
