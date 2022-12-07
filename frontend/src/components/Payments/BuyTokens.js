@@ -135,28 +135,28 @@ class BuyTokens extends React.Component {
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"5 applications per month. 30% Commision on brief budget."
+					"5 applications per month. 30% Commision on brief budget. Maximum of 15 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
 					"5.00/month",
 					"Basic Application Plan",
 					this.props.user,
-					"15 applications per month. 25% Commision on brief budget."
+					"15 applications per month. 25% Commision on brief budget. Maximum of 100 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
 					"19.00/month",
 					"Pro Application Plan",
 					this.props.user,
-					"30 applications per month. 18% Commission on brief budget."
+					"30 applications per month. 18% Commission on brief budget. Maximum of 500 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
 					"49.00/month",
 					"Business Application Plan",
 					this.props.user,
-					"Unlimited applications. 10% Commission on brief budget."
+					"Unlimited applications. 10% Commission on brief budget. Maximum of 1000 uploaded tracks."
 				)}
 			</Grid>
 		);
