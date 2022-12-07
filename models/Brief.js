@@ -59,7 +59,7 @@ const briefSchema = new mongoose.Schema(
 				"Perpetuity",
 			],
 		},
-		extractDuration: String,
+		extractDuration: Number,
 		territory: [
 			{
 				type: String,

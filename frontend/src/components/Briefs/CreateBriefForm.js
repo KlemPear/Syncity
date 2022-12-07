@@ -249,6 +249,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="extractDuration"
 						component={this.renderInput}
+						type="number"
 						label="Extract duration in minutes"
 						InputProps={{
 							inputProps: {
@@ -550,6 +551,7 @@ class CreateBriefForm extends React.Component {
 					<Field
 						name="extractDuration"
 						component={this.renderInput}
+						type="number"
 						label="Extract duration in minutes"
 						InputProps={{
 							inputProps: {
