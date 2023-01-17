@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { fetchTracks } from "../../actions";
 import Modal from "../Modal";
 import TrackLink from "./TrackLink";
+import TrackCommentForm from "./TrackCommentForm";
 
 //mui
 import {
@@ -21,7 +22,11 @@ import MuiLink from "@mui/material/Link";
 class TrackSelector extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = { selectedTracks: [], tooManyTracksSelected: false };
+		this.state = {
+			selectedTracks: [],
+			tooManyTracksSelected: false,
+			trackComment: {},
+		};
 	}
 
 	componentDidMount = () => {
@@ -80,6 +85,14 @@ class TrackSelector extends React.Component {
 		this.props.getSelectedTracks(this.state.selectedTracks);
 	};
 
+	addTrackComment = (comment) => {
+		const trackId = comment.trackId;
+		const text = comment.text;
+		this.setState({
+			trackComment: { ...this.state.trackComment, trackId: text },
+		});
+	};
+
 	render() {
 		if (!this.props.tracks) {
 			return (
@@ -92,27 +105,39 @@ class TrackSelector extends React.Component {
 			<Box>
 				<List dense={true}>
 					{this.props.tracks.map((track) => (
-						<ListItem
-							key={track._id}
-							secondaryAction={this.renderTrackButton(track)}
-						>
-							<ListItemAvatar>
-								<Avatar sx={{ bgcolor: "#458FF7" }}>
-									<AudiotrackIcon color="primary" />
-								</Avatar>
-							</ListItemAvatar>
-							<ListItemText
-								primary={
-									<TrackLink track={track} />
-								}
-								secondary={
-									<Typography variant="body2">
-										Master: {track.masterContact} - Publisher:{" "}
-										{track.publisherContact}
-									</Typography>
-								}
-							/>
-						</ListItem>
+						<Box key={track._id}>
+							<ListItem secondaryAction={this.renderTrackButton(track)}>
+								<ListItemAvatar>
+									<Avatar sx={{ bgcolor: "#458FF7" }}>
+										<AudiotrackIcon color="primary" />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary={<TrackLink track={track} />}
+									secondary={
+										<Typography variant="body2">
+											Master: {track.masterContact} - Publisher:{" "}
+											{track.publisherContact}
+										</Typography>
+									}
+								/>
+							</ListItem>
+							{/* {this.state.selectedTracks.includes(track._id) &&
+								Object.keys(this.state.trackComment).includes(track._id) && (
+									<ListItem>
+										<Typography>Text here</Typography>
+									</ListItem>
+								)}
+							{this.state.selectedTracks.includes(track._id) &&
+								!Object.keys(this.state.trackComment).includes(track._id) && (
+									<ListItem>
+										<TrackCommentForm
+											trackId={track._id}
+											onSubmit={this.addTrackComment}
+										/>
+									</ListItem>
+								)} */}
+						</Box>
 					))}
 				</List>
 				{this.state.tooManyTracksSelected ? (

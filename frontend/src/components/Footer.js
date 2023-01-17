@@ -49,7 +49,7 @@ class Footer extends Component {
 							</Typography>
 						</Grid>
 						<Grid item xs={2} sm={2}>
-							<Typography variant="caption">Copyright © nost 2022</Typography>
+							<Typography variant="caption">Copyright © nost 2023</Typography>
 						</Grid>
 					</Grid>
 				</Container>

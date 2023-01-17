@@ -195,20 +195,6 @@ const validate = (values) => {
 			errors[field] = "Required";
 		}
 	});
-	// if (
-	// 	values.link &&
-	// 	!(
-	// 		values.link.includes("spotify") ||
-	// 		values.link.includes("soundcloud") ||
-	// 		values.link.includes("youtube") ||
-	// 		values.link.includes("share.bridge.audio") ||
-	// 		values.link.includes("disco.ac") ||
-	// 		values.link.includes("dropbox")
-	// 	)
-	// ) {
-	// 	errors.link =
-	// 		"Your track link must be from Souncloud, Youtube, Spotify, Bridge.audio, Disco.ac or Dropbox.";
-	// }
 	return errors;
 };
 

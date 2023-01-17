@@ -155,31 +155,51 @@ class ListBriefs extends React.Component {
 							<Box sx={{ display: "flex", flexGrow: 1 }}></Box>
 						)}
 					</Stack>
-					<Grid
-						container
-						spacing={{ xs: 1, md: 2 }}
-						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
-						justifyContent="space-around"
-						alignItems="center"
-						sx={{ mb: 2 }}
-					>
-						{this.props.briefs.map((brief) => (
-							<Grid
-								item
-								xs={1}
-								sm={1}
-								md={1}
-								key={brief._id}
-								sx={{
-									display: "flex",
-									justifyContent: "center",
-									alignItems: "center",
-								}}
-							>
-								<BriefCard key={brief._id} brief={brief} />
-							</Grid>
-						))}
-					</Grid>
+					{this.props.briefs.length < 1 ? (
+						<Stack
+							direction="column"
+							sx={{
+								display: "flex",
+								justifyContent: "center",
+								my: 5,
+								alignItems: "center",
+							}}
+						>
+							<Typography variant="h5">
+								No open brief at the moment, please check back later!
+							</Typography>
+							<Typography variant="body1">
+								If you have a nost account, you will be notified by email when a
+								new brief is posted.
+							</Typography>
+						</Stack>
+					) : (
+						<Grid
+							container
+							spacing={{ xs: 1, md: 2 }}
+							columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
+							justifyContent="space-around"
+							alignItems="center"
+							sx={{ mb: 2 }}
+						>
+							{this.props.briefs.map((brief) => (
+								<Grid
+									item
+									xs={1}
+									sm={1}
+									md={1}
+									key={brief._id}
+									sx={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}
+								>
+									<BriefCard key={brief._id} brief={brief} />
+								</Grid>
+							))}
+						</Grid>
+					)}
 					{this.state.userNotVerified ? (
 						<Modal
 							showModal={this.state.userNotVerified}
