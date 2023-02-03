@@ -1,6 +1,6 @@
 # Syncity
 
-## How to run the app localy?
+## How to run the app locally?
 
  - clone the repo in the folder of your choice: git clone https://github.com/KlemPear/Syncity.git or use the Github desktop app.
 
