@@ -219,7 +219,10 @@ const mapStateToProps = (state) => {
 	return {
 		userId: state.auth.user._id,
 		user: state.auth.user,
-		briefs: Object.values(state.briefs),
+		// Order brief by dueDate descending
+		briefs: Object.values(state.briefs).sort(function(a,b){
+			return new Date(a.dueDate) - new Date(b.dueDate);
+		}),
 	};
 };
 

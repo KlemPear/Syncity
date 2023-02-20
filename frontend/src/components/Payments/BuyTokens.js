@@ -13,7 +13,13 @@ import {
 	CardContent,
 	CardActions,
 	CardHeader,
+	List,
+	ListItem,
+	Avatar,
+	ListItemAvatar,
+	ListItemText,
 } from "@mui/material";
+import AudiotrackIcon from "@mui/icons-material/Audiotrack";
 
 class BuyTokens extends React.Component {
 	constructor(props) {
@@ -29,24 +35,102 @@ class BuyTokens extends React.Component {
 		this.setState({ briefPlans: false });
 	};
 
-	renderPlanOption = (itemId, amount, name, user, description = null) => {
+	renderPlanOption = (
+		itemId,
+		amount,
+		name,
+		user,
+		description1 = null,
+		description2 = null,
+		description3 = null
+	) => {
 		return (
-			<Grid item xs={1} sm={1} md={1} lg={1}>
+			<Grid
+				item
+				xs={1}
+				sm={1}
+				md={1}
+				lg={1}
+				sx={{
+					display: "flex",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
 				<Card
 					elevation={3}
 					sx={{
-						m: 0.5,
-						minWidth: 250,
-						minHeight: 250,
-						alignItems: "stretch",
+						my: 0.5,
+						width: 450,
+						height: 370,
 						display: "flex",
 						flexDirection: "column",
-						justifyContent: "space-between",
 					}}
 				>
-					<CardHeader title={name} subheader={`$${amount}`} />
-					<CardContent>
-						<Typography variant="body2">{description}</Typography>
+					<CardHeader
+						title={
+							<Typography align="center" variant="h4">
+								{name}
+							</Typography>
+						}
+						subheader={
+							<Typography align="center" variant="h6">
+								${amount}
+							</Typography>
+						}
+						sx={{ mt: 2, p: 0 }}
+					/>
+					<CardContent
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+						}}
+					>
+						<List
+							sx={{
+								width: "100%",
+								maxWidth: 360,
+								bgcolor: "background.paper",
+							}}
+						>
+							<ListItem>
+								<ListItemAvatar>
+									<Avatar sx={{ bgcolor: "background.paper" }}>
+										<AudiotrackIcon color="primary" fontSize="small" />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary={
+										<Typography variant="body1">{description1}</Typography>
+									}
+								/>
+							</ListItem>
+							<ListItem>
+								<ListItemAvatar>
+									<Avatar sx={{ bgcolor: "background.paper" }}>
+										<AudiotrackIcon color="primary" fontSize="small" />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary={
+										<Typography variant="body1">{description2}</Typography>
+									}
+								/>
+							</ListItem>
+							<ListItem>
+								<ListItemAvatar>
+									<Avatar sx={{ bgcolor: "background.paper" }}>
+										<AudiotrackIcon color="primary" fontSize="small" />
+									</Avatar>
+								</ListItemAvatar>
+								<ListItemText
+									primary={
+										<Typography variant="body1">{description3}</Typography>
+									}
+								/>
+							</ListItem>
+						</List>
 					</CardContent>
 					<CardActions sx={{ justifyContent: "center" }}>
 						<SimpleStripe
@@ -67,9 +151,9 @@ class BuyTokens extends React.Component {
 				<Card
 					elevation={3}
 					sx={{
-						m: 0.5,
-						minWidth: 250,
-						minHeight: 250,
+						my: 0.5,
+						minWidth: 400,
+						minHeight: 300,
 						alignItems: "stretch",
 						display: "flex",
 						flexDirection: "column",
@@ -77,11 +161,19 @@ class BuyTokens extends React.Component {
 					}}
 				>
 					<CardHeader
-						title={"Become a verified briefer"}
-						subheader="It is free!"
+						title={
+							<Typography align="center" variant="h4">
+								Become a verified briefer
+							</Typography>
+						}
+						subheader={
+							<Typography align="center" variant="h6">
+								It's free!
+							</Typography>
+						}
 					/>
 					<CardContent>
-						<Typography variant="body2">
+						<Typography align="center" variant="body2">
 							To help maintain our high standards trust and integrity on the
 							platform, we require all new accounts who want to submit a brief
 							to go trough a verification process.{" "}
@@ -112,7 +204,7 @@ class BuyTokens extends React.Component {
 			<Grid
 				container
 				spacing={{ xs: 1, md: 2 }}
-				columns={{ xs: 1, sm: 2, lg: 4 }}
+				columns={{ xs: 1, sm: 1, md: 1, lg: 2 }}
 				justifyContent="space-evenly"
 			>
 				{this.renderBriefOption(
@@ -126,8 +218,9 @@ class BuyTokens extends React.Component {
 		return (
 			<Grid
 				container
-				spacing={{ xs: 1, md: 2 }}
-				columns={{ xs: 1, sm: 2, lg: 4 }}
+				spacing={{ xs: 3 }}
+				columns={{ xs: 1, sm: 1, md: 2, lg: 2 }}
+				alignItems="center"
 				justifyContent="space-evenly"
 			>
 				{this.renderPlanOption(
@@ -135,28 +228,36 @@ class BuyTokens extends React.Component {
 					"0.00/month",
 					"Free Plan",
 					this.props.user,
-					"5 applications per month. 30% Commision on brief budget. Maximum of 15 uploaded tracks."
+					"5 applications per month.",
+					"30% Commision on brief budget.",
+					"Maximum of 15 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
 					"5.00/month",
 					"Basic Application Plan",
 					this.props.user,
-					"15 applications per month. 25% Commision on brief budget. Maximum of 100 uploaded tracks."
+					"15 applications per month.",
+					"25% Commision on brief budget.",
+					"Maximum of 100 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
 					"19.00/month",
 					"Pro Application Plan",
 					this.props.user,
-					"30 applications per month. 18% Commission on brief budget. Maximum of 500 uploaded tracks."
+					"30 applications per month.",
+					"18% Commission on brief budget.",
+					"Maximum of 500 uploaded tracks."
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
 					"49.00/month",
 					"Business Application Plan",
 					this.props.user,
-					"Unlimited applications. 10% Commission on brief budget. Maximum of 1000 uploaded tracks."
+					"Unlimited applications.",
+					"10% Commission on brief budget.",
+					"Maximum of 1000 uploaded tracks."
 				)}
 			</Grid>
 		);

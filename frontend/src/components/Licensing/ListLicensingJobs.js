@@ -45,7 +45,7 @@ class ListLicensingJobs extends Component {
 									.sort((a, b) => +(a.brief?.dueDate - b.brief?.dueDate))
 									.map((licensingJob) => (
 										<LicensingJobCard
-											key={licensingJob._id}
+											key={licensingJob?._id}
 											licensingJob={licensingJob}
 										/>
 									))}

@@ -103,6 +103,9 @@ class LicensingJobCard extends Component {
 
 	render() {
 		const job = this.props.licensingJob;
+		if (job.brief == null) {
+			return null;
+		}
 		return (
 			<Box>
 				<ListItem
