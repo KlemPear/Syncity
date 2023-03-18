@@ -44,6 +44,9 @@ export const theme = (prefersDarkMode = false) => {
 						success: {
 							main: "#4caf50",
 						},
+						grey: {
+							main: "#999999",
+						},
 				  }
 				: {
 						primary: {
@@ -63,6 +66,9 @@ export const theme = (prefersDarkMode = false) => {
 						},
 						success: {
 							main: "#4caf50",
+						},
+						grey: {
+							main: "#999999",
 						},
 				  }),
 		},

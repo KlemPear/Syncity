@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
 import CreateTrack from "../Catalog/CreateTrack";
 //mui
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Box, Button, Typography, Stack, Checkbox } from "@mui/material";
 
 const pitchPlanToCommisionDict = {
 	freeTrial: 30,
@@ -29,6 +29,7 @@ class BriefApplication extends React.Component {
 			noTrackSelected: false,
 			validateOnSubmit: false,
 			selectedTracks: [],
+			onValidateSubmitchecked: false
 		};
 	}
 	onNotEnoughTokens = () => {
@@ -47,6 +48,9 @@ class BriefApplication extends React.Component {
 		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
 	};
 
+	handleOnValidateSubmitCheckboxChange = (event) => {
+		this.setState({ onValidateSubmitchecked: event.target.checked });
+	}
 	renderModalContent() {
 		return (
 			<div>
@@ -93,24 +97,34 @@ class BriefApplication extends React.Component {
 	renderOnValidateSubmitContent() {
 		return (
 			<Box>
-				<Typography variant="body2">
-					{`Upon submission of your application, you accept that nost will perceive
+				<Box>
+					<Typography variant="body2">
+						{`Upon submission of your application, you accept that nost will perceive
 				a commission of ${
 					pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan]
 				}% on this brief budget. `}
-					{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] ===
-					10
-						? "You are on the Business Application Plan, you are getting the best commission rate possible!"
-						: `Upgrade your account before
+						{pitchPlanToCommisionDict[this.props.user.pitchSubscriptionPlan] ===
+						10
+							? "You are on the Business Application Plan, you are getting the best commission rate possible!"
+							: `Upgrade your account before
 				submitting your selection to change your commission rate.`}
-				</Typography>
-				{this.props.brief.exclusivity === true && (
-					<Typography variant="body2" sx={{ color: "red" }}>
-						It is important to note that this brief requires exclusive music, so
-						you won’t be able to re-license it during the entire duration of the
-						license.
 					</Typography>
-				)}
+					{this.props.brief.exclusivity === true && (
+						<Typography variant="body2" sx={{ color: "red" }}>
+							It is important to note that this brief requires exclusive music,
+							so you won’t be able to re-license it during the entire duration
+							of the license.
+						</Typography>
+					)}
+				</Box>
+				<Stack direction="row">
+					<Checkbox
+						checked={this.state.onValidateSubmitchecked}
+						onChange={this.handleOnValidateSubmitCheckboxChange}
+						inputProps={{ "aria-label": "controlled" }}
+					/>
+					<Typography variant="caption">I confirm that all shareholders agree to pitch their track(s) for this brief.</Typography>
+				</Stack>
 			</Box>
 		);
 	}
@@ -123,10 +137,10 @@ class BriefApplication extends React.Component {
 				</Button>
 				<Button
 					variant="contained"
-					color="secondary"
+					color={this.state.onValidateSubmitchecked ? "secondary" : "grey"}
 					onClick={() => this.createApplicationAndNotification()}
 				>
-					I agree. Submit!
+					{this.state.onValidateSubmitchecked ? "I agree. Submit!" : "Please confirm the checkbox above."} 
 				</Button>
 			</React.Fragment>
 		);
@@ -147,6 +161,9 @@ class BriefApplication extends React.Component {
 	};
 
 	createApplicationAndNotification() {
+		if(!this.state.onValidateSubmitchecked){
+			return;
+		}
 		this.props.burnPitchToken(this.props.userId);
 		const applicationValues = {
 			tracks: this.state.selectedTracks,
