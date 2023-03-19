@@ -65,10 +65,7 @@ class ListApplications extends React.Component {
 						label="selected applications"
 					/>
 				</Tabs>
-				{!this.props.applications ||
-				this.props.applications.length === 0 ||
-				this.props.applications?.find((o) => true)?.brief?.title ===
-					undefined ? (
+				{this.props.applications.length === 0 ? (
 					<Box justifyContent="center" alignItems="center" sx={{ mt: 20 }}>
 						<Typography
 							sx={{ display: "flex", justifyContent: "center" }}
@@ -103,7 +100,7 @@ class ListApplications extends React.Component {
 									<BriefCard key={application._id} application={application} />
 								</Grid>
 							) : (
-								<></>
+								<React.Fragment key={application._id} />
 							)
 						)}
 					</Grid>
