@@ -88,7 +88,7 @@ module.exports.onCreateBrief = async (req, res, next) => {
 		// if brief is public send email to all potential applicants
 		if (!newBrief.private) {
 			applicantsEmailList = await User.find(
-				{ briefSubscriptionPlan: "None" },
+				{ briefSubscriptionPlan: { $ne: "Verified" } },
 				"email"
 			);
 		} else {

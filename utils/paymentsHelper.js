@@ -44,7 +44,7 @@ const updatePlans = async (user, plan) => {
 		case "freePlan":
 			user.briefTokens = -1;
 			user.pitchTokens = 5;
-			user.briefSubscriptionPlan = plan;
+			//user.briefSubscriptionPlan = plan; // Brief Plan decommissioned, either None or Verified now.
 			user.pitchSubscriptionPlan = plan;
 			break;
 		case "basicPitchPlan":
