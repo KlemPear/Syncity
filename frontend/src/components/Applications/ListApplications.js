@@ -71,7 +71,7 @@ class ListApplications extends React.Component {
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
-							No application found.
+							No applications were submitted from this account.
 						</Typography>
 					</Box>
 				) : (

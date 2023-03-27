@@ -14,14 +14,17 @@ const getNumberOfDays = (start, end) => {
 	const diffInTime = date2.getTime() - date1.getTime();
 
 	// Calculating the no. of days between two dates
-	const diffInDays = Math.round(diffInTime / oneDay);
+	const diffInDays = Math.round(diffInTime / oneDay) + 1;
 
 	return diffInDays;
 };
 
 const updateClosedBrief = async (briefs) => {
 	briefs.forEach(async (brief) => {
-		if (getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0) {
+		if (
+			brief.open !== false &&
+			getNumberOfDays(new Date(Date.now()), brief.dueDate) < 0
+		) {
 			brief.open = false;
 			const updatedBrief = await Brief.findByIdAndUpdate(brief._id, brief, {
 				returnDocument: "after",

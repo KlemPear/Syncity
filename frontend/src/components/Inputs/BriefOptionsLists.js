@@ -36,7 +36,9 @@ module.exports.licenseDurationOptions = [
 
 module.exports.territoryOptions = [
 	"Europe",
-	"USA and Canada",
+	//"USA and Canada",
+	"Canada",
+	"USA",
 	"Africa",
 	"South America",
 	"Asia",
