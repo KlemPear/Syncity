@@ -60,6 +60,7 @@ const briefSchema = new mongoose.Schema(
 			],
 		},
 		extractDuration: Number,
+		extractDurationSecond: Number,
 		territory: [
 			{
 				type: String,

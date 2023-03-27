@@ -139,9 +139,10 @@ class ShowBrief extends React.Component {
 			<>
 				<Typography sx={{ display: "flex", justifyContent: "flex-start" }}>
 					<HourglassBottomIcon sx={{ m: 0, p: 0 }} />
-					{numberOfDaysLeft > 0
-						? `${numberOfDaysLeft} days left`
-						: `${(numberOfDaysLeft * -1).toString()} days past due date`}
+					{numberOfDaysLeft === 0 && `Last day to apply!`}
+					{numberOfDaysLeft > 0 && `${numberOfDaysLeft} days left`}
+					{numberOfDaysLeft < 0 &&
+						`${(numberOfDaysLeft * -1).toString()} days past due date`}
 				</Typography>
 				<Typography>
 					Budget: {moneyFormatter(brief.currency).format(brief.budget)} all in
@@ -210,7 +211,10 @@ class ShowBrief extends React.Component {
 							<ListItem>Use: {brief.use.join(", ")}</ListItem>
 							<ListItem>License Duration: {brief.licenseDuration}</ListItem>
 							<ListItem>
-								Extract Duration: {brief.extractDuration} minutes
+								{"Extract Duration: "}
+								{brief.extractDuration ? `${brief.extractDuration}min` : "00min"}
+								{" : "}
+								{brief.extractDurationSecond ? `${brief.extractDurationSecond}sec` : "00sec"}
 							</ListItem>
 							<ListItem>Territory: {brief.territory.join(", ")}</ListItem>
 						</List>

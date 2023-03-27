@@ -210,7 +210,14 @@ class BriefCard extends React.Component {
 					<ListItem>Media: {brief.media}</ListItem>
 					<ListItem>Use: {brief.use.join(", ")}</ListItem>
 					<ListItem>License Duration: {brief.licenseDuration}</ListItem>
-					<ListItem>Extract Duration: {brief.extractDuration} minutes</ListItem>
+					<ListItem>
+						{"Extract Duration: "}
+						{brief.extractDuration ? `${brief.extractDuration}min` : "00min"}
+						{":"}
+						{brief.extractDurationSecond
+							? `${brief.extractDurationSecond}sec`
+							: "00 sec"}
+					</ListItem>
 					<ListItem>Territory: {brief.territory.join(", ")}</ListItem>
 				</List>
 				<br />

@@ -246,23 +246,42 @@ class CreateBriefForm extends React.Component {
 						value={editBrief.licenseDuration}
 						placeholder={editBrief.licenseDuration}
 					/>
-					<Field
-						name="extractDuration"
-						component={this.renderInput}
-						type="number"
-						label="Extract duration in minutes"
-						InputProps={{
-							inputProps: {
-								max: 90,
-								min: 1,
-							},
-							startAdornment: (
-								<InputAdornment position="start">minutes:</InputAdornment>
-							),
-						}}
-						value={editBrief.extractDuration}
-						placeholder={editBrief.extractDuration}
-					/>
+					<Stack direction="row">
+						<Field
+							name="extractDuration"
+							component={this.renderInput}
+							type="number"
+							label="Extract duration in minutes"
+							InputProps={{
+								inputProps: {
+									max: 90,
+									min: 0,
+								},
+								startAdornment: (
+									<InputAdornment position="start">minutes:</InputAdornment>
+								),
+							}}
+							value={editBrief.extractDuration}
+							placeholder={editBrief.extractDuration?.toString()}
+						/>
+						<Field
+							name="extractDurationSecond"
+							component={this.renderInput}
+							type="number"
+							label="Extract duration in seconds"
+							InputProps={{
+								inputProps: {
+									max: 60,
+									min: 0,
+								},
+								startAdornment: (
+									<InputAdornment position="start">seconds:</InputAdornment>
+								),
+							}}
+							value={editBrief.extractDurationSecond}
+							placeholder={editBrief.extractDurationSecond?.toString()}
+						/>
+					</Stack>
 					<Field
 						name="territory"
 						component={this.renderMultipleSelectInput}
@@ -548,21 +567,38 @@ class CreateBriefForm extends React.Component {
 						label="License Duration"
 						selectList={licenseDurationOptions}
 					/>
-					<Field
-						name="extractDuration"
-						component={this.renderInput}
-						type="number"
-						label="Extract duration in minutes"
-						InputProps={{
-							inputProps: {
-								max: 90,
-								min: 1,
-							},
-							startAdornment: (
-								<InputAdornment position="start">minutes:</InputAdornment>
-							),
-						}}
-					/>
+					<Stack direction="row">
+						<Field
+							name="extractDuration"
+							component={this.renderInput}
+							type="number"
+							label="Extract duration in minutes"
+							InputProps={{
+								inputProps: {
+									max: 90,
+									min: 0,
+								},
+								startAdornment: (
+									<InputAdornment position="start">minutes:</InputAdornment>
+								),
+							}}
+						/>
+						<Field
+							name="extractDurationSecond"
+							component={this.renderInput}
+							type="number"
+							label="Extract duration in seconds"
+							InputProps={{
+								inputProps: {
+									max: 60,
+									min: 0,
+								},
+								startAdornment: (
+									<InputAdornment position="start">seconds:</InputAdornment>
+								),
+							}}
+						/>
+					</Stack>
 					<Field
 						name="territory"
 						component={this.renderMultipleSelectInput}
