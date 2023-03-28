@@ -277,9 +277,10 @@ class BriefCard extends React.Component {
 				>
 					<CardContent sx={{ py: 0.5 }}>
 						<Typography sx={{ mt: 0.5 }}>Description:</Typography>
-						<Typography variant="body1" color="text.primary">
+						{/* <Typography variant="body1" color="text.primary">
 							{brief.description}
-						</Typography>
+						</Typography> */}
+						<Box dangerouslySetInnerHTML={{ __html: brief.description }}/>
 					</CardContent>
 				</Box>
 				<CardActions disableSpacing>

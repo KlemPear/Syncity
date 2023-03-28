@@ -17,6 +17,7 @@ import {
 	InputAdornment,
 } from "@mui/material";
 import MultipleSelectInput from "../Inputs/MulipleSelectInput";
+import TextFormattingInput from "../Inputs/TextFormattingInput";
 
 import {
 	mediaOptions,
@@ -184,8 +185,9 @@ class CreateBriefForm extends React.Component {
 					/>
 					<Field
 						name="description"
-						component={this.renderTextInput}
-						label="description"
+						//component={this.renderTextInput}
+						component={TextFormattingInput}
+						label="Description:"
 						value={editBrief.description}
 						placeholder={editBrief.description}
 					/>
@@ -517,8 +519,9 @@ class CreateBriefForm extends React.Component {
 					/>
 					<Field
 						name="description"
-						component={this.renderTextInput}
-						label="description"
+						//component={this.renderTextInput}
+						component={TextFormattingInput}
+						label="Description:"
 					/>
 					<Divider sx={{ m: 1, bgcolor: "black" }} />
 					<Typography variant="h5">License Terms</Typography>

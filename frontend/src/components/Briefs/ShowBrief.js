@@ -199,9 +199,10 @@ class ShowBrief extends React.Component {
 				>
 					<CardContent>
 						<Typography variant="h5">Description:</Typography>
-						<Typography variant="body1" color="text.primary">
+						{/* <Typography variant="body1" color="text.primary">
 							{brief.description}
-						</Typography>
+						</Typography> */}
+						<Box dangerouslySetInnerHTML={{ __html: brief.description }}/>
 					</CardContent>
 					<CardContent>
 						<Divider variant="middle" sx={{ margin: 1 }} />
