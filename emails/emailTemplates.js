@@ -84,3 +84,23 @@ module.exports.newBriefEmailOptions = (
 		},
 	};
 };
+
+module.exports.briefDeadlineExpired = (
+	firstName,
+	url,
+	briefTitle,
+	email
+) => {
+	return {
+		subject: `Brief deadline expired, let's see what tracks you have received!`,
+		text: `Your brief deadline has expired, check it out at https://app.nost.audio`,
+		html: "<p>Hello World!</p>",
+		toAddress: email,
+		templateId: "d-d7f5041f4e954deba1dd4f9095079a3f",
+		dynamicTemplateData: {
+			briefTitle: briefTitle,
+			url: url,
+			firstName: firstName,
+		},
+	};
+};

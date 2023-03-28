@@ -39,11 +39,11 @@ module.exports.onGetAllBriefs = async (req, res, next) => {
 	try {
 		if (req.query) {
 			const briefs = await Brief.find(req.query);
-			const updatedBriefs = await updateClosedBrief(briefs);
+			//const updatedBriefs = await updateClosedBrief(briefs);
 			return res.status(200).json(updatedBriefs);
 		} else {
 			const briefs = await Brief.find();
-			const updatedBriefs = await updateClosedBrief(briefs);
+			//const updatedBriefs = await updateClosedBrief(briefs);
 			return res.status(200).json(updatedBriefs);
 		}
 	} catch (error) {

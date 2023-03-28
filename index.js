@@ -8,6 +8,10 @@ const cors = require("cors");
 const path = require("path");
 // const helmet = require("helmet");
 
+//JobScheduler
+const cron = require("node-cron");
+const jobs = require("./ScheduledJobs/ScheduledEmails");
+
 // session
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
@@ -143,6 +147,15 @@ app.use(
 	licensingJobRouter
 );
 app.use("/audio-files", audioFilesRouter);
+
+//JobScheduler
+// Schedule the job to run at 00:05 daily
+cron.schedule("5 0 * * *", async () => {
+	console.log(
+		"Run Schedule: UpdateClosedBriefsAndSendBriefDeadlineExpiredEmails"
+	);
+	await jobs.UpdateClosedBriefsAndSendBriefDeadlineExpiredEmails();
+});
 
 if (process.env.NODE_ENV === "production") {
 	// Step 1: serve our static asset in production
