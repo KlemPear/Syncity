@@ -4,14 +4,14 @@ import RegisterForm from "./RegisterForm";
 import { registerUser } from "../../actions";
 
 //mui
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography, Divider } from "@mui/material";
 
 class Register extends React.Component {
 	onSubmit = (formValues) => {
 		const user = {
 			firstName: formValues.firstName,
 			lastName: formValues.lastName,
-			// bio: formValues.bio,
+			sponsorCode: formValues.sponsorCode,
 			email: formValues.email,
 			username: formValues.email,
 		};
@@ -25,14 +25,30 @@ class Register extends React.Component {
 
 	render() {
 		return (
-			<Box sx={{ display: "flex", justifyContent: "center" }}>
-				<Stack spacing={2}>
-					<Typography
-						sx={{ display: "flex", justifyContent: "center" }}
-						variant="h3"
-					>
-						Register
-					</Typography>
+			<Box sx={{ display: "flex", justifyContent: "space-around" }}>
+				<Stack
+					direction="row"
+					divider={<Divider orientation="vertical" flexItem />}
+					justifyContent="space-evenly"
+					alignItems="center"
+					spacing={2}
+				>
+					<Stack>
+						<img
+							style={{
+								width: 200,
+								height: 200,
+							}}
+							src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
+							alt="logo"
+						/>
+						<Typography
+							sx={{ display: "flex", justifyContent: "center" }}
+							variant="h3"
+						>
+							Sign Up
+						</Typography>
+					</Stack>
 					<RegisterForm onSubmit={this.onSubmit} />
 				</Stack>
 			</Box>

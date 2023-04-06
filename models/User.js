@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
 			},
 		},
 		bio: String,
-		// tokens: { type: Number, default: 10 },
 		connections: [
 			{
 				type: Schema.Types.ObjectId,
@@ -30,6 +29,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 		},
+		sponsorCode: String,
 		stripeCustomerId: String,
 		stripeAccount: String,
 		briefSubscriptionPlan: {

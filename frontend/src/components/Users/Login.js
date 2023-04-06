@@ -5,7 +5,7 @@ import { loginUser } from "../../actions";
 import { Link } from "react-router-dom";
 
 //mui
-import { Stack, Box, Typography, Button } from "@mui/material";
+import { Stack, Box, Typography, Button, Divider } from "@mui/material";
 
 class Login extends React.Component {
 	onSubmit = (formValues) => {
@@ -26,24 +26,32 @@ class Login extends React.Component {
 	render() {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center" }}>
-				<Stack direction="row" spacing={10}>
-					<img
-						style={{
-							width: 200,
-							height: 200,
-							display: "flex",
-							justifyContent: "center",
-						}}
-						src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
-						alt="logo"
-					/>
-					<Stack spacing={2}>
+				<Stack
+					direction="row"
+					divider={<Divider orientation="vertical" flexItem />}
+					justifyContent="space-evenly"
+					alignItems="center"
+					spacing={2}
+				>
+					<Stack>
+						<img
+							style={{
+								width: 200,
+								height: 200,
+								display: "flex",
+								justifyContent: "center",
+							}}
+							src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
+							alt="logo"
+						/>
 						<Typography
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
 							Log In
 						</Typography>
+					</Stack>
+					<Stack spacing={2}>
 						{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
 						<LoginForm onSubmit={this.onSubmit} />
 						<Button component={Link} to="/forgot-password">
