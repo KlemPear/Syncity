@@ -85,7 +85,7 @@ class RegisterForm extends React.Component {
 						<Field
 							name="sponsorCode"
 							component={this.renderInput}
-							label="Enter Ambassador code here (optional)"
+							label="Ambassador code (optional)"
 						/>
 						<Field
 							name="password"
