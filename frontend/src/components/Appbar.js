@@ -24,6 +24,39 @@ import {
 import { connect } from "react-redux";
 import NotificationCard from "./Notifications/NotificationCard";
 import history from "../util/history";
+
+//Shepherd tour
+import { ShepherdTour, ShepherdTourContext } from "react-shepherd";
+import "shepherd.js/dist/css/shepherd.css";
+import shepherdSteps from "../util/shepherdSteps";
+
+const tourOptions = {
+	defaultStepOptions: {
+		cancelIcon: {
+			enabled: true,
+		},
+	},
+	useModalOverlay: true,
+};
+
+function ShepherdButton() {
+	const tour = React.useContext(ShepherdTourContext);
+	return (
+		<Button
+			sx={{ my: 2, display: "block" }}
+			color="appBarButton"
+			onClick={tour.start}
+		>
+			Take A Tour
+		</Button>
+	);
+}
+
+function ShepherdTypography() {
+	const tour = React.useContext(ShepherdTourContext);
+	return <Typography onClick={tour.start}>Take a tour of nost!</Typography>;
+}
+
 class ResponsiveAppBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -133,7 +166,7 @@ class ResponsiveAppBar extends React.Component {
 	render() {
 		const { pages, settings } = this.getPagesAndSettings();
 		return (
-			<AppBar position="static" sx={{ mb: 2 }} color="third">
+			<AppBar position="static" sx={{ mb: 10 }} color="third">
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
 						<Typography
@@ -243,6 +276,11 @@ class ResponsiveAppBar extends React.Component {
 									{page}
 								</Button>
 							))}
+							{this.props.isSignedIn && !this.props.isUserPending && (
+								<ShepherdTour steps={shepherdSteps} tourOptions={tourOptions}>
+									<ShepherdButton />
+								</ShepherdTour>
+							)}
 						</Box>
 
 						{settings != null ? (
@@ -261,6 +299,7 @@ class ResponsiveAppBar extends React.Component {
 												color="primary"
 												sx={{ p: 0 }}
 												onClick={this.handleOpenNotificationMenu}
+												id="notifications-button"
 											>
 												<CircleNotificationsIcon fontSize="large" />
 											</IconButton>
@@ -309,6 +348,7 @@ class ResponsiveAppBar extends React.Component {
 										sx={{ p: 0 }}
 										startIcon={<AccountCircleIcon color="appBarButton" />}
 										color="appBarButton"
+										id="username-button"
 									>
 										{this.props.user.firstName} {this.props.user.lastName}
 									</Button>
@@ -341,6 +381,14 @@ class ResponsiveAppBar extends React.Component {
 												inputProps={{ "aria-label": "controlled" }}
 											/>
 										</Stack>
+									</MenuItem>
+									<MenuItem onClick={this.handleCloseUserMenu}>
+										<ShepherdTour
+											steps={shepherdSteps}
+											tourOptions={tourOptions}
+										>
+											<ShepherdTypography />
+										</ShepherdTour>
 									</MenuItem>
 									{this.props.user?.briefSubscriptionPlan !== "Verified" ? (
 										<MenuItem>

@@ -39,11 +39,9 @@ module.exports.onGetAllBriefs = async (req, res, next) => {
 	try {
 		if (req.query) {
 			const briefs = await Brief.find(req.query);
-			//const updatedBriefs = await updateClosedBrief(briefs);
 			return res.status(200).json(briefs);
 		} else {
 			const briefs = await Brief.find();
-			//const updatedBriefs = await updateClosedBrief(briefs);
 			return res.status(200).json(briefs);
 		}
 	} catch (error) {

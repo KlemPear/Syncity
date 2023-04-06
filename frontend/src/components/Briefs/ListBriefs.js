@@ -132,6 +132,7 @@ class ListBriefs extends React.Component {
 								onClick={() => this.onUserNotVerified()}
 								color="secondary"
 								aria-label="add"
+								id="new-brief-button"
 							>
 								<Add sx={{ mr: 1 }} />
 								New Brief
@@ -143,6 +144,7 @@ class ListBriefs extends React.Component {
 								to="/create-brief"
 								color="secondary"
 								aria-label="add"
+								id="new-brief-button"
 							>
 								<Add sx={{ mr: 1 }} />
 								New Brief
@@ -150,7 +152,11 @@ class ListBriefs extends React.Component {
 						)}
 
 						{this.state.value === 0 ? (
-							<FilterBriefForm onSubmit={this.onBriefFilterSubmit} />
+							<Box id="list-brief-filters">
+								<FilterBriefForm
+									onSubmit={this.onBriefFilterSubmit}
+								/>
+							</Box>
 						) : (
 							<Box sx={{ display: "flex", flexGrow: 1 }}></Box>
 						)}
@@ -220,7 +226,7 @@ const mapStateToProps = (state) => {
 		userId: state.auth.user._id,
 		user: state.auth.user,
 		// Order brief by dueDate descending
-		briefs: Object.values(state.briefs).sort(function(a,b){
+		briefs: Object.values(state.briefs).sort(function (a, b) {
 			return new Date(a.dueDate) - new Date(b.dueDate);
 		}),
 	};

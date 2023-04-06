@@ -72,5 +72,17 @@ export const theme = (prefersDarkMode = false) => {
 						},
 				  }),
 		},
+		components: {
+			// Name of the component
+			MuiButton: {
+				defaultProps: {},
+				styleOverrides: {
+					root: {
+						textTransform: "none",
+						fontSize: "1rem",
+					},
+				},
+			},
+		},
 	});
 };

@@ -125,6 +125,15 @@ class ShowUser extends React.Component {
 					<Typography sx={{ display: "flex", justifyContent: "center" }}>
 						{this.props.currentUser.bio}
 					</Typography>
+					<Box sx={{ display: "flex", justifyContent: "center" }}>
+						<Button
+							variant="outlined"
+							component={Link}
+							to={`/forgot-password/reset/${this.props.currentUser.confirmationCode}`}
+						>
+							Change Password
+						</Button>
+					</Box>
 					<Divider variant="middle" sx={{ margin: 1, bgcolor: "black" }} />
 					<Box
 						sx={{
@@ -226,6 +235,7 @@ class ShowUser extends React.Component {
 						sx={{
 							justifyContent: "space-evenly",
 						}}
+						id="connections"
 					>
 						<Typography sx={{ mb: 2 }} variant="h5">
 							Connections

@@ -26,18 +26,30 @@ class Login extends React.Component {
 	render() {
 		return (
 			<Box sx={{ display: "flex", justifyContent: "center" }}>
-				<Stack spacing={2}>
-					<Typography
-						sx={{ display: "flex", justifyContent: "center" }}
-						variant="h3"
-					>
-						Log In
-					</Typography>
-					{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
-					<LoginForm onSubmit={this.onSubmit} />
-					<Button component={Link} to="/forgot-password">
-						Forgot Password?
-					</Button>
+				<Stack direction="row" spacing={10}>
+					<img
+						style={{
+							width: 200,
+							height: 200,
+							display: "flex",
+							justifyContent: "center",
+						}}
+						src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
+						alt="logo"
+					/>
+					<Stack spacing={2}>
+						<Typography
+							sx={{ display: "flex", justifyContent: "center" }}
+							variant="h3"
+						>
+							Log In
+						</Typography>
+						{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
+						<LoginForm onSubmit={this.onSubmit} />
+						<Button component={Link} to="/forgot-password">
+							Forgot Password?
+						</Button>
+					</Stack>
 				</Stack>
 			</Box>
 		);
