@@ -49,6 +49,9 @@ class LicensingJobCard extends Component {
 					<Typography variant="body2">{`Submitted by ${brief.author.firstName} ${brief.author.lastName} - ${brief.author.email}`}</Typography>
 				</ListItem>
 				<ListItem>
+					<Typography variant="body2">{`Sponsor Code: ${brief.author.sponsorCode ?? "N/A"}`}</Typography>
+				</ListItem>
+				<ListItem>
 					<Typography variant="body2">{`Budget: ${moneyFormatter(
 						brief.currency
 					).format(brief.budget)}`}</Typography>
