@@ -82,11 +82,11 @@ class RegisterForm extends React.Component {
 							label="Email Address"
 							type="email"
 						/>
-						{/* <Field
-							name="bio"
-							component={this.renderTextInput}
-							label="Add a short bio to your profile..."
-						/> */}
+						<Field
+							name="sponsorCode"
+							component={this.renderInput}
+							label="Enter Ambassador code here (optional)"
+						/>
 						<Field
 							name="password"
 							component={this.renderInput}
