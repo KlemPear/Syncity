@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { fetchTracks } from "../../actions";
 import Modal from "../Modal";
 import TrackLink from "./TrackLink";
-import TrackCommentForm from "./TrackCommentForm";
 
 //mui
 import {
@@ -17,7 +16,6 @@ import {
 	Typography,
 } from "@mui/material";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import MuiLink from "@mui/material/Link";
 
 class TrackSelector extends React.Component {
 	constructor(props) {
@@ -25,7 +23,6 @@ class TrackSelector extends React.Component {
 		this.state = {
 			selectedTracks: [],
 			tooManyTracksSelected: false,
-			trackComment: {},
 		};
 	}
 
@@ -86,14 +83,6 @@ class TrackSelector extends React.Component {
 		this.props.getSelectedTracks(this.state.selectedTracks);
 	};
 
-	addTrackComment = (comment) => {
-		const trackId = comment.trackId;
-		const text = comment.text;
-		this.setState({
-			trackComment: { ...this.state.trackComment, trackId: text },
-		});
-	};
-
 	render() {
 		if (!this.props.tracks) {
 			return (
@@ -123,21 +112,6 @@ class TrackSelector extends React.Component {
 									}
 								/>
 							</ListItem>
-							{/* {this.state.selectedTracks.includes(track._id) &&
-								Object.keys(this.state.trackComment).includes(track._id) && (
-									<ListItem>
-										<Typography>Text here</Typography>
-									</ListItem>
-								)}
-							{this.state.selectedTracks.includes(track._id) &&
-								!Object.keys(this.state.trackComment).includes(track._id) && (
-									<ListItem>
-										<TrackCommentForm
-											trackId={track._id}
-											onSubmit={this.addTrackComment}
-										/>
-									</ListItem>
-								)} */}
 						</Box>
 					))}
 				</List>

@@ -9,8 +9,16 @@ import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
 import CreateTrack from "../Catalog/CreateTrack";
+
 //mui
-import { Box, Button, Typography, Stack, Checkbox } from "@mui/material";
+import {
+	Box,
+	Button,
+	Typography,
+	Stack,
+	Checkbox,
+	TextField,
+} from "@mui/material";
 
 const pitchPlanToCommisionDict = {
 	freeTrial: 30,
@@ -31,6 +39,7 @@ class BriefApplication extends React.Component {
 			selectedTracks: [],
 			onValidateSubmitchecked: false,
 			onTrackSelectedAddComment: false,
+			tracksComments: {},
 		};
 	}
 	onNotEnoughTokens = () => {
@@ -163,12 +172,31 @@ class BriefApplication extends React.Component {
 	}
 
 	renderOnTrackSelectedAddCommentContent() {
-		console.log(this.state);
 		return (
 			<Box>
-				{this.state.selectedTracks.map((track) => {
-					<Typography variant="body2">track</Typography>;
-				})}
+				{this.state.selectedTracks.map((track) => (
+					<Box key={track._id}>
+						<Typography variant="h6">
+							{track.title} - {track.artist}
+						</Typography>
+						<TextField
+							id={track._id}
+							hiddenLabel
+							margin="dense"
+							fullWidth
+							placeholder="optional..."
+							value={this.state.tracksComments[track._id] ?? ""}
+							onChange={(event) => {
+								this.setState({
+									tracksComments: {
+										...this.state.tracksComments,
+										[track._id]: event.target.value,
+									},
+								});
+							}}
+						/>
+					</Box>
+				))}
 			</Box>
 		);
 	}
@@ -211,13 +239,19 @@ class BriefApplication extends React.Component {
 		if (!this.state.onValidateSubmitchecked) {
 			return;
 		}
-		this.props.burnPitchToken(this.props.userId);
+		var comments = [];
+		var tracksComments = this.state.tracksComments;
+		Object.keys(tracksComments).map((trackId) =>
+			comments.push({ trackId: trackId, comment: tracksComments[trackId] })
+		);
 		const applicationValues = {
 			tracks: this.state.selectedTracks,
 			author: `${this.props.userId}`,
 			brief: `${this.props.brief._id}`,
+			tracksComments: comments,
 		};
 		this.props.createApplication(applicationValues);
+		this.props.burnPitchToken(this.props.userId);
 		// Notify brief author of the application
 		const notif = {
 			title: "You've got a new application!",
