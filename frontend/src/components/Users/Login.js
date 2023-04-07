@@ -48,7 +48,7 @@ class Login extends React.Component {
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
-							Log In
+							Sign in
 						</Typography>
 					</Stack>
 					<Stack spacing={2}>
