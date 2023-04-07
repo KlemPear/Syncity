@@ -46,7 +46,7 @@ class Register extends React.Component {
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
-							Sign Up
+							Sign up
 						</Typography>
 					</Stack>
 					<RegisterForm onSubmit={this.onSubmit} />
