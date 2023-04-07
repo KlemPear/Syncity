@@ -29,7 +29,8 @@ class BriefApplication extends React.Component {
 			noTrackSelected: false,
 			validateOnSubmit: false,
 			selectedTracks: [],
-			onValidateSubmitchecked: false
+			onValidateSubmitchecked: false,
+			onTrackSelectedAddComment: false,
 		};
 	}
 	onNotEnoughTokens = () => {
@@ -45,12 +46,22 @@ class BriefApplication extends React.Component {
 	};
 
 	onValidateOnSubmit = () => {
-		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
+		this.setState({
+			validateOnSubmit: !this.state.validateOnSubmit,
+			onTrackSelectedAddComment: false,
+		});
+	};
+
+	onTrackSelectedAddComment = () => {
+		this.setState({
+			onTrackSelectedAddComment: !this.state.onTrackSelectedAddComment,
+		});
 	};
 
 	handleOnValidateSubmitCheckboxChange = (event) => {
 		this.setState({ onValidateSubmitchecked: event.target.checked });
-	}
+	};
+
 	renderModalContent() {
 		return (
 			<div>
@@ -123,7 +134,10 @@ class BriefApplication extends React.Component {
 						onChange={this.handleOnValidateSubmitCheckboxChange}
 						inputProps={{ "aria-label": "controlled" }}
 					/>
-					<Typography variant="caption">I confirm that all shareholders agree to pitch their track(s) for this brief.</Typography>
+					<Typography variant="caption">
+						I confirm that all shareholders agree to pitch their track(s) for
+						this brief.
+					</Typography>
 				</Stack>
 			</Box>
 		);
@@ -140,7 +154,39 @@ class BriefApplication extends React.Component {
 					color={this.state.onValidateSubmitchecked ? "secondary" : "grey"}
 					onClick={() => this.createApplicationAndNotification()}
 				>
-					{this.state.onValidateSubmitchecked ? "I agree. Submit!" : "Please confirm the checkbox above."} 
+					{this.state.onValidateSubmitchecked
+						? "I agree. Submit!"
+						: "Please confirm the checkbox above."}
+				</Button>
+			</React.Fragment>
+		);
+	}
+
+	renderOnTrackSelectedAddCommentContent() {
+		console.log(this.state);
+		return (
+			<Box>
+				{this.state.selectedTracks.map((track) => {
+					<Typography variant="body2">track</Typography>;
+				})}
+			</Box>
+		);
+	}
+
+	renderOnTrackSelectedAddCommentActions() {
+		return (
+			<React.Fragment>
+				<Button
+					onClick={() => this.setState({ onTrackSelectedAddComment: false })}
+				>
+					Cancel
+				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={() => this.onValidateOnSubmit()}
+				>
+					Next
 				</Button>
 			</React.Fragment>
 		);
@@ -156,12 +202,13 @@ class BriefApplication extends React.Component {
 		if (this.state.selectedTracks.length === 0) {
 			this.onNoTrackSelected();
 		} else {
-			this.onValidateOnSubmit();
+			//this.onValidateOnSubmit();
+			this.onTrackSelectedAddComment();
 		}
 	};
 
 	createApplicationAndNotification() {
-		if(!this.state.onValidateSubmitchecked){
+		if (!this.state.onValidateSubmitchecked) {
 			return;
 		}
 		this.props.burnPitchToken(this.props.userId);
@@ -256,6 +303,17 @@ class BriefApplication extends React.Component {
 						content={this.renderNoTrackModalContent()}
 						actions={this.renderNoTrackModalActions()}
 						onDismiss={() => this.setState({ noTrackSelected: false })}
+					/>
+				) : null}
+				{this.state.onTrackSelectedAddComment ? (
+					<Modal
+						showModal={this.state.onTrackSelectedAddComment}
+						title={"Add a comment to your tracks?"}
+						content={this.renderOnTrackSelectedAddCommentContent()}
+						actions={this.renderOnTrackSelectedAddCommentActions()}
+						onDismiss={() =>
+							this.setState({ onTrackSelectedAddComment: false })
+						}
 					/>
 				) : null}
 				{this.state.validateOnSubmit ? (

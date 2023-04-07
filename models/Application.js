@@ -9,6 +9,12 @@ const applicationSchema = new mongoose.Schema(
 				ref: "Track",
 			},
 		],
+		tracksComments: [
+			{
+				trackId: { type: String },
+				comment: { type: String },
+			},
+		],
 		author: {
 			type: Schema.Types.ObjectId,
 			ref: "User",
