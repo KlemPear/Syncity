@@ -124,8 +124,8 @@ class ResponsiveAppBar extends React.Component {
 		} else {
 			return {
 				pages: {
-					"Sign Up": "/register",
-					"Sign In": "/login",
+					"Sign up": "/register",
+					"Sign in": "/login",
 				},
 				settings: null,
 			};
@@ -194,7 +194,7 @@ class ResponsiveAppBar extends React.Component {
 								alt="logo"
 							/>
 						</Typography>
-						<Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+						<Box sx={{ flexGrow: 1, flexDirection: "row", display: { xs: "flex", md: "none" } }}>
 							<IconButton
 								size="large"
 								aria-label="account of current user"
@@ -263,7 +263,7 @@ class ResponsiveAppBar extends React.Component {
 								alt="logo"
 							/>
 						</Typography>
-						<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+						<Box sx={{ flexGrow: 1, flexDirection: "row", display: { xs: "none", md: "flex" } }}>
 							{Object.keys(pages).map((page) => (
 								<Button
 									key={page}

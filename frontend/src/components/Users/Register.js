@@ -29,27 +29,27 @@ class Register extends React.Component {
 				<Stack
 					direction="row"
 					divider={<Divider orientation="vertical" flexItem />}
-					justifyContent="space-evenly"
+					justifyContent="space-around"
 					alignItems="center"
 					spacing={2}
 				>
-					<Stack>
-						<img
-							style={{
-								width: 200,
-								height: 200,
-							}}
-							src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
-							alt="logo"
-						/>
+					<img
+						style={{
+							width: 200,
+							height: 200,
+						}}
+						src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
+						alt="logo"
+					/>
+					<Stack spacing={2}>
 						<Typography
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
 							Sign up
 						</Typography>
+						<RegisterForm onSubmit={this.onSubmit} />
 					</Stack>
-					<RegisterForm onSubmit={this.onSubmit} />
 				</Stack>
 			</Box>
 		);

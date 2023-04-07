@@ -44,14 +44,14 @@ class Login extends React.Component {
 							src={process.env.PUBLIC_URL + "/NOST_CHOICE-Favicon.png"}
 							alt="logo"
 						/>
+					</Stack>
+					<Stack spacing={2}>
 						<Typography
 							sx={{ display: "flex", justifyContent: "center" }}
 							variant="h3"
 						>
 							Sign in
 						</Typography>
-					</Stack>
-					<Stack spacing={2}>
 						{this.props.unauthorized ? this.renderUnauthorizedMessage() : null}
 						<LoginForm onSubmit={this.onSubmit} />
 						<Button component={Link} to="/forgot-password">
