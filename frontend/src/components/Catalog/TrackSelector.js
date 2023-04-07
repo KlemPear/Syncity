@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { fetchTracks } from "../../actions";
 import Modal from "../Modal";
 import TrackLink from "./TrackLink";
-import TrackCommentForm from "./TrackCommentForm";
 
 //mui
 import {
@@ -17,7 +16,6 @@ import {
 	Typography,
 } from "@mui/material";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
-import MuiLink from "@mui/material/Link";
 
 class TrackSelector extends React.Component {
 	constructor(props) {
@@ -25,7 +23,6 @@ class TrackSelector extends React.Component {
 		this.state = {
 			selectedTracks: [],
 			tooManyTracksSelected: false,
-			trackComment: {},
 		};
 	}
 
@@ -38,12 +35,12 @@ class TrackSelector extends React.Component {
 	};
 
 	handleCheckboxToggle = (track) => {
-		if (!this.state.selectedTracks.includes(track._id)) {
+		if (!this.state.selectedTracks.includes(track)) {
 			if (this.state.selectedTracks.length >= 3) {
-				this.setState({ tooManyTracksSelected: true });
+				return this.setState({ tooManyTracksSelected: true });
 			}
 			this.setState({
-				selectedTracks: [...this.state.selectedTracks, track._id],
+				selectedTracks: [...this.state.selectedTracks, track],
 			});
 		} else {
 			if (this.state.selectedTracks.length === 1) {
@@ -53,7 +50,7 @@ class TrackSelector extends React.Component {
 			} else {
 				this.setState({
 					selectedTracks: this.state.selectedTracks.filter(
-						(item) => item !== track._id
+						(item) => item !== track
 					),
 				});
 			}
@@ -66,6 +63,7 @@ class TrackSelector extends React.Component {
 				<Checkbox
 					type="checkbox"
 					name={track._id}
+					checked={this.state.selectedTracks.includes(track)}
 					onChange={() => this.handleCheckboxToggle(track)}
 				/>
 			</>
@@ -78,19 +76,11 @@ class TrackSelector extends React.Component {
 
 	renderModalDismiss() {
 		this.setState({ tooManyTracksSelected: false });
-		window.location.reload(false);
+		//window.location.reload(false);
 	}
 
 	relaySelectedTracks = () => {
 		this.props.getSelectedTracks(this.state.selectedTracks);
-	};
-
-	addTrackComment = (comment) => {
-		const trackId = comment.trackId;
-		const text = comment.text;
-		this.setState({
-			trackComment: { ...this.state.trackComment, trackId: text },
-		});
 	};
 
 	render() {
@@ -122,21 +112,6 @@ class TrackSelector extends React.Component {
 									}
 								/>
 							</ListItem>
-							{/* {this.state.selectedTracks.includes(track._id) &&
-								Object.keys(this.state.trackComment).includes(track._id) && (
-									<ListItem>
-										<Typography>Text here</Typography>
-									</ListItem>
-								)}
-							{this.state.selectedTracks.includes(track._id) &&
-								!Object.keys(this.state.trackComment).includes(track._id) && (
-									<ListItem>
-										<TrackCommentForm
-											trackId={track._id}
-											onSubmit={this.addTrackComment}
-										/>
-									</ListItem>
-								)} */}
 						</Box>
 					))}
 				</List>

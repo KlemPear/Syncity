@@ -14,6 +14,7 @@ import {
 	ListItemText,
 	Box,
 	Button,
+	Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AudiotrackIcon from "@mui/icons-material/Audiotrack";
@@ -62,7 +63,11 @@ class ApplicationCard extends React.Component {
 		this.props.playTrack(track);
 	};
 
-	renderTracks = (tracks) => {
+	renderTracks = (tracks, tracksComments) => {
+		var tracksCommentsObj = {};
+		tracksComments?.map(
+			(track) => (tracksCommentsObj[track.trackId] = track.comment)
+		);
 		return (
 			<>
 				<List>
@@ -109,6 +114,13 @@ class ApplicationCard extends React.Component {
 									>
 										<TrackLink track={track} />
 									</ListItem>
+									{tracksCommentsObj[track._id] && (
+										<ListItem>
+											<Typography variant="body2">{`From pitcher: "${
+												tracksCommentsObj[track._id]
+											}"`}</Typography>
+										</ListItem>
+									)}
 								</Box>
 						  ))
 						: null}
@@ -117,7 +129,7 @@ class ApplicationCard extends React.Component {
 		);
 	};
 
-	renderApplication(tracks) {
+	renderApplication(application) {
 		return (
 			<>
 				<ListItem sx={{ border: 1, borderRadius: "16px", m: 1 }}>
@@ -126,7 +138,12 @@ class ApplicationCard extends React.Component {
 							<AudiotrackIcon color="primary" />
 						</Avatar>
 					</ListItemAvatar>
-					<ListItemText primary={this.renderTracks(tracks)} />
+					<ListItemText
+						primary={this.renderTracks(
+							application.tracks,
+							application.tracksComments
+						)}
+					/>
 				</ListItem>
 			</>
 		);
@@ -140,7 +157,7 @@ class ApplicationCard extends React.Component {
 				</div>
 			);
 		} else {
-			return this.renderApplication(this.props.application.tracks);
+			return this.renderApplication(this.props.application);
 		}
 	}
 }

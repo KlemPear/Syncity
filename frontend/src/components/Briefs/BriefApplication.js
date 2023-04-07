@@ -9,8 +9,16 @@ import Modal from "../Modal";
 import { Link } from "react-router-dom";
 import TrackSelector from "../Catalog/TrackSelector";
 import CreateTrack from "../Catalog/CreateTrack";
+
 //mui
-import { Box, Button, Typography, Stack, Checkbox } from "@mui/material";
+import {
+	Box,
+	Button,
+	Typography,
+	Stack,
+	Checkbox,
+	TextField,
+} from "@mui/material";
 
 const pitchPlanToCommisionDict = {
 	freeTrial: 30,
@@ -29,7 +37,9 @@ class BriefApplication extends React.Component {
 			noTrackSelected: false,
 			validateOnSubmit: false,
 			selectedTracks: [],
-			onValidateSubmitchecked: false
+			onValidateSubmitchecked: false,
+			onTrackSelectedAddComment: false,
+			tracksComments: {},
 		};
 	}
 	onNotEnoughTokens = () => {
@@ -45,12 +55,22 @@ class BriefApplication extends React.Component {
 	};
 
 	onValidateOnSubmit = () => {
-		this.setState({ validateOnSubmit: !this.state.validateOnSubmit });
+		this.setState({
+			validateOnSubmit: !this.state.validateOnSubmit,
+			onTrackSelectedAddComment: false,
+		});
+	};
+
+	onTrackSelectedAddComment = () => {
+		this.setState({
+			onTrackSelectedAddComment: !this.state.onTrackSelectedAddComment,
+		});
 	};
 
 	handleOnValidateSubmitCheckboxChange = (event) => {
 		this.setState({ onValidateSubmitchecked: event.target.checked });
-	}
+	};
+
 	renderModalContent() {
 		return (
 			<div>
@@ -123,7 +143,10 @@ class BriefApplication extends React.Component {
 						onChange={this.handleOnValidateSubmitCheckboxChange}
 						inputProps={{ "aria-label": "controlled" }}
 					/>
-					<Typography variant="caption">I confirm that all shareholders agree to pitch their track(s) for this brief.</Typography>
+					<Typography variant="caption">
+						I confirm that all shareholders agree to pitch their track(s) for
+						this brief.
+					</Typography>
 				</Stack>
 			</Box>
 		);
@@ -140,7 +163,58 @@ class BriefApplication extends React.Component {
 					color={this.state.onValidateSubmitchecked ? "secondary" : "grey"}
 					onClick={() => this.createApplicationAndNotification()}
 				>
-					{this.state.onValidateSubmitchecked ? "I agree. Submit!" : "Please confirm the checkbox above."} 
+					{this.state.onValidateSubmitchecked
+						? "I agree. Submit!"
+						: "Please confirm the checkbox above."}
+				</Button>
+			</React.Fragment>
+		);
+	}
+
+	renderOnTrackSelectedAddCommentContent() {
+		return (
+			<Box>
+				{this.state.selectedTracks.map((track) => (
+					<Box key={track._id}>
+						<Typography variant="h6">
+							{track.title} - {track.artist}
+						</Typography>
+						<TextField
+							id={track._id}
+							hiddenLabel
+							margin="dense"
+							fullWidth
+							placeholder="optional..."
+							value={this.state.tracksComments[track._id] ?? ""}
+							onChange={(event) => {
+								this.setState({
+									tracksComments: {
+										...this.state.tracksComments,
+										[track._id]: event.target.value,
+									},
+								});
+							}}
+						/>
+					</Box>
+				))}
+			</Box>
+		);
+	}
+
+	renderOnTrackSelectedAddCommentActions() {
+		return (
+			<React.Fragment>
+				<Button
+					onClick={() => this.setState({ onTrackSelectedAddComment: false })}
+				>
+					Cancel
+				</Button>
+				<Button
+					variant="contained"
+					color="secondary"
+					onClick={() => this.onValidateOnSubmit()}
+				>
+					Next
 				</Button>
 			</React.Fragment>
 		);
@@ -156,21 +230,28 @@ class BriefApplication extends React.Component {
 		if (this.state.selectedTracks.length === 0) {
 			this.onNoTrackSelected();
 		} else {
-			this.onValidateOnSubmit();
+			//this.onValidateOnSubmit();
+			this.onTrackSelectedAddComment();
 		}
 	};
 
 	createApplicationAndNotification() {
-		if(!this.state.onValidateSubmitchecked){
+		if (!this.state.onValidateSubmitchecked) {
 			return;
 		}
-		this.props.burnPitchToken(this.props.userId);
+		var comments = [];
+		var tracksComments = this.state.tracksComments;
+		Object.keys(tracksComments).map((trackId) =>
+			comments.push({ trackId: trackId, comment: tracksComments[trackId] })
+		);
 		const applicationValues = {
 			tracks: this.state.selectedTracks,
 			author: `${this.props.userId}`,
 			brief: `${this.props.brief._id}`,
+			tracksComments: comments,
 		};
 		this.props.createApplication(applicationValues);
+		this.props.burnPitchToken(this.props.userId);
 		// Notify brief author of the application
 		const notif = {
 			title: "You've got a new application!",
@@ -256,6 +337,17 @@ class BriefApplication extends React.Component {
 						content={this.renderNoTrackModalContent()}
 						actions={this.renderNoTrackModalActions()}
 						onDismiss={() => this.setState({ noTrackSelected: false })}
+					/>
+				) : null}
+				{this.state.onTrackSelectedAddComment ? (
+					<Modal
+						showModal={this.state.onTrackSelectedAddComment}
+						title={"Add a comment to your tracks?"}
+						content={this.renderOnTrackSelectedAddCommentContent()}
+						actions={this.renderOnTrackSelectedAddCommentActions()}
+						onDismiss={() =>
+							this.setState({ onTrackSelectedAddComment: false })
+						}
 					/>
 				) : null}
 				{this.state.validateOnSubmit ? (

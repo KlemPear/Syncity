@@ -58,8 +58,8 @@ class TrackCommentForm extends Component {
 				<form onSubmit={this.props.handleSubmit(this.onSubmit)}>
 					<Stack direction="row" spacing={1}>
 						{this.renderFormFields()}
-						<Button type="submit" variant="contained" color="secondary">
-							Submit
+						<Button type="submit" variant="contained" color="primary">
+							Validate
 						</Button>
 					</Stack>
 				</form>
