@@ -354,7 +354,6 @@ class BriefCard extends React.Component {
 						height: 150,
 						overflow: "hidden",
 						overflowY: "auto",
-						py: 0.5,
 					}}
 				/>
 				<Divider

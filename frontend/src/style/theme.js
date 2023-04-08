@@ -93,7 +93,7 @@ export const theme = (prefersDarkMode = false) => {
 			MuiCard: {
 				styleOverrides: {
 					root: {
-						padding: "20px",
+						padding: "12px",
 						margin: "10px",
 						borderRadius: "15px",
 					},
