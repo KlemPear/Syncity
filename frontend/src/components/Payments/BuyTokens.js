@@ -60,22 +60,24 @@ class BuyTokens extends React.Component {
 				<Card
 					elevation={3}
 					sx={{
-						my: 0.5,
-						width: 450,
-						height: 370,
+						width: 300,
+						height: "auto",
 						display: "flex",
 						flexDirection: "column",
 					}}
 				>
 					<CardHeader
 						title={
-							<Typography align="center" variant="h4">
+							<Typography align="center" variant="h6">
 								{name}
 							</Typography>
 						}
 						subheader={
-							<Typography align="center" variant="h6">
-								${amount}
+							<Typography align="center" variant="body1">
+								<Typography component="span" variant="h3">
+									${amount}
+								</Typography>
+								/month
 							</Typography>
 						}
 						sx={{ mt: 2, p: 0 }}
@@ -90,11 +92,14 @@ class BuyTokens extends React.Component {
 						<List
 							sx={{
 								width: "100%",
-								maxWidth: 360,
-								bgcolor: "background.paper",
 							}}
+							dense
 						>
-							<ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+								}}
+							>
 								<ListItemAvatar>
 									<Avatar sx={{ bgcolor: "background.paper" }}>
 										<AudiotrackIcon color="primary" fontSize="small" />
@@ -102,11 +107,15 @@ class BuyTokens extends React.Component {
 								</ListItemAvatar>
 								<ListItemText
 									primary={
-										<Typography variant="body1">{description1}</Typography>
+										<Typography variant="body2">{description1}</Typography>
 									}
 								/>
 							</ListItem>
-							<ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+								}}
+							>
 								<ListItemAvatar>
 									<Avatar sx={{ bgcolor: "background.paper" }}>
 										<AudiotrackIcon color="primary" fontSize="small" />
@@ -114,11 +123,15 @@ class BuyTokens extends React.Component {
 								</ListItemAvatar>
 								<ListItemText
 									primary={
-										<Typography variant="body1">{description2}</Typography>
+										<Typography variant="body2">{description2}</Typography>
 									}
 								/>
 							</ListItem>
-							<ListItem>
+							<ListItem
+								sx={{
+									padding: 0,
+								}}
+							>
 								<ListItemAvatar>
 									<Avatar sx={{ bgcolor: "background.paper" }}>
 										<AudiotrackIcon color="primary" fontSize="small" />
@@ -126,7 +139,7 @@ class BuyTokens extends React.Component {
 								</ListItemAvatar>
 								<ListItemText
 									primary={
-										<Typography variant="body1">{description3}</Typography>
+										<Typography variant="body2">{description3}</Typography>
 									}
 								/>
 							</ListItem>
@@ -219,13 +232,13 @@ class BuyTokens extends React.Component {
 			<Grid
 				container
 				spacing={{ xs: 3 }}
-				columns={{ xs: 1, sm: 1, md: 2, lg: 2 }}
+				columns={{ xs: 1, sm: 1, md: 2, lg: 4 }}
 				alignItems="center"
 				justifyContent="space-evenly"
 			>
 				{this.renderPlanOption(
 					"freePlan",
-					"0.00/month",
+					"0",
 					"Free Plan",
 					this.props.user,
 					"5 applications/month.",
@@ -234,7 +247,7 @@ class BuyTokens extends React.Component {
 				)}
 				{this.renderPlanOption(
 					"basicPitchPlan",
-					"5.00/month",
+					"5",
 					"Basic Plan",
 					this.props.user,
 					"15 applications/month.",
@@ -243,7 +256,7 @@ class BuyTokens extends React.Component {
 				)}
 				{this.renderPlanOption(
 					"proPitchPlan",
-					"19.00/month",
+					"19",
 					"Pro Plan",
 					this.props.user,
 					"30 applications/month.",
@@ -252,7 +265,7 @@ class BuyTokens extends React.Component {
 				)}
 				{this.renderPlanOption(
 					"businessPitchPlan",
-					"49.00/month",
+					"49",
 					"Business Plan",
 					this.props.user,
 					"Unlimited applications.",

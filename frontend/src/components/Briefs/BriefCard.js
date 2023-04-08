@@ -282,7 +282,7 @@ class BriefCard extends React.Component {
 			<Tooltip title={media}>
 				<Avatar
 					sx={{
-						bgcolor: mediaMapping[media]?.color[500],
+						bgcolor: mediaMapping[media]?.color[400],
 						width: "65px",
 						height: "65px",
 					}}
