@@ -98,7 +98,7 @@ class ListBriefs extends React.Component {
 						textColor="secondary"
 						indicatorColor="secondary"
 						centered
-						sx={{ margin: 1 }}
+						sx={{ margin: 0 }}
 					>
 						<Tab
 							icon={<Public />}

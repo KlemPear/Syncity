@@ -83,6 +83,21 @@ export const theme = (prefersDarkMode = false) => {
 					},
 				},
 			},
+			MuiCardContent: {
+				styleOverrides: {
+					root: {
+						padding: "10px",
+					},
+				},
+			},
+			MuiCard: {
+				styleOverrides: {
+					root: {
+						padding: "20px",
+						margin: "10px",
+					},
+				},
+			},
 		},
 	});
 };
