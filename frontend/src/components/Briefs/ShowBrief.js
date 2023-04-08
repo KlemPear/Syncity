@@ -51,47 +51,135 @@ import OtherIcon from "@mui/icons-material/AudioFile";
 
 const mediaMapping = {
 	Film: {
-		icon: <FilmIcon />,
+		icon: (
+			<FilmIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: red,
 	},
 	Web: {
-		icon: <WebIcon />,
+		icon: (
+			<WebIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: deepPurple,
 	},
 	TV: {
-		icon: <TvIcon />,
+		icon: (
+			<TvIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: blue,
 	},
 	Advertising: {
-		icon: <AdvertisingIcon />,
+		icon: (
+			<AdvertisingIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: green,
 	},
 	"Video Game": {
-		icon: <VideoGameIcon />,
+		icon: (
+			<VideoGameIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: deepOrange,
 	},
 	Trailer: {
-		icon: <TrailerIcon />,
+		icon: (
+			<TrailerIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: yellow,
 	},
 	Radio: {
-		icon: <RadioIcon />,
+		icon: (
+			<RadioIcon
+				sx={{
+					wwidth: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: pink,
 	},
 	Podcast: {
-		icon: <PodcastIcon />,
+		icon: (
+			<PodcastIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: teal,
 	},
 	Corporate: {
-		icon: <CorporateIcon />,
+		icon: (
+			<CorporateIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: amber,
 	},
 	Other: {
-		icon: <OtherIcon />,
+		icon: (
+			<OtherIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: indigo,
 	},
 	"All Media": {
-		icon: <OtherIcon />,
+		icon: (
+			<OtherIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: indigo,
 	},
 };
@@ -163,7 +251,11 @@ class ShowBrief extends React.Component {
 		return (
 			<Tooltip title={media}>
 				<Avatar
-					sx={{ bgcolor: mediaMapping[media]?.color[500] }}
+					sx={{
+						bgcolor: mediaMapping[media]?.color[500],
+						width: "65px",
+						height: "65px",
+					}}
 					aria-label="media"
 				>
 					{mediaMapping[media]?.icon}
@@ -174,20 +266,38 @@ class ShowBrief extends React.Component {
 
 	renderBrief(brief) {
 		return (
-			<Card sx={{ width: 0.9 }}>
+			<Card
+				sx={{
+					width: 0.9,
+					boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+				}}
+			>
 				<CardHeader
 					avatar={this.renderAvatar(brief.media)}
 					title={this.renderHeader(brief)}
 					subheader={this.renderSubheader(brief)}
 				/>
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<CardContent>
-					<Divider variant="middle" sx={{ margin: 1 }} />
 					<Typography variant="body2" color="text.secondary">
 						{brief.numberOfApplicationsWanted > 0
 							? `Number of applications submitted: ${brief.numberOfApplicationsSubmitted} of ${brief.numberOfApplicationsWanted}`
 							: null}
 					</Typography>
 				</CardContent>
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<Box
 					sx={{
 						display: "flex",
@@ -198,11 +308,7 @@ class ShowBrief extends React.Component {
 					}}
 				>
 					<CardContent>
-						<Typography variant="h5">Description:</Typography>
-						{/* <Typography variant="body1" color="text.primary">
-							{brief.description}
-						</Typography> */}
-						<Box dangerouslySetInnerHTML={{ __html: brief.description }}/>
+						<Box dangerouslySetInnerHTML={{ __html: brief.description }} />
 					</CardContent>
 					<CardContent>
 						<Divider variant="middle" sx={{ margin: 1 }} />
@@ -213,9 +319,13 @@ class ShowBrief extends React.Component {
 							<ListItem>License Duration: {brief.licenseDuration}</ListItem>
 							<ListItem>
 								{"Extract Duration: "}
-								{brief.extractDuration ? `${brief.extractDuration}min` : "00min"}
+								{brief.extractDuration
+									? `${brief.extractDuration}min`
+									: "00min"}
 								{" : "}
-								{brief.extractDurationSecond ? `${brief.extractDurationSecond}sec` : "00sec"}
+								{brief.extractDurationSecond
+									? `${brief.extractDurationSecond}sec`
+									: "00sec"}
 							</ListItem>
 							<ListItem>Territory: {brief.territory.join(", ")}</ListItem>
 						</List>

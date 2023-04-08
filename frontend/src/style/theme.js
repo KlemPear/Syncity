@@ -95,7 +95,13 @@ export const theme = (prefersDarkMode = false) => {
 					root: {
 						padding: "20px",
 						margin: "10px",
+						borderRadius: "15px",
 					},
+				},
+			},
+			MuiIcon: {
+				styleOverrides: {
+					root: {},
 				},
 			},
 		},
