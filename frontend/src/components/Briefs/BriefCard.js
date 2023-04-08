@@ -57,47 +57,135 @@ import OtherIcon from "@mui/icons-material/AudioFile";
 
 const mediaMapping = {
 	Film: {
-		icon: <FilmIcon />,
+		icon: (
+			<FilmIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: red,
 	},
 	Web: {
-		icon: <WebIcon />,
+		icon: (
+			<WebIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: deepPurple,
 	},
 	TV: {
-		icon: <TvIcon />,
+		icon: (
+			<TvIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: blue,
 	},
 	Advertising: {
-		icon: <AdvertisingIcon />,
+		icon: (
+			<AdvertisingIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: green,
 	},
 	"Video Game": {
-		icon: <VideoGameIcon />,
+		icon: (
+			<VideoGameIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: deepOrange,
 	},
 	Trailer: {
-		icon: <TrailerIcon />,
+		icon: (
+			<TrailerIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: yellow,
 	},
 	Radio: {
-		icon: <RadioIcon />,
+		icon: (
+			<RadioIcon
+				sx={{
+					wwidth: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: pink,
 	},
 	Podcast: {
-		icon: <PodcastIcon />,
+		icon: (
+			<PodcastIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: teal,
 	},
 	Corporate: {
-		icon: <CorporateIcon />,
+		icon: (
+			<CorporateIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: amber,
 	},
 	Other: {
-		icon: <OtherIcon />,
+		icon: (
+			<OtherIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: indigo,
 	},
 	"All Media": {
-		icon: <OtherIcon />,
+		icon: (
+			<OtherIcon
+				sx={{
+					width: "40px",
+					height: "40px",
+					color: "#232323",
+				}}
+			/>
+		),
 		color: indigo,
 	},
 };
@@ -193,7 +281,11 @@ class BriefCard extends React.Component {
 		return (
 			<Tooltip title={media}>
 				<Avatar
-					sx={{ bgcolor: mediaMapping[media]?.color[500] }}
+					sx={{
+						bgcolor: mediaMapping[media]?.color[400],
+						width: "65px",
+						height: "65px",
+					}}
 					aria-label="media"
 				>
 					{mediaMapping[media]?.icon}
@@ -244,7 +336,14 @@ class BriefCard extends React.Component {
 	renderMuiBrief(brief) {
 		return (
 			<Card
-				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 500 }}
+				sx={{
+					width: 375,
+					height: "auto",
+					minHeight: 300,
+					maxHeight: 550,
+					boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					borderRadius: "15px",
+				}}
 				elevation={8}
 			>
 				<CardHeader
@@ -255,10 +354,15 @@ class BriefCard extends React.Component {
 						height: 150,
 						overflow: "hidden",
 						overflowY: "auto",
-						py: 0.5,
 					}}
 				/>
-				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<CardContent sx={{ py: 0.5 }}>
 					<Typography variant="body2" color="text.secondary">
 						{brief.numberOfApplicationsWanted > 0
@@ -266,6 +370,13 @@ class BriefCard extends React.Component {
 							: null}
 					</Typography>
 				</CardContent>
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<Box
 					sx={{
 						display: "flex",
@@ -276,11 +387,9 @@ class BriefCard extends React.Component {
 					}}
 				>
 					<CardContent sx={{ py: 0.5 }}>
-						<Typography sx={{ mt: 0.5 }}>Description:</Typography>
-						{/* <Typography variant="body1" color="text.primary">
-							{brief.description}
-						</Typography> */}
-						<Box dangerouslySetInnerHTML={{ __html: brief.description }}/>
+						{/* <Typography sx={{ mt: 0.5 }}>Description:</Typography> */}
+
+						<Box dangerouslySetInnerHTML={{ __html: brief.description }} />
 					</CardContent>
 				</Box>
 				<CardActions disableSpacing>
@@ -412,7 +521,14 @@ class BriefCard extends React.Component {
 		const brief = application.brief;
 		return (
 			<Card
-				sx={{ width: 300, height: "auto", minHeight: 350, maxHeight: 600 }}
+				sx={{
+					width: 375,
+					height: "auto",
+					minHeight: 450,
+					maxHeight: 450,
+					boxShadow: `0 0 5px ${mediaMapping[brief.media]?.color[500]}`,
+					borderRadius: "15px",
+				}}
 				elevation={8}
 			>
 				<CardHeader
@@ -426,7 +542,13 @@ class BriefCard extends React.Component {
 						py: 0.5,
 					}}
 				/>
-				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<Box
 					sx={{
 						display: "flex",
@@ -442,7 +564,13 @@ class BriefCard extends React.Component {
 						</Typography>
 					</CardContent>
 				</Box>
-				<Divider variant="middle" sx={{ margin: 1 }} />
+				<Divider
+					variant="middle"
+					sx={{
+						margin: 1,
+						boxShadow: `0 0 3px ${mediaMapping[brief.media]?.color[500]}`,
+					}}
+				/>
 				<Box
 					sx={{
 						display: "flex",

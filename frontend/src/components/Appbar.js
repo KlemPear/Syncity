@@ -166,7 +166,7 @@ class ResponsiveAppBar extends React.Component {
 	render() {
 		const { pages, settings } = this.getPagesAndSettings();
 		return (
-			<AppBar position="static" sx={{ mb: 10 }} color="third">
+			<AppBar position="sticky" sx={{ mb: 5, height: "65px" }} color="third">
 				<Container maxWidth="xl">
 					<Toolbar disableGutters>
 						<Typography
