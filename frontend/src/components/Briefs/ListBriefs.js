@@ -153,9 +153,7 @@ class ListBriefs extends React.Component {
 
 						{this.state.value === 0 ? (
 							<Box id="list-brief-filters">
-								<FilterBriefForm
-									onSubmit={this.onBriefFilterSubmit}
-								/>
+								<FilterBriefForm onSubmit={this.onBriefFilterSubmit} />
 							</Box>
 						) : (
 							<Box sx={{ display: "flex", flexGrow: 1 }}></Box>
@@ -185,22 +183,11 @@ class ListBriefs extends React.Component {
 							spacing={{ xs: 1, md: 2 }}
 							columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
 							justifyContent="space-around"
-							alignItems="center"
+							alignItems="flex-start"
 							sx={{ mb: 2 }}
 						>
 							{this.props.briefs.map((brief) => (
-								<Grid
-									item
-									xs={1}
-									sm={1}
-									md={1}
-									key={brief._id}
-									sx={{
-										display: "flex",
-										justifyContent: "center",
-										alignItems: "center",
-									}}
-								>
+								<Grid item xs={1} sm={1} md={1} key={brief._id}>
 									<BriefCard key={brief._id} brief={brief} />
 								</Grid>
 							))}

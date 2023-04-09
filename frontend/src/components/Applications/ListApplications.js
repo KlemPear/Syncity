@@ -80,7 +80,7 @@ class ListApplications extends React.Component {
 						spacing={{ xs: 1, md: 2 }}
 						columns={{ xs: 1, sm: 1, md: 2, lg: 3 }}
 						justifyContent="space-evenly"
-						alignItems="center"
+						alignItems="flex-start"
 						sx={{ mb: 2 }}
 					>
 						{this.props.applications.map((application) =>
