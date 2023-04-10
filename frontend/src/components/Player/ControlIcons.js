@@ -57,7 +57,6 @@ const ControlIcons = ({
 			</Tooltip>
 		);
 	}
-
 	const PrettoSlider = styled(Slider)({
 		height: 5,
 		"& .MuiSlider-track": {
@@ -95,6 +94,7 @@ const ControlIcons = ({
 			},
 		},
 	});
+
 	return (
 		<div className="controls__div">
 			{/* Bottom Controls */}
