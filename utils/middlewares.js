@@ -3,6 +3,104 @@ const Track = require("../models/Track");
 const Application = require("../models/Application");
 const User = require("../models/User");
 
+//DB
+const mongoDbSetUp = require(".././config/mongo");
+
+//Rate limiter
+const { RateLimiterMongo } = require("rate-limiter-flexible");
+
+const LoginFailOpts = {
+	storeClient: mongoDbSetUp,
+	keyPrefix: "login_limiter_username",
+	points: 5, // Number of attempts allowed
+	duration: 60, // Per minute
+	blockDuration: 60 * 2, // Block for 2 minutes
+};
+
+const LoginUserlimiter = new RateLimiterMongo(LoginFailOpts);
+
+module.exports.authLimiter = async (req, res, next) => {
+	const username = req.body.username;
+
+	//Check the rate limiter
+	LoginUserlimiter.consume(username)
+		.then((rateLimiterRes) => {
+			if (rateLimiterRes !== null) {
+				const date = new Date(Date.now() + rateLimiterRes.msBeforeNext);
+				res.setHeader("X-RateLimit-Limit", LoginFailOpts.points),
+					res.setHeader(
+						"X-RateLimit-Remaining",
+						rateLimiterRes.remainingPoints
+					),
+					res.setHeader(
+						"X-RateLimit-Reset",
+						date.toLocaleDateString() + " " + date.toLocaleTimeString()
+					);
+			}
+			next();
+		})
+		.catch((rateLimiterRes) => {
+			if (
+				rateLimiterRes !== null &&
+				rateLimiterRes.consumedPoints > LoginFailOpts.points
+			) {
+				// Rate limit exceeded, send error response
+				const date = new Date(Date.now() + rateLimiterRes.msBeforeNext);
+				res.setHeader("Retry-After", rateLimiterRes.msBeforeNext / 1000),
+					res.setHeader("X-RateLimit-Limit", LoginFailOpts.points),
+					res.setHeader(
+						"X-RateLimit-Remaining",
+						rateLimiterRes.remainingPoints
+					),
+					res.setHeader(
+						"X-RateLimit-Reset",
+						date.toLocaleDateString() + " " + date.toLocaleTimeString()
+					),
+					res
+						.status(429)
+						.send("Too many authentication attemps. Please wait 2 minutes.");
+				return;
+			}
+		});
+};
+
+const IpRequestOpts = {
+	storeClient: mongoDbSetUp,
+	keyPrefix: "rate_limiter_ip_request",
+	points: 100, // Number of attempts allowed
+	duration: 1, // Per sec
+};
+
+const IpRequestlimiter = new RateLimiterMongo(IpRequestOpts);
+
+module.exports.rateLimiterMiddleware = (req, res, next) => {
+	IpRequestlimiter.consume(req.ip)
+		.then((rateLimiterRes) => {
+			next();
+		})
+		.catch((rateLimiterRes) => {
+			if (
+				rateLimiterRes !== null &&
+				rateLimiterRes.consumedPoints > IpRequestOpts.points
+			) {
+				// Rate limit exceeded, send error response
+				const date = new Date(Date.now() + rateLimiterRes.msBeforeNext);
+				res.setHeader("Retry-After", rateLimiterRes.msBeforeNext / 1000),
+					res.setHeader("X-RateLimit-Limit", IpRequestOpts.points),
+					res.setHeader(
+						"X-RateLimit-Remaining",
+						rateLimiterRes.remainingPoints
+					),
+					res.setHeader(
+						"X-RateLimit-Reset",
+						date.toLocaleDateString() + " " + date.toLocaleTimeString()
+					),
+					res.status(429).send("Too many requests from the same IP");
+				return;
+			}
+		});
+};
+
 const {
 	BriefValidationSchema,
 	ApplicationValidationSchema,
