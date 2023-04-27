@@ -29,7 +29,12 @@ const notificationRouter = require("./routes/notification");
 const licensingJobRouter = require("./routes/licensingJob");
 const audioFilesRouter = require("./routes/audioFiles");
 //middlewares
-const { isLoggedIn, hasVerificationHeader } = require("./utils/middlewares");
+const {
+	isLoggedIn,
+	hasVerificationHeader,
+	rateLimiterMiddleware,
+} = require("./utils/middlewares");
+app.use(rateLimiterMiddleware);
 // mongo connection start mongoDb server
 // sudo mongod --dbpath=/home/clem/Git/Syncity/data/db
 const mongoDbSetUp = require("./config/mongo");

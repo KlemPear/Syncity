@@ -97,11 +97,15 @@ module.exports.login = async (req, res) => {
 	return res.status(200).json(user);
 };
 
-module.exports.logout = (req, res) => {
-	req.logout();
-	req.session.destroy();
-	res.clearCookie("SessionId");
-	return res.status(200).json(null);
+module.exports.logout = (req, res, next) => {
+	req.logout(function (err) {
+		if (err) {
+			return res.status(500).json(err);
+		}
+		req.session.destroy();
+		res.clearCookie("SessionId");
+		return res.status(200).json(null);
+	});
 };
 
 module.exports.onDeleteUserById = async (req, res, next) => {

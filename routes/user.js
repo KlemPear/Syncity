@@ -1,16 +1,15 @@
 const express = require("express");
-const { isLoggedIn, validateUser } = require("../utils/middlewares");
+const { isLoggedIn, validateUser, authLimiter } = require("../utils/middlewares");
 // controllers
 const user = require("../controllers/user");
 const passport = require("passport");
-
 const router = express.Router();
 
 router
 	// .get("/", user.onGetAllUsers)
 	.get("/session", user.getSession)
 	.post("/register", user.onCreateUser)
-	.post("/login", passport.authenticate("local"), user.login)
+	.post("/login", authLimiter, passport.authenticate("local"), user.login)
 	.post("/:id/tokens", isLoggedIn, user.onAddTokens)
 	.post("/:id/burn-brief-token", isLoggedIn, user.onBurnBriefToken)
 	.post("/:id/burn-pitch-token", isLoggedIn, user.onBurnPitchToken)
