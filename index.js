@@ -44,7 +44,7 @@ mongoDbSetUp.once("open", () => {
 	console.log("Database connected");
 });
 
-const port = process.env.PORT || "5000";
+const port = process.env.PORT || "8080";
 let frontendURL = ["http://localhost:3000", "https://dashboard.stripe.com/"];
 if (process.env.FRONTEND_URL_1 && process.env.FRONTEND_URL_2) {
 	frontendURL = [
