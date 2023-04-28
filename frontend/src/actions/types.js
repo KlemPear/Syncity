@@ -14,6 +14,7 @@ export const usersTypes = {
 	USER_NOT_FOUND: "USER_NOT_FOUND",
 	USER_FOUND: "USER_FOUND",
 	UPDATE_USER_PASSWORD: "UPDATE_USER_PASSWORD",
+	TOO_MANY_REQUESTS: "TOO_MANY_REQUESTS"
 };
 
 export const briefsTypes = {

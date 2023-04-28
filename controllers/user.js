@@ -104,7 +104,7 @@ module.exports.logout = (req, res, next) => {
 		}
 		req.session.destroy();
 		res.clearCookie("SessionId");
-		return res.status(200).json(null);
+		return res.status(200).json("Log out successful.");
 	});
 };
 

@@ -11,7 +11,9 @@ const CONNECTION_URL =
 		? process.env.MONGODB_CONNECTION_STRING
 		: process.env.MONGODB_CONNECTION_STRING_TEST;
 // : `mongodb://${db.url}/${db.name}`;
+
 mongoose.set('strictQuery', true);
+
 mongoose.connect(CONNECTION_URL, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
