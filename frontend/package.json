@@ -31,6 +31,8 @@
 		"redux-form": "^8.3.8",
 		"redux-thunk": "^2.4.1",
 		"shepherd.js": "^11.0.1",
+		"wavesurfer-react": "^2.2.2",
+		"wavesurfer.js": "^6.6.3",
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {

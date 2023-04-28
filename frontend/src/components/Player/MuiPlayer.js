@@ -1,8 +1,9 @@
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 import "../../style/MuiPlayer.css";
 import ControlIcons from "./ControlIcons";
+
 
 const format = (seconds) => {
 	if (isNaN(seconds)) {
@@ -21,8 +22,7 @@ const format = (seconds) => {
 	}
 };
 
-function MuiPlayer(props) {
-
+const MuiPlayer = (props) => {
 	const [playerstate, setPlayerState] = useState({
 		playing: true,
 		muted: false,
@@ -165,6 +165,6 @@ function MuiPlayer(props) {
 			</div>
 		</>
 	);
-}
+};
 
 export default MuiPlayer;

@@ -9,6 +9,7 @@ import Spotify from "react-spotify-embed";
 import baseUrl from "../../apis/baseUrl";
 import Loader from "../Loader";
 import MuiPlayer from "../Player/MuiPlayer";
+import WaveFormPlayer from "../Player/WaveFormPlayer";
 
 class TrackPlayer extends Component {
 	constructor(props) {
@@ -59,6 +60,7 @@ class TrackPlayer extends Component {
 						title={`${track.title} - ${track.artist}`}
 						playing={true}
 					/>
+					<WaveFormPlayer url={this.state.url} />
 				</>
 			);
 		}
